@@ -164,20 +164,24 @@ const buildAbril = () => [
 ];
 
 // ─── STORAGE PERSISTENTE ──────────────────────────────────────────────────────
-const STORAGE_KEY = "teatrando_parrilla_v18";
-const POLL_INTERVAL = 4000; // refresco cliente cada 4 segundos
+const POLL_INTERVAL = 4000;
 
 async function saveData(data) {
   try {
-    await window.storage.set(STORAGE_KEY, JSON.stringify(data), true); // shared=true
-  } catch(e) { console.warn("storage save error", e); }
+    await fetch('/api/data', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({data: JSON.stringify(data)})
+    });
+  } catch(e) { console.warn("save error", e); }
 }
 
 async function loadData() {
   try {
-    const res = await window.storage.get(STORAGE_KEY, true);
-    if (res && res.value) return JSON.parse(res.value);
-  } catch(e) { console.warn("storage load error", e); }
+    const res = await fetch('/api/data');
+    const json = await res.json();
+    if (json.data) return JSON.parse(json.data);
+  } catch(e) { console.warn("load error", e); }
   return null;
 }
 

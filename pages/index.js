@@ -164,24 +164,20 @@ const buildAbril = () => [
 ];
 
 // ─── STORAGE PERSISTENTE ──────────────────────────────────────────────────────
-const POLL_INTERVAL = 4000;
+const STORAGE_KEY = "teatrando_parrilla_v19";
+const POLL_INTERVAL = 4000; // refresco cliente cada 4 segundos
 
 async function saveData(data) {
   try {
-    await fetch('/api/data', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({data: JSON.stringify(data)})
-    });
-  } catch(e) { console.warn("save error", e); }
+    await window.storage.set(STORAGE_KEY, JSON.stringify(data), true); // shared=true
+  } catch(e) { console.warn("storage save error", e); }
 }
 
 async function loadData() {
   try {
-    const res = await fetch('/api/data');
-    const json = await res.json();
-    if (json.data) return JSON.parse(json.data);
-  } catch(e) { console.warn("load error", e); }
+    const res = await window.storage.get(STORAGE_KEY, true);
+    if (res && res.value) return JSON.parse(res.value);
+  } catch(e) { console.warn("storage load error", e); }
   return null;
 }
 
@@ -259,30 +255,26 @@ export default function TeatrandoApp(){
       }
     },800); // debounce 800ms
     return()=>clearTimeout(t);
-  },[parrillas,resenas,briefings,mesesDisp,dataLoaded]);
+  },[parrillas,resenas,briefings,mesesDisp,visitas,dataLoaded]);
 
   // ── POLLING: refresca datos desde storage cada 4s (siempre activo) ──
   // El cliente ve los cambios del admin en tiempo real
   useEffect(()=>{
     const interval=setInterval(async()=>{
-      // En modo admin no sobreescribir con datos viejos del storage
-      // solo refrescar si no hay cambios locales recientes (syncStatus idle)
-      if(modoCliente){
-        // CLIENTE (modoCliente=true): siempre refresca desde storage
-        const saved=await loadData();
-        if(saved && isMounted.current){
-          if(saved.parrillas) setParrillas(saved.parrillas);
-          if(saved.resenas)   setResenas(saved.resenas);
-          if(saved.briefings) setBriefings(saved.briefings);
-          if(saved.mesesDisp) setMesesDisp(saved.mesesDisp);
-          if(saved.visitas) setVisitas(saved.visitas);
-          setLastRefresh(new Date().toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit",second:"2-digit"}));
-        }
+      // No refrescar si admin está guardando — evita sobreescribir cambios locales
+      if(!modoCliente && syncStatus==="saving") return;
+      const saved=await loadData();
+      if(saved && isMounted.current){
+        if(saved.parrillas) setParrillas(saved.parrillas);
+        if(saved.resenas)   setResenas(saved.resenas);
+        if(saved.briefings) setBriefings(saved.briefings);
+        if(saved.mesesDisp) setMesesDisp(saved.mesesDisp);
+        if(saved.visitas)   setVisitas(saved.visitas);
+        setLastRefresh(new Date().toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit",second:"2-digit"}));
       }
-      // ADMIN (modoCliente=false): no refresca, el guardado automático tiene prioridad
     },POLL_INTERVAL);
     return()=>clearInterval(interval);
-  },[modoCliente]);
+  },[modoCliente,syncStatus]);
 
   // MIX — calcula solo sobre publicaciones (excluye reseñas programadas como pubs separadas)
   const mix=useCallback(()=>{

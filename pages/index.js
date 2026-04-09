@@ -462,7 +462,7 @@ export default function TeatrandoApp(){
           <div style={{marginBottom:14,display:"flex",gap:6,flexWrap:"wrap",alignItems:"center"}}>
             {mesesDisp.map(mes=>(
               <div key={mes} style={{position:"relative"}}>
-                <button onClick={()=>{setMesActivo(mes);setMesExp(mes===mesExp?null:mes);setSemanaActiva(1);}}
+                <button onClick={()=>{setMesActivo(mes);setMesExp(mes===mesExp?null:mes);if(mes!==mesActivo)setSemanaActiva(1);}}
                   style={{padding:"5px 14px",borderRadius:18,display:"flex",alignItems:"center",gap:5,border:mesActivo===mes?"2px solid #C40803":"1.5px solid #222",background:mesActivo===mes?"#C40803":"#111",color:"#fff",fontWeight:700,cursor:"pointer",fontSize:11}}>
                   {mes} <span style={{fontSize:9,opacity:0.7}}>{mesExp===mes?"▲":"▼"}</span>
                 </button>
@@ -810,7 +810,7 @@ export default function TeatrandoApp(){
         <div style={{marginTop:12,marginBottom:10,display:"flex",gap:6,flexWrap:"wrap",alignItems:"center"}}>
           {mesesDisp.map(mes=>(
             <div key={mes} style={{position:"relative"}}>
-              <button onClick={()=>{setMesActivo(mes);setMesExp(mes===mesExp?null:mes);setSemanaActiva(1);setCardAbierta(null);}}
+              <button onClick={()=>{setMesActivo(mes);setMesExp(mes===mesExp?null:mes);if(mes!==mesActivo)setSemanaActiva(1);setCardAbierta(null);}}
                 style={{padding:"5px 14px",borderRadius:18,display:"flex",alignItems:"center",gap:5,border:mesActivo===mes?"2px solid #C40803":"1.5px solid #222",background:mesActivo===mes?"#C40803":"#111",color:"#fff",fontWeight:700,cursor:"pointer",fontSize:11}}>
                 {mes} <span style={{fontSize:9,opacity:0.7}}>{mesExp===mes?"▲":"▼"}</span>
               </button>

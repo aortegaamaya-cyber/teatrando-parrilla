@@ -164,7 +164,7 @@ const buildAbril = () => [
 ];
 
 // ─── STORAGE PERSISTENTE ──────────────────────────────────────────────────────
-const STORAGE_KEY = "teatrando_parrilla_v19";
+const STORAGE_KEY = "teatrando_parrilla_v18";
 const POLL_INTERVAL = 4000; // refresco cliente cada 4 segundos
 
 async function saveData(data) {

@@ -508,8 +508,18 @@ export default function App() {
   
   // VISTA CLIENTE — pantalla de login
   // ══════════════════════════════════════════════════════════════════════════
-  if(showAdminLogin){
-    return(
+  // Variables para vista cliente
+  const parrillaCliente=parrillas[mesActivo]||[];
+  const semanasCliente=[...new Set(parrillaCliente.map(p=>p.semana))].sort((a,b)=>a-b);
+  const byDateCliente={};
+  parrillaCliente.filter(p=>p.semana===semanaActiva).forEach(p=>{if(!byDateCliente[p.fecha])byDateCliente[p.fecha]=[];byDateCliente[p.fecha].push(p);});
+  const todasLasFechas=[...new Set(parrillaCliente.map(p=>p.fecha))];
+  const resenasCliente=resenas[mesActivo]||[];
+
+
+  return(
+    showAdminLogin ? (
+
       <div style={{fontFamily:"Segoe UI,system-ui,sans-serif",background:"#0a0a0a",minHeight:"100vh",color:"#fff",display:"flex",alignItems:"center",justifyContent:"center"}}>
         <div style={{background:"#111",border:"1px solid #C40803",borderRadius:16,padding:36,width:340,maxWidth:"90vw",textAlign:"center"}}>
           <div style={{fontSize:32,marginBottom:6}}>🎭</div>
@@ -531,22 +541,9 @@ export default function App() {
           </div>
         </div>
       </div>
-    );
-  }
+    
+    ) : modoCliente ? (
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // VISTA CLIENTE — contenido
-  // ══════════════════════════════════════════════════════════════════════════
-  if(modoCliente){
-    // datos del mes activo para cliente
-    const parrillaCliente=parrillas[mesActivo]||[];
-    const semanasCliente=[...new Set(parrillaCliente.map(p=>p.semana))].sort((a,b)=>a-b);
-    const byDateCliente={};
-    parrillaCliente.filter(p=>p.semana===semanaActiva).forEach(p=>{if(!byDateCliente[p.fecha])byDateCliente[p.fecha]=[];byDateCliente[p.fecha].push(p);});
-    const todasLasFechas=[...new Set(parrillaCliente.map(p=>p.fecha))];
-    const resenasCliente=resenas[mesActivo]||[];
-
-    return(
       <div style={{fontFamily:"Segoe UI,system-ui,sans-serif",background:"#0a0a0a",minHeight:"100vh",color:"#fff"}}>
         {/* HEADER CLIENTE */}
         <div style={{background:"linear-gradient(135deg,#C40803 0%,#8B0000 60%,#0a0a0a 100%)",padding:"16px 20px",borderBottom:"2px solid #C40803"}}>
@@ -788,38 +785,9 @@ export default function App() {
           <div style={{textAlign:"center",marginTop:40,fontSize:9,color:"#1a1a1a",paddingBottom:20}}>Teatrando CDMX · @teatrandocdmx · teatrando.com.mx</div>
         </div>
       </div>
-    );
-  }
+    
+    ) : (
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // VISTA ADMIN
-  // ══════════════════════════════════════════════════════════════════════════
-  const handleEditPub = useCallback((id,campo,valor)=>{
-    setParrillas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(p=>p.id===id?{...p,[campo]:valor}:p)}));
-  },[mesActivo]);
-
-  const handleEditRedes = useCallback((id,nv)=>{
-    setParrillas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(p=>p.id===id?{...p,redes:nv}:p)}));
-  },[mesActivo]);
-
-  const filtrarPubs = useCallback((pubs)=>{
-    return pubs.filter(p=>{
-      if(p.semana!==semanaActiva)return false;
-      if(filtros.pilar!=="Todos"&&p.pilar!==filtros.pilar)return false;
-      if(filtros.formato!=="Todos"&&!p.formato.toLowerCase().includes(filtros.formato.toLowerCase().replace(" estático","").replace(" interactiva","")))return false;
-      if(filtros.red!=="Todas"&&!(p.redes||[]).includes(filtros.red))return false;
-      return true;
-    });
-  },[semanaActiva,filtros]);
-
-  if(!dataLoaded) return(
-    <div style={{fontFamily:"Segoe UI,system-ui,sans-serif",background:"#0a0a0a",minHeight:"100vh",color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:16}}>
-      <div style={{fontSize:36,fontWeight:900,color:"#C40803"}}>🎭 Teatrando</div>
-      <div style={{fontSize:12,color:"#666",letterSpacing:2,textTransform:"uppercase"}}>Cargando parrilla...</div>
-    </div>
-  );
-
-  return(
     <div style={{fontFamily:"Segoe UI,system-ui,sans-serif",background:"#060606",minHeight:"100vh",color:"#fff",paddingBottom:60}}>
 
       {/* Notificación flotante */}
@@ -1216,5 +1184,8 @@ export default function App() {
         <div style={{textAlign:"center",marginTop:28,fontSize:8,color:"#141414"}}>Teatrando CDMX · Sistema de Contenido 2026 · @teatrandocdmx</div>
       </div>
     </div>
+  
+    )
   );
+
 }

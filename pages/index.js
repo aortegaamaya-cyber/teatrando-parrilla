@@ -242,8 +242,8 @@ async function generarResenaIA(r,obrasCtx=[]){
 
 export default function App() {
   const isMounted = useRef(true);
-  const [parrillas, setParrillas] = useState({"Abril": buildAbril()});
-  const [resenas, setResenas] = useState({"Abril": buildResenas()});
+  const [parrillas, setParrillas] = useState({"Mayo": buildMayo()});
+  const [resenas, setResenas] = useState({"Mayo": []});
   const [briefings, setBriefings] = useState(BRIEFINGS_INIT);
   const [mesesDisp, setMesesDisp] = useState(["Mayo"]);
   const [mesActivo, setMesActivo] = useState("Mayo");
@@ -344,7 +344,7 @@ export default function App() {
           if(saved.briefings) setBriefings(saved.briefings);
           if(saved.mesesDisp) setMesesDisp(saved.mesesDisp);
         }
-        // Si storage inválido: los useState ya tienen buildAbril() como valor inicial
+        // Si storage inválido: los useState ya tienen buildMayo() como valor inicial
       }
       if(isMounted.current) setDataLoaded(true);
     })();

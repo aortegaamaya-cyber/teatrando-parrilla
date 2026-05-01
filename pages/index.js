@@ -685,10 +685,13 @@ export default function App() {
                     <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
                       <span style={{fontSize:9,color:"#fff",background:"#C40803",fontWeight:700,textTransform:"uppercase",letterSpacing:2,padding:"3px 12px",borderRadius:6}}>Semana {s}</span>
                       <div style={{flex:1,height:1,background:"#1a1a1a"}}/>
-                      
-                      
                     </div>
-
+                    {rs.map(r=>(
+                      <div key={r.id} style={{background:"#0d0d0d",border:"1px solid #1a1a1a",borderRadius:10,padding:"12px 14px",marginBottom:8}}>
+                        <div style={{fontSize:13,fontWeight:700,color:"#fff",marginBottom:4}}>{r.obra||"Sin título"}</div>
+                        {r.titulo&&<div style={{fontSize:10,color:"#C40803",fontStyle:"italic"}}>{r.titulo}</div>}
+                      </div>
+                    ))}
                   </div>
                 );
               })}

@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 
-const REDES = ["Instagram Feed","Instagram Stories","Instagram Reels","Facebook","Facebook Stories","TikTok","X","YouTube Shorts","YouTube"];
+const REDES = ["Instagram Feed","Instagram Stories","Instagram Reels","Facebook","TikTok","X","YouTube Shorts","YouTube"];
 const PILARES = ["P1 – Curaduría","P2 – Planes","P3 – Experiencia","P4 – Servicio","P5 – Prueba social","P6 – Cultura"];
 const FORMATOS = ["Post estático","Carrusel","Reel","Reel corto","Story interactiva","Story estática","Story","Video","YouTube Short","Live"];
 const ESTADOS = ["Pendiente","En producción","Publicado"];
@@ -13,10 +13,10 @@ const ADMIN_PASS = "Teatrando2026Amaya";
 const LOGO_SRC = ""
 
 
+const TIPO_COLOR = {"RESENA":"#7c3aed","3 RAZONES":"#0891b2","5 RAZONES":"#0891b2","FRASE":"#b45309","RECOMENDACION":"#059669","ESTRENO":"#dc2626","SI TE GUSTO":"#be185d"};
 const PILAR_COLOR = {"P1 – Curaduría":"#C40803","P2 – Planes":"#8B0000","P3 – Experiencia":"#B61220","P4 – Servicio":"#1a1a2e","P5 – Prueba social":"#0d2137","P6 – Cultura":"#700B15"};
-const RED_ICON = {"Instagram Feed":"📸","Instagram Stories":"📲","Instagram Reels":"🎬","Facebook":"👍","Facebook Stories":"📘","TikTok":"🎵","X":"✖️","YouTube Shorts":"▶️","YouTube":"🎥"};
-const RED_COLOR = {"Instagram Feed":"#E1306C","Instagram Stories":"#833AB4","Instagram Reels":"#405DE6","Facebook":"#1877F2","Facebook Stories":"#1877F2","TikTok":"#ff0050","X":"#ffffff","YouTube Shorts":"#FF0000","YouTube":"#FF0000"};
-const TIPO_COLOR = {"RESENA":"#7c3aed","3 RAZONES":"#0891b2","5 RAZONES":"#0891b2","FRASE":"#b45309","RECOMENDACION":"#059669","ESTRENO":"#dc2626","SI TE GUSTO":"#be185d","ALERTA PROMO":"#C40803"};
+const RED_ICON = {"Instagram Feed":"📸","Instagram Stories":"📲","Instagram Reels":"🎬","Facebook":"👍","TikTok":"🎵","X":"✖","YouTube Shorts":"▶","YouTube":"🎥"};
+const RED_COLOR = {"Instagram Feed":"#E1306C","Instagram Stories":"#833AB4","Instagram Reels":"#405DE6","Facebook":"#1877F2","TikTok":"#ff0050","X":"#ffffff","YouTube Shorts":"#FF0000","YouTube":"#FF0000"};
 const ESTADO_CFG = {"Pendiente":{color:"#f59e0b",bg:"#2a1f00"},"En producción":{color:"#3b82f6",bg:"#001a2a"},"Publicado":{color:"#22c55e",bg:"#002a10"}};
 
 const OBRAS_REALES = [
@@ -34,12 +34,11 @@ const buildPub = (o={}) => ({
   id:mkId("p"),fecha:"",dia:"",mes:"",semana:1,pub:1,
   redes:["Instagram Feed","Facebook"],pilar:"P1 – Curaduría",
   formato:"Post estático",tema:"Nuevo contenido",copy:"Escribe aquí el copy...",
-  cta:"",estado:"Pendiente",notas:"",disenho:"",...o
+  cta:"Link en bio",estado:"Pendiente",notas:"",linkDiseno:"",disenho:"",...o
 });
 
 const buildResena = (o={}) => ({
-  id:mkId("r"),semana:1,obra:"",genero:"Comedia",redSocial:false,
-  titulo:"",gancho:"",estado:"Pendiente",notas:"",...o
+  id:mkId("r"),semana:1,obra:"",titulo:"",...o
 });
 
 // ─── PARRILLA MARZO CON MIX 70/20/10 CORRECTO (reseñas FUERA del mix) ─────────
@@ -47,123 +46,148 @@ const buildResena = (o={}) => ({
 // P1+P2+P3 = 70% = 20 pubs | P4 = 20% = 6 pubs | P5+P6 = 10% = 3 pubs (sin contar reseñas que son independientes)
 
 
-const BRIEFINGS_INIT = {"Abril":"📌 LÍNEA EDITORIAL ABRIL 2026\n\n🎯 Objetivo: Vacaciones + Especial Día del Niño — convertir el tiempo libre en planes teatrales fáciles.\n👨‍👩‍👧 Audiencia principal: Papás jóvenes · Amigos · Parejas.\n📣 Mensajes clave: 'El mejor plan: teatro con peques' / 'Sal sin estrés: elige por mood/zona'\n📲 CTA dominante: Compra en Teatrando.com.mx + WhatsApp para dudas.\n\nSemana 1 (30 Mar–5 Abr): Vacaciones/puentes — Plan fácil sin complicarte.\nSemana 2 (6–12 Abr): Fin vacaciones + arranque Día del Niño.\nSemana 3 (13–19 Abr): Especial Día del Niño — familias primero.\nSemana 4 (20–26 Abr): Cierre del mes — todas las audiencias."};
+const buildMayo = () => [
+// ═══════════════════════════════════════════════════════
+// SEMANA 1: Vie 1 – Dom 3
+// ═══════════════════════════════════════════════════════
+  {id:"may_s1_01",fecha:"Vie 1",dia:"Viernes",mes:"Mayo",semana:1,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P6 – Cultura",formato:"Carrusel",tipo:"",resenaId:"",tema:"¿Sabías que el teatro nació hace más de 2,500 años?",copy:"¿Sabías que el teatro nació hace más de 2,500 años?\n\nTodo empezó en Grecia, en las fiestas en honor a Dioniso.\nEsquilo, Sófocles y Eurípides escribieron las primeras historias que se representaron al aire libre.\n\nDesde entonces, el teatro no ha parado.\nSigue vivo. Sigue presente. Sigue emocionando.\n\nY en CDMX, cada fin de semana hay una historia esperándote en el escenario.\n\nEncuéntrala en teatrando.com.mx\n\n#Teatrando #TeatroCDMX #CulturaTeatro #HistoriaDelTeatro #CarteleraCDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"POST CULTURAL - El primero del mes. Imagen tipo infografía teatral. Ya existe diseño de referencia.",disenho:"para_disenar"},
 
-let _historial = [];
-const regCambio = (id,campo,ant,nuevo) => {
-  _historial = [{ts:new Date().toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit",second:"2-digit"}),id,campo,anterior:typeof ant==="object"?JSON.stringify(ant):String(ant),nuevo:typeof nuevo==="object"?JSON.stringify(nuevo):String(nuevo)},..._historial].slice(0,300);
-  return [..._historial];
-};
+  {id:"may_s1_02",fecha:"Vie 1",dia:"Viernes",mes:"Mayo",semana:1,pub:2,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Cartelera de este fin de semana — arranca mayo con todo",copy:"Arranca mayo y el teatro te espera 🎭\n\nESTE FIN DE SEMANA:\nPARA PAREJA: Tripas Corazón · La Dama de Negro\nPARA AMIGOS: Sor-presas Amén · Qué Desastre de Función\nPARA FAMILIA: Cri Cri · Los Clowns · Caperucita\n\nDesliza y elige. Reserva en teatrando.com.mx\n\n#Teatrando #TeatroCDMX #PlanFinDeSemana #CarteleraCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
 
+  {id:"may_s1_03",fecha:"Sáb 2",dia:"Sábado",mes:"Mayo",semana:1,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Reels","TikTok"],pilar:"P3 – Experiencia",formato:"Reel",tipo:"",resenaId:"",tema:"Tripas Corazón — la comedia que abre mayo con carcajadas",copy:"Chelis y Lupe lo volvieron a hacer. 😂\n\nDos amigas. Un trabajo imposible. Situaciones que ya no puedes más.\nPero en lugar de rendirse… eligieron reírse de todo.\n\nTripas Corazón es la comedia que CDMX necesita este mayo.\nSin filtros. Sin pretextos. Con todo el corazón.\n\n📍 Foro Cultural Coyoacanense\n🗓️ Viernes y Sábado 8pm · Domingo 7pm\n🎟️ Reserva ya en teatrando.com.mx\n\nCon Libertad Palomo y Alejandra Toussaint.\n\n#Teatrando #TripasCorazon #ObrasDeCDMX #TeatroCDMX #PlanAmigos",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
 
-const buildResenas = () => [
-  {id:"r_1775523073572_ec28",semana:1,obra:"Malinche el Musical",genero:"Musical",redSocial:false,titulo:"Malinche el Musical: cuando la historia se convierte en espectáculo",gancho:"Una producción que redefine lo que puede hacer el teatro mexicano",estado:"Pendiente",notas:""},
-  {id:"r_1775523068268_4ws9",semana:1,obra:"Las Leonas",genero:"Comedia",redSocial:false,titulo:"Las Leonas: la comedia que dice lo que todas piensan pero nadie dice",gancho:"Humor inteligente con corazón — así se hace la comedia en CDMX",estado:"Pendiente",notas:""},
-  {id:"r_1775523072893_7209",semana:1,obra:"Notre Dame de París",genero:"Musical",redSocial:false,titulo:"Notre Dame de París en CDMX: amor, tragedia y música que no se olvida",gancho:"Una de las producciones más esperadas llega al Teatro Rafael Solana",estado:"Pendiente",notas:""},
-  {id:"r_1775523075445_wlij",semana:1,obra:"Señora Presidenta",genero:"Comedia",redSocial:false,titulo:"Señora Presidenta: por qué sigue llenando cada domingo",gancho:"Meses en cartelera y el público sigue llegando — esto es lo que pasa",estado:"Pendiente",notas:""},
-  {id:"r_1775523074617_5111",semana:1,obra:"Editorial",genero:"Teatro General",redSocial:false,titulo:"Por qué el teatro en CDMX es el mejor entretenimiento que no estás aprovechando",gancho:"Una ciudad con más de 100 salas activas y el público aún no lo sabe",estado:"Pendiente",notas:""},
-  {id:"r_1775523070393_qsps",semana:1,obra:"Editorial",genero:"Teatro General",redSocial:false,titulo:"10 palabras que solo entiendes si eres amante del teatro en México",gancho:"De 'butaca' a 'bambalinas': el vocabulario que te hace parte de la experiencia",estado:"Pendiente",notas:""},
-  {id:"r_1775523067940_9c76",semana:1,obra:"Editorial",genero:"Teatro General",redSocial:false,titulo:"La diferencia entre ver teatro y vivir teatro — y cómo cruzar esa línea",gancho:"Hay un momento en que el teatro deja de ser un plan y se convierte en necesidad",estado:"Pendiente",notas:""},
-  {id:"r_1775522611354_qiaq",semana:1,obra:"Frida Kahlo el Musical",genero:"Musical",redSocial:true,titulo:"Frida Kahlo el Musical: arte, dolor y resistencia en el escenario",gancho:"Más que una biopic — es un acto de amor al arte mexicano",estado:"Pendiente",notas:""},
-  {id:"r_1775523069288_fy5k",semana:1,obra:"Editorial",genero:"Teatro Infantil",redSocial:false,titulo:"Cuándo y cómo llevar a tu hijo al teatro por primera vez — guía práctica",gancho:"La edad correcta, la obra correcta y lo que no te deben decir",estado:"Pendiente",notas:""},
-  {id:"r_1775523067972_xrpy",semana:1,obra:"Editorial",genero:"Teatro General",redSocial:false,titulo:"5 razones por las que el teatro es mejor que el cine — aunque nadie lo admita",gancho:"No es competencia. Pero si lo fuera, el teatro ganaría en estas 5 cosas",estado:"Pendiente",notas:""},
-  {id:"r_1775523067767_d9xd",semana:2,obra:"Matilda el Musical",genero:"Musical Familiar",redSocial:false,titulo:"Matilda el Musical: la obra que convierte a los niños en lectores",gancho:"No es magia — es teatro bien hecho con una historia que transforma",estado:"Pendiente",notas:""},
-  {id:"r_1775523070184_f0ew",semana:2,obra:"Garfio",genero:"Teatro Infantil",redSocial:false,titulo:"Garfio: la historia de Peter Pan que los niños no esperaban",gancho:"Piratas, aventura y una puesta en escena que desafía la imaginación",estado:"Pendiente",notas:""},
-  {id:"r_1775523073602_yyfm",semana:2,obra:"Las Princesas Monsters",genero:"Teatro Infantil",redSocial:false,titulo:"Las Princesas Monsters: cuando las princesas rompen todos los estereotipos",gancho:"Humor, diversidad y un mensaje que los peques entienden perfectamente",estado:"Pendiente",notas:""},
-  {id:"r_1775522611356_eu8p",semana:2,obra:"Descubriendo a Cri Cri",genero:"Teatro Infantil",redSocial:true,titulo:"Descubriendo a Cri Cri: por qué Francisco Gabilondo sigue vigente en el escenario",gancho:"Un legado musical que cobra vida y emociona a varias generaciones a la vez",estado:"Pendiente",notas:""},
-  {id:"r_1775523068431_ha8w",semana:2,obra:"Paw Patrol",genero:"Teatro Infantil",redSocial:false,titulo:"Paw Patrol en vivo: lo que pasa cuando tus personajes favoritos existen de verdad",gancho:"La reacción de los niños al ver a sus héroes en el escenario no tiene precio",estado:"Pendiente",notas:""},
-  {id:"r_1775523070757_7q2i",semana:2,obra:"Editorial",genero:"Teatro Infantil",redSocial:false,titulo:"Por qué el teatro infantil es la mejor inversión cultural que puedes hacer como papá",gancho:"No es entretenimiento — es desarrollo cognitivo, emocional y social en vivo",estado:"Pendiente",notas:""},
-  {id:"r_1775523075795_5sgn",semana:2,obra:"Editorial",genero:"Teatro General",redSocial:false,titulo:"El fenómeno de los musicales en México: de Broadway a las calles de CDMX",gancho:"Cómo los musicales pasaron de ser nicho a convertirse en el formato favorito del público",estado:"Pendiente",notas:""},
-  {id:"r_1775523070228_x66n",semana:2,obra:"Sor-presas Amén",genero:"Comedia",redSocial:false,titulo:"Sor-presas Amén: la comedia religiosa que hace reír sin ofender — casi",gancho:"Un equilibrio difícil que esta obra logra con maestría y mucho humor",estado:"Pendiente",notas:""},
-  {id:"r_1775523075244_jafz",semana:2,obra:"Editorial",genero:"Teatro General",redSocial:false,titulo:"Actores de teatro vs actores de televisión: ¿quién trabaja más duro?",gancho:"La respuesta te va a sorprender — y cambiar la forma en que ves una función",estado:"Pendiente",notas:""},
-  {id:"r_1775523068190_z7h6",semana:2,obra:"Editorial",genero:"Teatro General",redSocial:false,titulo:"Guía para no perderte en la cartelera de CDMX: cómo elegir la obra perfecta",gancho:"Con más de 80 obras activas, elegir puede ser abrumador — hasta hoy",estado:"Pendiente",notas:""},
-  {id:"r_1775522611142_v8st",semana:3,obra:"31 Minutos",genero:"Musical Infantil",redSocial:true,titulo:"31 Minutos en vivo: por qué Tulio Triviño sigue siendo el rey de la televisión infantil",gancho:"Una generación entera creció con ellos — y ahora los lleva a sus hijos al teatro",estado:"Pendiente",notas:""},
-  {id:"r_1775523076093_3mvl",semana:3,obra:"Nuestro Mundo Maravilloso",genero:"Teatro Infantil",redSocial:false,titulo:"Nuestro Mundo Maravilloso: el teatro inmersivo que cambia la relación del niño con el arte",gancho:"No son espectadores — son parte de la historia desde que entran al teatro",estado:"Pendiente",notas:""},
-  {id:"r_1775523068996_vsk3",semana:3,obra:"El Reino de los Desobedientes",genero:"Teatro Infantil",redSocial:false,titulo:"El Reino de los Desobedientes: un cuento sobre la rebeldía que vale la pena aplaudir",gancho:"Desobedecer tiene consecuencias — y en el teatro esas consecuencias son divertidísimas",estado:"Pendiente",notas:""},
-  {id:"r_1775523071308_1zs2",semana:3,obra:"Gato con Botas Vaqueras",genero:"Teatro Infantil",redSocial:false,titulo:"Gato con Botas Vaqueras: el clásico con bota tejana y mucho humor",gancho:"La mezcla que nadie pidió pero todos necesitaban — y funciona perfectamente",estado:"Pendiente",notas:""},
-  {id:"r_1775523073064_ccre",semana:3,obra:"K Pop",genero:"Musical Infantil",redSocial:false,titulo:"K-Pop en el teatro: cuando la cultura coreana conquista los escenarios de CDMX",gancho:"Baile, música y una energía que contagia desde el primer acto",estado:"Pendiente",notas:""},
-  {id:"r_1775523072239_y9af",semana:3,obra:"Editorial",genero:"Teatro Infantil",redSocial:false,titulo:"Día del Niño: 8 obras de teatro en CDMX que van a superar cualquier regalo",gancho:"El 30 de abril regala algo que se lleva en el corazón, no en una caja",estado:"Pendiente",notas:""},
-  {id:"r_1775523068405_vy32",semana:3,obra:"Editorial",genero:"Teatro Infantil",redSocial:false,titulo:"A qué edad llevar a los niños al teatro — la respuesta según los especialistas",gancho:"No hay una edad mínima, pero sí hay una obra correcta para cada etapa",estado:"Pendiente",notas:""},
-  {id:"r_1775523070417_npx3",semana:3,obra:"Editorial",genero:"Teatro General",redSocial:false,titulo:"La magia del teatro infantil: qué pasa en el cerebro de un niño durante una función",gancho:"Neurociencia y narrativa — por qué el teatro es la mejor escuela que existe",estado:"Pendiente",notas:""},
-  {id:"r_1775523068394_9i88",semana:3,obra:"Merlina en Transilvania",genero:"Teatro Infantil",redSocial:false,titulo:"Merlina en Transilvania: la oscuridad que los niños necesitan en el escenario",gancho:"No todo el teatro infantil tiene que ser luminoso — y esta obra lo demuestra",estado:"Pendiente",notas:""},
-  {id:"r_1775523071332_599g",semana:3,obra:"Editorial",genero:"Teatro General",redSocial:false,titulo:"Si te gustó Matilda la película, así es la experiencia de ver el musical en vivo",gancho:"Una comparativa honesta entre dos formatos y por qué el teatro gana la partida",estado:"Pendiente",notas:""},
-  {id:"r_1775523071954_fhkp",semana:4,obra:"Mentiras / Mentidrags",genero:"Comedia",redSocial:false,titulo:"Mentiras y Mentidrags: la misma comedia en dos versiones que no puedes perderte",gancho:"Una obra, dos públicos distintos y doble cantidad de carcajadas garantizadas",estado:"Pendiente",notas:""},
-  {id:"r_1775523070229_2bm2",semana:4,obra:"Qué Desastre de Función",genero:"Comedia",redSocial:false,titulo:"Qué Desastre de Función: cuando todo sale mal en el escenario y eso es exactamente el plan",gancho:"El caos organizado como forma de arte — y el público como cómplice involuntario",estado:"Pendiente",notas:""},
-  {id:"r_1775523068670_xlxz",semana:4,obra:"Crisis para Principiantes",genero:"Drama",redSocial:false,titulo:"Crisis para Principiantes: el drama de crecer que todos reconocemos pero nadie quiere ver",gancho:"Una obra que duele bien — y de esa incomodidad nace algo muy parecido a la catarsis",estado:"Pendiente",notas:""},
-  {id:"r_1775522610604_ojej",semana:4,obra:"12 Princesas en Pugna",genero:"Comedia",redSocial:true,titulo:"12 Princesas en Pugna: el absurdo como lenguaje teatral que funciona mejor de lo que debería",gancho:"Humor surreal, ingenio desbordado y princesas que no se parecen a ningún cuento conocido",estado:"Pendiente",notas:""},
-  {id:"r_1775523069498_7kme",semana:4,obra:"Alberto y el Sueño",genero:"Teatro Infantil",redSocial:false,titulo:"Alberto y el Sueño: la obra que enseña a los niños que soñar también es trabajar",gancho:"Un mensaje simple con una puesta en escena que lo convierte en algo extraordinario",estado:"Pendiente",notas:""},
-  {id:"r_1775523068567_qlg3",semana:4,obra:"Editorial",genero:"Teatro General",redSocial:false,titulo:"Por qué la comedia teatral en México está viviendo su mejor momento — y no lo sabemos",gancho:"Nunca hubo tanta comedia de calidad en los escenarios de CDMX como ahora mismo",estado:"Pendiente",notas:""},
-  {id:"r_1775523074474_tnd7",semana:4,obra:"Editorial",genero:"Teatro General",redSocial:false,titulo:"El teatro como cita perfecta: por qué funciona mejor que el cine para conectar en pareja",gancho:"Sin distracciones, sin pantallas, sin spoilers — solo dos personas y una historia en vivo",estado:"Pendiente",notas:""},
-  {id:"r_1775523076107_0jtq",semana:4,obra:"Editorial",genero:"Teatro General",redSocial:false,titulo:"Cómo leer una reseña de teatro — y por qué la opinión del crítico no lo es todo",gancho:"La diferencia entre una crítica profesional y una recomendación honesta para el público general",estado:"Pendiente",notas:""},
-  {id:"r_1775523074419_x5fk",semana:4,obra:"El Zorro y el Sabueso",genero:"Teatro Infantil",redSocial:false,titulo:"El Zorro y el Sabueso en el teatro: la amistad más improbable que más enseña",gancho:"Una historia sobre diferencias que los niños entienden mejor que los adultos",estado:"Pendiente",notas:""},
-  {id:"r_1775523074397_j79e",semana:4,obra:"Editorial",genero:"Teatro General",redSocial:false,titulo:"Abril teatral en CDMX: el balance del mes que cambió cómo miles de familias viven el teatro",gancho:"Más de 20 obras infantiles, estrenos, musicales y un Día del Niño que se sintió en el escenario",estado:"Pendiente",notas:""},
-  {id:"r_dama_negro_s5",semana:5,obra:"La Dama de Negro",genero:"Drama / Terror",redSocial:true,titulo:"La Dama de Negro: por qué el teatro de terror es una experiencia que el cine no puede replicar",gancho:"El miedo en vivo tiene otra dimensión — y esta obra lo sabe perfectamente",estado:"Pendiente",notas:""}
+  {id:"may_s1_04",fecha:"Sáb 2",dia:"Sábado",mes:"Mayo",semana:1,pub:2,redes:["Instagram Feed","Facebook","Instagram Stories","Facebook Stories"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Plan familiar este fin — Los Clowns y Cri Cri",copy:"Plan familiar este fin 🎭\n\n🤡 LOS CLOWNS — Circo Atayde\nSáb 2 mayo · 11am y 1:30pm · Centro Cultural Teatro 2\nDom 3 mayo · 11am\n\n🎵 DESCUBRIENDO A CRI CRI\nSáb y Dom · 1pm · Teatro Hidalgo\n\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #TeatroFamiliar #ObrasDeCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s1_05",fecha:"Dom 3",dia:"Domingo",mes:"Mayo",semana:1,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Meme — Antes vs durante el teatro",copy:"Yo antes de ir al teatro:\n\"A ver si no me aburro…\" 😐\n\nYo en la obra:\n😭🤯👏\n*Parado aplaudiendo como si conociera al elenco*\n\nTodo el que ha ido al teatro entiende exactamente esto.\n\n¿A quién se lo mandas? 👇\n\nEncuentra tu próxima obra en teatrando.com.mx\n\n#Teatrando #TeatroCDMX #MemeTeatro #ObrasDeCDMX #QueHacerEnCDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"MEME — Adaptación del meme 5. Lolita tiene el diseño de referencia.",disenho:"para_disenar"},
+
+  {id:"may_s1_06",fecha:"Dom 3",dia:"Domingo",mes:"Mayo",semana:1,pub:2,redes:["Instagram Feed","Facebook","Instagram Stories","Facebook Stories"],pilar:"P5 – Prueba social",formato:"Post estático",tipo:"",resenaId:"",tema:"Interacción — ¿Qué tipo de obra eres?",copy:"¿Qué tipo de obra eres? 🎭\n\na) 😂 Comedia — porque la vida ya tiene suficiente drama\nb) 💔 Drama — porque necesitas sentir algo de verdad\nc) 🎵 Musical — porque todo mejora con buena música\nd) 🔪 Suspenso — porque te gusta no saber qué viene\n\nResponde en los comentarios y etiqueta a alguien que vaya contigo al teatro 👇\n\n#Teatrando #TeatroCDMX #ObrasDeCDMX #PlanesCDMX #QueHacerEnCDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+// ═══════════════════════════════════════════════════════
+// SEMANA 2: Lun 4 – Dom 10 (Día de las Madres Sáb 10)
+// ═══════════════════════════════════════════════════════
+  {id:"may_s2_01",fecha:"Lun 4",dia:"Lunes",mes:"Mayo",semana:2,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"RECOMENDACION",resenaId:"",tema:"Recomendación de la semana — El amor es una mierda",copy:"LA RECOMENDACIÓN TEATRANDO DE ESTA SEMANA:\nEL AMOR ES UNA MIERDA\n\nLa obra que dice en voz alta lo que todos hemos pensado alguna vez.\n\nHumor inteligente, situaciones reconocibles y una honestidad brutal que te hace reír y pensar al mismo tiempo.\n\nPerfecta para ir con pareja, con ex-amigos o solo.\n\n📍 La Teatrería\n🗓️ Martes 8pm\n🎟️ Boletos en Teatrando.com.mx\n\n#Teatrando #TeatroCDMX #ElAmorEsUnaMierda #ObrasDeCDMX #CarteleraCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s2_02",fecha:"Lun 4",dia:"Lunes",mes:"Mayo",semana:2,pub:2,redes:["Instagram Feed","Facebook"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"FRASE",resenaId:"",tema:"Frase de la semana — Einstein",copy:"El arte supremo del maestro consiste en despertar el goce de la expresión creativa y del conocimiento. ✨\n— Albert Einstein\n\nGuárdala y compártela con alguien que necesita esta frase hoy.\n\n#Teatrando #FraseDeTeatro #TeatroCDMX #Einstein #ObrasDeCDMX",cta:"Guardar y compartir",estado:"Pendiente",notas:"",disenho:"para_disenar"},
+
+  {id:"may_s2_03",fecha:"Mar 5",dia:"Martes",mes:"Mayo",semana:2,pub:1,redes:["Instagram Reels","TikTok","YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"El amor es una mierda — Reseña Teatrando",copy:"RESEÑA TEATRANDO: EL AMOR ES UNA MIERDA\n\n¿El amor duele? ¿El amor confunde? ¿El amor ya no sabe como antes?\n\nEsta obra no da respuestas — da algo mejor:\nuna hora de comedia honesta que te hace sentir que no eres el único.\n\nHumor sin filtros sobre lo más humano que existe.\n\n📍 La Teatrería\n🗓️ Martes 8pm\n🎟️ Lee la reseña completa en Teatrando.com.mx\n\n#Teatrando #ElAmorEsUnaMierda #TeatroCDMX #ReseñaTeatro #ObrasDeCDMX",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s2_04",fecha:"Mar 5",dia:"Martes",mes:"Mayo",semana:2,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P3 – Experiencia",formato:"Carrusel",tipo:"3 RAZONES",resenaId:"",tema:"3 razones para ver Crisis para principiantes",copy:"3 RAZONES PARA VER CRISIS PARA PRINCIPIANTES\n\n1. Porque ser adulto es improvisar — y esta obra lo entiende perfectamente\n\n2. Drama que te hace sentir acompañado en lo que no sabes cómo nombrar\n\n3. Viernes 8:30pm en Teatro Rafael Solana — el espacio perfecto para dejarse llevar\n\nDesliza y reserva.\n🎟️ Teatrando.com.mx\n\n#Teatrando #CrisisParaPrincipiantes #TeatroCDMX #ObrasDeCDMX #PlanCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s2_05",fecha:"Mié 6",dia:"Miércoles",mes:"Mayo",semana:2,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P6 – Cultura",formato:"Post estático",tipo:"",resenaId:"",tema:"Post cultural — La primera obra musical en CDMX",copy:"¿Sabías que la primera obra musical en la Ciudad de México\nse presentó el 4 de noviembre de 1866?\n\nSe llamó \"La Hija del Batallón\"\ny se estrenó en el Teatro Nacional — hoy el Palacio de Bellas Artes.\n\nMéxico siempre ha tenido el telón levantado. 🎭\n\nAnd la historia sigue. Este mes hay más de 40 obras en cartelera esperándote.\nEncuéntralas en teatrando.com.mx\n\n#Teatrando #TeatroCDMX #CulturaTeatro #HistoriaDelTeatro #CDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"POST CULTURAL — primera obra musical CDMX. Diseño de referencia disponible.",disenho:"para_disenar"},
+
+  {id:"may_s2_06",fecha:"Mié 6",dia:"Miércoles",mes:"Mayo",semana:2,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Meme — Cine vs Teatro",copy:"EL CINE CADA AÑO:\n✓ 3D · ✓ 4K · ✓ Dolby · ✓ VR\n\nEL TEATRO DESDE SIEMPRE:\n\"Hola, estoy vivo frente a ti\" ❤️\n\nNo es competencia. Pero si lo fuera...\n\n¿A quién le mandas esto? 👇\n\n#Teatrando #TeatroCDMX #MemeTeatro #CineVsTeatro #ObrasDeCDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"MEME — Adaptación del meme 3. Diseño de referencia disponible.",disenho:"para_disenar"},
+
+  {id:"may_s2_07",fecha:"Jue 7",dia:"Jueves",mes:"Mayo",semana:2,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"ESTRENO",resenaId:"",tema:"ESTRENO — El que se enamora pierde arranca este jueves",copy:"ESTRENO ESTA SEMANA\nEL QUE SE ENAMORA PIERDE\n\nArranca este jueves 7 de mayo en el escenario.\n\n¿Es posible querer sin perder? ¿Amar sin rendirse?\nEsta obra no da respuestas fáciles — da una noche de teatro que no olvidarás.\n\n📍 Nuevo Teatro Versalles\n🗓️ Jueves 8:30pm\n🎟️ Reserva ya en teatrando.com.mx\n\n#Teatrando #ElQueSeEnamoraPierde #EstrenoTeatro #TeatroCDMX #ObrasDeCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"ESTRENO — arranca 7 de mayo",disenho:""},
+
+  {id:"may_s2_08",fecha:"Jue 7",dia:"Jueves",mes:"Mayo",semana:2,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"",resenaId:"",tema:"La última paciente — suspenso que no te suelta",copy:"Una sala de terapia. Un paciente difícil. Una verdad que alguien quiere callar. 🔍\n\nLA ÚLTIMA PACIENTE tiene todo lo que el suspenso promete:\ntensión, giros y una actuación que te mantiene al borde de la butaca.\n\nPerfecta para los que quieren algo diferente este fin.\n\n📍 Foro Shakespeare\n🗓️ Sábados 8:30pm\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #LaUltimaPaciente #TeatroCDMX #ObrasDeCDMX #TeatroSuspenso",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s2_09",fecha:"Vie 8",dia:"Viernes",mes:"Mayo",semana:2,pub:1,redes:["Instagram Feed","Facebook","X"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Cartelera de fin de semana — plan para mamá",copy:"Lleva a mamá al teatro este fin 💐🎭\n\nPLAN PARA EL 10 DE MAYO:\n🎭 Madre Mía · Teatro Varsovia · Jue-Sáb\n🎵 Frida Kahlo el Musical · Sáb-Dom · Coyoacán\n🎵 Malinche el Musical · Frontón México\n😂 Tripas Corazón · Foro Coyoacanense\n\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #DiaDeLasMadres #TeatroCDMX #PlanParaMama",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"Anticipa el 10 de mayo",disenho:""},
+
+  {id:"may_s2_10",fecha:"Vie 8",dia:"Viernes",mes:"Mayo",semana:2,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P4 – Servicio",formato:"Post estático",tipo:"",resenaId:"",tema:"Guía por zona — dónde encontrar tu obra en CDMX",copy:"¿En qué zona de CDMX vives? 🗺️\n\nCOYOACÁN: Frida Kahlo Musical · Tripas Corazón\nCENTRO: Malinche · Cri Cri · Sor-presas Amén\nINSURGENTES: Crisis para principiantes · Notre Dame\nSUR: Princesas Monster · Merlina · El reino\n\nEscríbenos tu zona por WhatsApp y te ayudamos.\n\n#Teatrando #TeatroCDMX #GuiaPorZona #ObrasDeCDMX",cta:"WhatsApp por zona",estado:"Pendiente",notas:"",disenho:"para_disenar"},
+
+  {id:"may_s2_11",fecha:"Sáb 9",dia:"Sábado",mes:"Mayo",semana:2,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P6 – Cultura",formato:"Carrusel",tipo:"",resenaId:"",tema:"10 de mayo — Mamás que también son actrices y son leyenda",copy:"Mañana es su día. Hoy las celebramos. 💐\n\nMAMÁS LEYENDA EN EL ESCENARIO:\n🌟 Laura Zapata · 🌟 Lourdes Munguía\n🌟 Ana Martín · 🌟 Ofelia Medina\n\nEl mejor regalo: llevarla al teatro.\nTeatrando.com.mx\n\n#Teatrando #DiaDeLasMadres #TeatroCDMX #10DeMayo",cta:"teatrando.com.mx",estado:"Pendiente",notas:"POST ESPECIAL 10 de mayo. Diseño de referencia disponible — mamás actrices.",disenho:"para_disenar"},
+
+  {id:"may_s2_12",fecha:"Sáb 9",dia:"Sábado",mes:"Mayo",semana:2,pub:2,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Maduras solteras y desesperadas — única función este sábado",copy:"SOLO HOY\nMADURAS, SOLTERAS Y DESESPERADAS\nSábado 9 de mayo · 8:30pm\nTeatro Rodolfo Usigli\n\nLa comedia que conecta, incomoda y hace reír de principio a fin.\nSituaciones que reconocerás. Personajes que no olvidarás.\n\nSi tienes tu boleto — disfruta cada segundo.\nSi no — corre a Teatrando.com.mx 🎟️\n\n#Teatrando #MadurasSolterasYDesesperadas #TeatroCDMX #ObrasDeCDMX #ComediaCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"ÚNICA FUNCIÓN: sábado 9 de mayo",disenho:""},
+
+  {id:"may_s2_13",fecha:"Dom 10",dia:"Domingo",mes:"Mayo",semana:2,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Feliz Día de las Madres — llévala al teatro hoy",copy:"Mañana es su día. Hoy las celebramos. 💐\n\nMAMÁS QUE SON LEYENDA EN EL ESCENARIO:\n🌟 Laura Zapata · 🌟 Lourdes Munguía\n🌟 Ana Martín · 🌟 Ofelia Medina\n\nMamás en la vida. Grandes en el escenario. ❤️\nEl mejor regalo: llevarla al teatro.\nTeatrando.com.mx\n\n#Teatrando #DiaDeLasMadres #TeatroCDMX #10DeMayo",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"POST ESPECIAL DÍA DE LAS MADRES",disenho:"para_disenar"},
+
+  {id:"may_s2_14",fecha:"Dom 10",dia:"Domingo",mes:"Mayo",semana:2,pub:2,redes:["Instagram Feed","Facebook","Instagram Stories","Facebook Stories"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Último domingo de Los Clowns — plan familiar hoy",copy:"Feliz Día de las Madres 💐🎭\n\nHOY EN CDMX:\n🎵 Frida Kahlo el Musical · Dom 6pm · Coyoacán\n🎭 Malinche el Musical · Dom 1 y 5pm · Frontón México\n😂 Tripas Corazón · Dom 7pm · Foro Coyoacanense\n\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #DiaDeLasMadres #TeatroCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"Última función de Los Clowns",disenho:""},
+
+// ═══════════════════════════════════════════════════════
+// SEMANA 3: Lun 11 – Dom 17 (Día del Maestro Vie 15, One Vision Jue 14, La Cantadera Vie 15)
+// ═══════════════════════════════════════════════════════
+  {id:"may_s3_01",fecha:"Lun 11",dia:"Lunes",mes:"Mayo",semana:3,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"RECOMENDACION",resenaId:"",tema:"Recomendación de la semana — El hubiera no existe",copy:"LA RECOMENDACIÓN TEATRANDO DE ESTA SEMANA:\nEL HUBIERA NO EXISTE\n\nTodas las decisiones que no tomaste. Todas las palabras que no dijiste.\nTodos los caminos que se quedaron sin recorrer.\n\nEsta obra te confronta con eso — y lo hace con un humor que duele de lo honesto que es.\n\n📍 Foro Sylvia Pasquel\n🗓️ Miércoles 8:30pm\n🎟️ Boletos en Teatrando.com.mx\n\n#Teatrando #ElHuberaNoExiste #TeatroCDMX #ObrasDeCDMX #CarteleraCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s3_02",fecha:"Lun 11",dia:"Lunes",mes:"Mayo",semana:3,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"5 RAZONES",resenaId:"",tema:"5 razones para ver Siempre los hombres las prefieren cabronas",copy:"5 RAZONES PARA VER SIEMPRE LOS HOMBRES LAS PREFIEREN CABRONAS\n\n1. El título ya dice todo — y la obra lo cumple con creces\n\n2. Comedia que se ríe de los estereotipos con inteligencia y sin filtros\n\n3. Actuación que te hace reír de principio a fin sin un solo segundo de pausa\n\n4. Sábados 5:30pm en Espacio Teatral Danzite — horario perfecto para el plan\n\n5. Porque hay obras que te cambian la perspectiva riéndote — esta es una de ellas\n\n🎟️ Reserva en Teatrando.com.mx\n\n#Teatrando #SiempreLasPrefierenCabronas #TeatroCDMX #ObrasDeCDMX #ComediaCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s3_03",fecha:"Mar 12",dia:"Martes",mes:"Mayo",semana:3,pub:1,redes:["Instagram Reels","TikTok","YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Las heridas del viento — Reseña Teatrando",copy:"RESEÑA TEATRANDO: LAS HERIDAS DEL VIENTO\n\nHay obras que no entretienen — transforman.\n\nLas heridas del viento es una de ellas.\nUna historia que habla de lo que no se dice, de lo que duele sin nombre,\nde esas cicatrices que solo el tiempo — y el teatro — pueden iluminar.\n\nTeatro que se queda contigo mucho después de que cae el telón.\n\n📍 Teatro Milán\n🗓️ Martes 8:45pm\n🎟️ Lee la reseña completa en Teatrando.com.mx\n\n#Teatrando #LasHeridasDelViento #TeatroCDMX #ReseñaTeatro #ObrasDeCDMX",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s3_04",fecha:"Mar 12",dia:"Martes",mes:"Mayo",semana:3,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Nos amábamos tanto — cuando el amor tiene otra dimensión",copy:"¿Y si el amor que más duele es el que sigue ahí? 💔\n\nNOS AMÁBAMOS TANTO\n\nUna historia de amor que no termina donde crees que termina.\nÍntima. Honesta. Imposible de olvidar.\n\n📍 Casa Fuerte de Emilio el Indio Fernández\n🗓️ Viernes · Sábados · Domingos · Por línea — múltiples horarios\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #NosAmábamosTanto #TeatroCDMX #ObrasDeCDMX #TeatroDeDrama",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s3_05",fecha:"Mié 13",dia:"Miércoles",mes:"Mayo",semana:3,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Meme — Chisme premium desde bambalinas",copy:"Director: Traten de no distraerse detrás del telón 🎭\n\nYo viendo la obra desde bambalinas: 👀🐕\n\nCHISME PREMIUM desde el escenario. 😂\n\n¿Le ha pasado a alguien más? Cuéntanos en los comentarios 👇\n\n#Teatrando #TeatroCDMX #MemeTeatro #ObrasDeCDMX #BastidoresDeCDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"MEME — Diseño de referencia disponible.",disenho:"para_disenar"},
+
+  {id:"may_s3_06",fecha:"Mié 13",dia:"Miércoles",mes:"Mayo",semana:3,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P4 – Servicio",formato:"Carrusel",tipo:"",resenaId:"",tema:"Cómo reservar en Teatrando — 3 pasos y listo",copy:"Reservar en Teatrando es facilísimo. 🎟️\n\n1️⃣ Entra a teatrando.com.mx\nO escríbenos directamente por WhatsApp\n\n2️⃣ Elige tu obra y función\nTe ayudamos a encontrar la mejor opción según tu zona, presupuesto y con quién vas\n\n3️⃣ Paga de forma segura y recibe tus boletos\nEn oficina o directo en el teatro — sin filas, sin complicaciones\n\n¿Dudas? WhatsApp en minutos 📲\n\n#Teatrando #TeatroCDMX #ReservaTusBoletos #ObrasDeCDMX #CarteleraCDMX",cta:"WhatsApp para dudas",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s3_07",fecha:"Jue 14",dia:"Jueves",mes:"Mayo",semana:3,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"ESTRENO",resenaId:"",tema:"ESTA NOCHE — One Vision of Queen en Pepsi Center WTC",copy:"HOY ES EL DÍA 🎸\nONE VISION OF QUEEN\n\nJueves 14 de mayo · 8pm\nPepsi Center WTC\n\nQueen en vivo — o lo más cercano que puedes estar a esa experiencia.\nMúsica que trasciende generaciones.\nUna noche que no se olvida.\n\nSi tienes tu boleto: disfruta cada segundo.\nSi no — hay otras experiencias únicas esperándote en teatrando.com.mx 🎟️\n\n#Teatrando #OneVisionOfQueen #PepsiCenterWTC #TeatroCDMX #MusicaEnVivo",cta:"teatrando.com.mx",estado:"Pendiente",notas:"EVENTO ESPECIAL — 14 de mayo",disenho:""},
+
+  {id:"may_s3_08",fecha:"Jue 14",dia:"Jueves",mes:"Mayo",semana:3,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"El sanador — cuando el escenario sana de verdad",copy:"Hay obras que no entretienen — sanan. 🌿\n\nEL SANADOR\n\nUna historia sobre lo que no se ve, sobre lo que cargamos sin saberlo,\nsobre el poder de soltar y seguir.\n\nTeatro que llega a lugares donde pocas cosas llegan.\n\n📍 La Teatrería\n🗓️ Sábados 6 y 8:30pm\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #ElSanador #TeatroCDMX #ObrasDeCDMX #TeatroDeDrama",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s3_09",fecha:"Vie 15",dia:"Viernes",mes:"Mayo",semana:3,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P6 – Cultura",formato:"Carrusel",tipo:"",resenaId:"",tema:"Día del Maestro — Maestros del teatro que formaron generaciones",copy:"Hoy, Día del Maestro, los celebramos. 🎭\n\nMAESTROS DEL TEATRO QUE FORMARON GENERACIONES:\n🎭 Luis de Tavira — disciplina y amor por el escenario\n🎭 Sargenti — el maestro de los maestros\n🎭 Héctor Mendoza — teatro es verdad y presencia\n\nSu legado vive en cada función. ✨\n\n#Teatrando #DiadelMaestro #TeatroCDMX #15DeMayo",cta:"teatrando.com.mx",estado:"Pendiente",notas:"POST ESPECIAL DÍA DEL MAESTRO. Diseño de referencia disponible.",disenho:"para_disenar"},
+
+  {id:"may_s3_10",fecha:"Vie 15",dia:"Viernes",mes:"Mayo",semana:3,pub:2,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"ESTRENO",resenaId:"",tema:"ESTA NOCHE — La Cantadera en Foro Stelaris",copy:"ESTA NOCHE 🎶\nLA CANTADERA\n\nViernes 15 de mayo\n🕙 Puertas: 9:30pm · Show: 10:30pm\n📍 Foro Stelaris\n\nUna experiencia musical que te va a mover por dentro.\nArte en vivo en uno de los foros más únicos de CDMX.\n\nSi vas esta noche — cuéntanos todo después 🙌\n🎟️ teatrando.com.mx\n\n#Teatrando #LaCantadera #ForoStelaris #TeatroCDMX #MusicaEnVivo",cta:"teatrando.com.mx",estado:"Pendiente",notas:"EVENTO ESPECIAL — 15 de mayo (Foro Stelaris)",disenho:""},
+
+  {id:"may_s3_11",fecha:"Sáb 16",dia:"Sábado",mes:"Mayo",semana:3,pub:1,redes:["Instagram Reels","TikTok","YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"El enfermo imaginario — Reseña Teatrando (últimas funciones)",copy:"ESTA NOCHE 🎸\nONE VISION OF QUEEN\n\nJueves 14 de mayo · 8pm · Pepsi Center WTC\n\nQueen en vivo. Una noche que no se olvida.\n\n🎟️ teatrando.com.mx\n\n#Teatrando #OneVisionOfQueen #TeatroCDMX",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"ÚLTIMAS FUNCIONES — termina 16 de mayo",disenho:""},
+
+  {id:"may_s3_12",fecha:"Sáb 16",dia:"Sábado",mes:"Mayo",semana:3,pub:2,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"ESTRENO",resenaId:"",tema:"ESTRENO — Penelogías arranca este sábado",copy:"ESTRENO ESTA SEMANA\nPENELOGÍAS\n\nArranca este sábado 16 de mayo en el escenario.\n\nUna propuesta fresca que llega para quedarse.\nTeatro que cuestiona, divierte y sorprende.\n\n📍 Foro Sylvia Pasquel\n🗓️ Sábados 8:30pm · A partir del 16 de mayo\n🎟️ Reserva ya en teatrando.com.mx\n\n#Teatrando #Penelogias #EstrenoTeatro #TeatroCDMX #ObrasDeCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"ESTRENO — arranca 16 de mayo",disenho:""},
+
+  {id:"may_s3_13",fecha:"Dom 17",dia:"Domingo",mes:"Mayo",semana:3,pub:1,redes:["Instagram Feed","Facebook","X"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Cartelera de domingo — elige tu plan de hoy",copy:"¿Ya tienes tu plan de domingo? 🎭\n\nPARA ADULTOS:\n😂 Tripas Corazón · 7pm · Foro Coyoacanense\n🎵 Frida Kahlo el Musical · 6pm · Coyoacán\n🔍 Un muerto en el baúl · 6:30pm · Danzite\n\nPARA FAMILIA:\n👸 Princesas Monster · 1:30pm\n🌳 El reino · 1:30pm · T. Enrique Elizalde\n🎵 Cri Cri · 1pm · Teatro Hidalgo\n\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #PlanDomingo",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s3_14",fecha:"Dom 17",dia:"Domingo",mes:"Mayo",semana:3,pub:2,redes:["Instagram Feed","Facebook","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Carrusel",tipo:"",resenaId:"",tema:"Teatro inmersivo — Nuestro mundo maravilloso y Alberto y el sueño",copy:"Teatro inmersivo en CDMX ✨\n\n🌍 NUESTRO MUNDO MARAVILLOSO\nNo son espectadores — son parte de la historia.\n\n🌙 ALBERTO Y EL SUEÑO\n45 minutos que te dejan pensando mucho más.\n\n📍 Casa Fuerte · Vie-Sáb-Dom por línea\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroInmersivo #TeatroCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+// ═══════════════════════════════════════════════════════
+// SEMANA 4: Lun 18 – Dom 24
+// ═══════════════════════════════════════════════════════
+  {id:"may_s4_01",fecha:"Lun 18",dia:"Lunes",mes:"Mayo",semana:4,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"RECOMENDACION",resenaId:"",tema:"Recomendación de la semana — El que se enamora pierde",copy:"LA RECOMENDACIÓN TEATRANDO DE ESTA SEMANA:\nEL QUE SE ENAMORA PIERDE\n\nYa lleva semanas en el escenario y el público no para de recomendarla.\n\nUna obra sobre lo que pasa cuando das todo por alguien\n— y lo que queda cuando ya no queda nada.\n\nComedia y drama en el balance exacto.\n\n📍 Nuevo Teatro Versalles\n🗓️ Jueves 8:30pm\n🎟️ Boletos en Teatrando.com.mx\n\n#Teatrando #ElQueSeEnamoraPierde #TeatroCDMX #ObrasDeCDMX #CarteleraCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s4_02",fecha:"Lun 18",dia:"Lunes",mes:"Mayo",semana:4,pub:2,redes:["Instagram Feed","Facebook"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"FRASE",resenaId:"",tema:"Frase de la semana — Peter Brook",copy:"El teatro es el único lugar donde puedes vivir diez vidas en una sola noche. 🎭✨\n— Peter Brook\n\nGuárdala y compártela con alguien que todavía no ha descubierto el teatro.\n\n#Teatrando #FraseDeTeatro #TeatroCDMX #ObrasDeCDMX",cta:"Guardar y compartir",estado:"Pendiente",notas:"",disenho:"para_disenar"},
+
+  {id:"may_s4_03",fecha:"Mar 19",dia:"Martes",mes:"Mayo",semana:4,pub:1,redes:["Instagram Reels","TikTok","YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Oh Karen — Reseña Teatrando",copy:"RESEÑA TEATRANDO: OH KAREN, LA HISTORIA DE UNA GATA\n\n¿Qué pasaría si tu gata pudiera contarte todo lo que ha visto?\n\nOh Karen lleva la comedia a un territorio inesperado:\nuna gata con opiniones muy claras sobre los humanos que la rodean.\n\nOriginal. Divertida. Imposible de adivinar hacia dónde va.\n\n📍 Teatro Xola\n🗓️ Miércoles 8:30pm y Domingo 1pm\n🎟️ Lee la reseña completa en Teatrando.com.mx\n\n#Teatrando #OhKaren #TeatroCDMX #ReseñaTeatro #ObrasDeCDMX",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s4_04",fecha:"Mar 19",dia:"Martes",mes:"Mayo",semana:4,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P6 – Cultura",formato:"Carrusel",tipo:"",resenaId:"",tema:"Post cultural — Grandes productores que hicieron historia",copy:"Hoy, Día del Maestro, los celebramos. 🎭\n\nMAESTROS DEL TEATRO:\n🎭 Luis de Tavira — disciplina y amor por el escenario\n🎭 Sargenti — el maestro de los maestros\n🎭 Héctor Mendoza — teatro es verdad y presencia\n\nSu legado vive en cada función. ✨\n\n#Teatrando #DiadelMaestro #TeatroCDMX #15DeMayo",cta:"teatrando.com.mx",estado:"Pendiente",notas:"POST CULTURAL — Grandes productores. Diseño de referencia disponible.",disenho:"para_disenar"},
+
+  {id:"may_s4_05",fecha:"Mié 20",dia:"Miércoles",mes:"Mayo",semana:4,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Meme — Cuando mañana es función y tu cerebro a las 3am",copy:"Cuando mañana es función… 🎭\n\nY tu cerebro decide hacer esto a las 3am: 🐱\n\n\"REPASAR TODA LA OBRA\"\n\"¿Y si olvido el texto?\"\n\"¿Qué cara pongo en la escena 4?\"\n\"Debí haberme dormido hace 3 horas\"\n\nTodo el que ha estado en un escenario entiende esto perfectamente.\n\n¿Se lo mandas a alguien del elenco? 😂\n\n#Teatrando #TeatroCDMX #MemeTeatro #Actores #ObrasDeCDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"MEME — Adaptación del meme 2 (gato 3am). Diseño de referencia disponible.",disenho:"para_disenar"},
+
+  {id:"may_s4_06",fecha:"Mié 20",dia:"Miércoles",mes:"Mayo",semana:4,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P2 – Planes",formato:"Post estático",tipo:"",resenaId:"",tema:"Hasta que la mafia nos separe — domingo de comedia",copy:"¿A quién no le ha tocado una familia que parece de película? 😂\n\nHASTA QUE LA MAFIA NOS SEPARE\n\nComedia absurda, situaciones imposibles y un elenco que da todo en escena.\nEl plan perfecto para reírse con quien más quieras.\n\n📍 Teatro Xola\n🗓️ Domingos 6pm\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #HastaQueLaMafiaNosSepare #TeatroCDMX #ObrasDeCDMX #ComediaCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s4_07",fecha:"Jue 21",dia:"Jueves",mes:"Mayo",semana:4,pub:1,redes:["Instagram Reels","TikTok","YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Dani y el profundo mar azul — Reseña Teatrando (últimas funciones)",copy:"RESEÑA TEATRANDO: DANI Y EL PROFUNDO MAR AZUL\n\nHay obras que llegan cuando las necesitas.\nDani y el profundo mar azul es una de esas.\n\nUna historia sobre lo que nos hunde y lo que nos salva.\nSobre encontrar algo a lo que aferrarse cuando todo parece perdido.\n\nÚltimas funciones. No la dejes ir.\n\n📍 La Teatrería\n🗓️ Miércoles 8:30pm · HASTA EL 15 DE MAYO (ya terminó en teatro pero puede haber funciones especiales)\n🎟️ Consulta disponibilidad en Teatrando.com.mx\n\n#Teatrando #DaniYElProfundoMarAzul #TeatroCDMX #ReseñaTeatro #ObrasDeCDMX",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"Termina 15 de mayo — verificar si hay funciones especiales",disenho:""},
+
+  {id:"may_s4_08",fecha:"Jue 21",dia:"Jueves",mes:"Mayo",semana:4,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Un muerto en el baúl — suspenso en Danzite",copy:"GRANDES PRODUCTORES QUE HICIERON HISTORIA 🎭\n\n🎭 Morris Gilbert — creyó en el talento mexicano\n🎭 Alejandro Gou — teatro con visión y riesgo\n🎭 Juan Torres Delgado — fundó los proyectos más importantes\n\nSu pasión, nuestro escenario. ✨\n\n#Teatrando #TeatroCDMX #CulturaTeatro",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s4_09",fecha:"Vie 22",dia:"Viernes",mes:"Mayo",semana:4,pub:1,redes:["Instagram Feed","Facebook","X"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Cartelera del fin — semana 4 de mayo",copy:"¿Ya tienes tu plan? 🎭\n\nPARA PAREJA:\n🎵 Malinche · Frontón México · Sáb-Dom\n🎵 Notre Dame · Teatro Rafael Solana · Sáb\n💔 Nos amábamos tanto · Casa Fuerte\n\nPARA AMIGOS:\n😂 Siempre las prefieren cabronas · Sáb 5:30pm\n🔍 Un muerto en el baúl · Sáb 8:45pm\n😂 Tripas Corazón · Vie-Sáb 8pm\n\nPARA FAMILIA:\n👸 Princesas Monster · Dom 1:30pm\n🌳 El reino · Dom 1:30pm\n\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #PlanFinDeSemana",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s4_10",fecha:"Vie 22",dia:"Viernes",mes:"Mayo",semana:4,pub:2,redes:["Instagram Stories","Facebook Stories"],pilar:"P4 – Servicio",formato:"Story interactiva",tipo:"ALERTA PROMO",resenaId:"",tema:"Alerta — obras con pocas fechas en mayo",copy:"ALERTA BOLETOS 🚨\n\nEstas obras tienen pocas fechas restantes en mayo:\n\n⏰ El enfermo imaginario → ya terminó\n⏰ Dani y el profundo mar azul → consulta disponibilidad\n⏰ Maduras solteras y desesperadas → función única ya pasó\n\nNo dejes para después lo que puedes reservar hoy.\nEscríbenos por WhatsApp y te ayudamos.\n\n#Teatrando #TeatroCDMX #ObrasDeCDMX",cta:"WhatsApp para dudas",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s4_11",fecha:"Sáb 23",dia:"Sábado",mes:"Mayo",semana:4,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Carrusel",tipo:"5 RAZONES",resenaId:"",tema:"5 razones para ver Malinche el Musical",copy:"5 RAZONES PARA VER MALINCHE EL MUSICAL\n\n1. La historia de México recontada desde adentro — sin los clichés de siempre\n\n2. Producción de nivel internacional en el escenario más imponente de la ciudad: Frontón México\n\n3. Música, danza y teatro integrados en una experiencia que no se divide en partes\n\n4. Miércoles 8pm · Jue-Vie 8pm · Sáb-Dom 1pm y 5pm — múltiples horarios para armar tu plan\n\n5. Una obra que divide opiniones, genera conversación y hace exactamente lo que el teatro tiene que hacer\n\n🎟️ Reserva en Teatrando.com.mx\n\n#Teatrando #MalinchElMusical #TeatroCDMX #ObrasDeCDMX #FrontonMexico",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s4_12",fecha:"Sáb 23",dia:"Sábado",mes:"Mayo",semana:4,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Lo que callamos las suegras — comedia en Foro Coapa",copy:"Lo que las suegras nunca dicen en voz alta… 👀\n\nLO QUE CALLAMOS LAS SUEGRAS\n\nComedia que te hará reír de lo que normalmente no puedes decir.\nPersonajes reconocibles, situaciones reales y actuaciones que no dan tregua.\n\nPerfecta para ir en familia — o no.\n\n📍 Foro Coapa\n🗓️ Sábados 6pm · Domingos 7pm\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #LoQueCallamosLasSuegras #TeatroCDMX #ObrasDeCDMX #ComediaCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s4_13",fecha:"Dom 24",dia:"Domingo",mes:"Mayo",semana:4,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Meme — Las máscaras del teatro",copy:"Las máscaras del teatro:\n\n😊 Esta obra me hizo reír\n💔 No estaba listo para esto\n\nA veces no sabes cuál vas a necesitar hasta que se levanta el telón.\n\n¿Cuál te tocó la última vez? 👇\n\nEncuentra tu próxima obra en teatrando.com.mx\n\n#Teatrando #TeatroCDMX #MemeTeatro #ObrasDeCDMX #MascarasDelTeatro",cta:"teatrando.com.mx",estado:"Pendiente",notas:"MEME — Adaptación del meme 4 (máscaras). Diseño de referencia disponible.",disenho:"para_disenar"},
+
+  {id:"may_s4_14",fecha:"Dom 24",dia:"Domingo",mes:"Mayo",semana:4,pub:2,redes:["Instagram Feed","Facebook","Instagram Stories","Facebook Stories"],pilar:"P5 – Prueba social",formato:"Post estático",tipo:"",resenaId:"",tema:"Interacción — ¿Con quién irías al teatro?",copy:"Una pregunta importante para este domingo: 🎭\n\n¿Con quién irías al teatro esta semana?\n\na) 💑 Con mi pareja — plan romántico garantizado\nb) 👯 Con mis amigos — la mejor noche del mes\nc) 🎭 Solo — porque el teatro también es para uno\nd) 👨‍👩‍👧 En familia — recuerdos que duran para siempre\n\nResponde en los comentarios y organiza el plan 👇\nTeatrando.com.mx tiene la obra perfecta para cada opción.\n\n#Teatrando #TeatroCDMX #ObrasDeCDMX #PlanesCDMX #QueHacerEnCDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+// ═══════════════════════════════════════════════════════
+// SEMANA 5: Lun 25 – Dom 31
+// ═══════════════════════════════════════════════════════
+  {id:"may_s5_01",fecha:"Lun 25",dia:"Lunes",mes:"Mayo",semana:5,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"RECOMENDACION",resenaId:"",tema:"Recomendación de cierre — Nos amábamos tanto",copy:"LA RECOMENDACIÓN TEATRANDO DE CIERRE DE MAYO:\nNOS AMÁBAMOS TANTO\n\nSi aún no la has visto — esta última semana es tu oportunidad.\n\nUna de las obras más comentadas del mes.\nÍntima, honesta y con una actuación que no se olvida.\n\n📍 Casa Fuerte de Emilio el Indio Fernández\n🗓️ Viernes · Sábados · Domingos por línea\n🎟️ Boletos en Teatrando.com.mx\n\n#Teatrando #NosAmábamosTanto #TeatroCDMX #ObrasDeCDMX #CarteleraCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_02",fecha:"Lun 25",dia:"Lunes",mes:"Mayo",semana:5,pub:2,redes:["Instagram Reels","TikTok","YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Penelogías — Reseña Teatrando",copy:"RESEÑA TEATRANDO: PENELOGÍAS 🎭\n\nPenélope esperó. Tejió. Calló.\nPero ¿qué pensaba mientras esperaba?\n\nPenelogías reimagina un clásico desde una mirada completamente nueva.\n\n📍 Foro Sylvia Pasquel · Sáb 8:30pm\n🎟️ Teatrando.com.mx\n\n#Teatrando #Penelogias #TeatroCDMX",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_03",fecha:"Mar 26",dia:"Martes",mes:"Mayo",semana:5,pub:1,redes:["Instagram Reels","TikTok","YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Santas y perversas — Reseña Teatrando",copy:"RESEÑA TEATRANDO: SANTAS Y PERVERSAS\n\nHay mujeres que parecen santas. Hay mujeres que parecen perversas.\nY luego están las que son ambas cosas — y lo saben perfectamente.\n\nSantas y perversas es una comedia que celebra la complejidad femenina sin disculparse por ello.\n\nDivertida, provocadora y completamente honesta.\n\n📍 Teatro Enrique Lizalde\n🗓️ Domingos 6:30pm\n🎟️ Lee la reseña completa en Teatrando.com.mx\n\n#Teatrando #SantasYPerversas #TeatroCDMX #ReseñaTeatro #ObrasDeCDMX",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_04",fecha:"Mar 26",dia:"Martes",mes:"Mayo",semana:5,pub:2,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Notre Dame de París — la épica musical del mes",copy:"Hay obras que no se ven — se viven. 🎵\n\nNOTRE DAME DE PARÍS\n\nAmor, tragedia y una música que se te queda para siempre.\nUna producción que demuestra que el teatro musical puede quitar el aliento.\n\n📍 Teatro Rafael Solana\n🗓️ Sábados 6 y 8:30pm\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #NotreDameDeParis #TeatroCDMX #MusicalCDMX #ObrasDeCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_05",fecha:"Mié 27",dia:"Miércoles",mes:"Mayo",semana:5,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Meme — Haz el teatro, no la guerra",copy:"HAZ EL TEATRO ❤️\nNO LA GUERRA\n\nEl escenario tiene espacio para todos. 🎭\n\nEste fin de semana, elige una butaca y déjate llevar.\nToda la cartelera en teatrando.com.mx\n\n#Teatrando #TeatroCDMX #ObrasDeCDMX #QueHacerEnCDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"",disenho:"para_disenar"},
+
+  {id:"may_s5_06",fecha:"Mié 27",dia:"Miércoles",mes:"Mayo",semana:5,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Frida Kahlo el Musical — icono en el escenario",copy:"Pies, ¿para qué los quiero si tengo alas para volar? ✨\n— Frida Kahlo\n\n🎵 FRIDA KAHLO EL MUSICAL\n\nNo es solo la historia de Frida — es su universo en el escenario.\nSu dolor convertido en música. Su arte en movimiento. 🎨\n\n📍 Teatro Centenario Coyoacán\n🗓️ Sábados 5 y 7:30pm · Domingos 6pm\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #FridaKahloElMusical #TeatroCDMX #ObrasDeCDMX #MusicalCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_07",fecha:"Jue 28",dia:"Jueves",mes:"Mayo",semana:5,pub:1,redes:["Instagram Reels","TikTok","YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Madre mía — Reseña Teatrando",copy:"RESEÑA TEATRANDO: MADRE MÍA\n\nHay una relación que no se puede explicar — solo se puede sentir.\n\nMadre Mía lleva al escenario algo que todos hemos vivido:\nla complejidad de querer a alguien que es perfectamente imperfecto.\n\nComedia y ternura en el balance exacto.\nUna obra para ir con mamá — o para entenderla un poco mejor.\n\n📍 Teatro Varsovia\n🗓️ Jueves 8pm · Viernes 7 y 9pm · Sábados 6 y 8pm\n🎟️ Lee la reseña completa en Teatrando.com.mx\n\n#Teatrando #MadreMia #TeatroCDMX #ReseñaTeatro #ObrasDeCDMX",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_08",fecha:"Jue 28",dia:"Jueves",mes:"Mayo",semana:5,pub:2,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Sor-presas Amén — comedia que llena el teatro semana a semana",copy:"Semanas en cartelera y el teatro sigue lleno. 🎭\n\nSOR-PRESAS AMÉN\n\nLa comedia que logra lo más difícil: hacer reír a todos,\nsin importar de dónde vengas ni qué tan fácil o difícil te caigan las bromas.\n\nHumor con corazón. Y mucho, mucho teatro.\n\n📍 Teatro Hidalgo\n🗓️ Viernes 8:30pm · Sábados 6 y 8:30pm · Domingos 6pm\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #SorpresasAmen #TeatroCDMX #ObrasDeCDMX #ComediaCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_09",fecha:"Vie 29",dia:"Viernes",mes:"Mayo",semana:5,pub:1,redes:["Instagram Feed","Facebook","X"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Cartelera de cierre — último fin de semana de mayo",copy:"Último fin de semana de mayo. ¿Qué vas a ver? 🎭\n\nPARA PAREJA:\n🎵 Malinche · Frontón México · Sáb-Dom\n🎵 Notre Dame · Teatro Rafael Solana · Sáb\n🎵 Frida Kahlo · Coyoacán · Sáb-Dom\n\nPARA AMIGOS:\n😂 Sor-presas Amén · Teatro Hidalgo\n😂 Tripas Corazón · Foro Coyoacanense\n\nPARA FAMILIA:\n👸 Princesas Monster · Dom 1:30pm\n🎵 Cri Cri · Sáb-Dom 1pm\n\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #CierreMayo",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_10",fecha:"Vie 29",dia:"Viernes",mes:"Mayo",semana:5,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P5 – Prueba social",formato:"Post estático",tipo:"",resenaId:"",tema:"Lo que dice el público — las más recomendadas de mayo",copy:"El público ha hablado este mayo. 🎭\n\nLAS MÁS RECOMENDADAS DEL MES:\n\n⭐ \"Nos amábamos tanto me dejó sin palabras. Teatro de verdad.\"\n⭐ \"Fui a Siempre los hombres las prefieren cabronas y no paré de reír.\"\n⭐ \"Malinche es la producción del año. Punto.\"\n⭐ \"La Cantadera fue una experiencia que no esperaba — completamente diferente.\"\n⭐ \"El que se enamora pierde me llegó exactamente donde tenía que llegar.\"\n\n¿Fuiste a alguna? Cuéntanos en los comentarios 👇\nY si no — el fin de semana todavía está disponible.\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #LoDiceElPublico #ObrasDeCDMX #RecomendacionesTeatro",cta:"teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_11",fecha:"Sáb 30",dia:"Sábado",mes:"Mayo",semana:5,pub:1,redes:["Instagram Feed","Facebook"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"FRASE",resenaId:"",tema:"Frase de cierre de mayo",copy:"El teatro existe porque la vida no es suficiente. 🎭✨\n— Fernando Arrabal\n\nMayo cerró el telón con el corazón lleno.\nGracias por elegirnos. Junio ya viene. 🙌\n\n#Teatrando #TeatroCDMX #FraseDeTeatro #CierreDeMayo #ObrasDeCDMX",cta:"Seguir en redes",estado:"Pendiente",notas:"",disenho:"para_disenar"},
+
+  {id:"may_s5_12",fecha:"Sáb 30",dia:"Sábado",mes:"Mayo",semana:5,pub:2,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Adelanto junio — esto viene el próximo mes",copy:"JUNIO EN TEATRANDO 🎭\n\nMayo cerró. Junio ya se asoma con obras que vienen con todo:\n\n🎭 La Dama de Negro continúa · Teatro 11 de Julio\n🎭 Malinche el Musical continúa · Frontón México\n🎭 Notre Dame de París continúa · Teatro Rafael Solana\n🎭 Las heridas del viento continúa · Teatro Milán\n🎭 Solamente una vez continúa · Casa Fuerte\n🎭 Y más estrenos por confirmar…\n\nSíguenos para la cartelera completa de junio.\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #AdelantoJunio #CarteleraCDMX #ObrasDeCDMX",cta:"Seguir en redes",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_13",fecha:"Dom 31",dia:"Domingo",mes:"Mayo",semana:5,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"",resenaId:"",tema:"Cierre de mayo — gracias por un mes de teatro",copy:"Mayo cerró el telón. 🎭\n\nFue un mes de comedias que dolieron de tanto reír,\nde dramas que tocaron donde nadie esperaba,\nde musicales que quitaron el aliento\ny de familias, parejas y amigos que eligieron el teatro como su plan.\n\nGracias por elegirnos.\nGracias por confiarle sus noches y domingos a Teatrando.\n\nJunio ya viene — y viene con más. ✨\n\nteatrando.com.mx\n\n#Teatrando #TeatroCDMX #CierreMayo #ObrasDeCDMX #CarteleraCDMX",cta:"Seguir en redes",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_14",fecha:"Dom 31",dia:"Domingo",mes:"Mayo",semana:5,pub:2,redes:["Instagram Feed","Facebook","Instagram Stories","Facebook Stories"],pilar:"P5 – Prueba social",formato:"Post estático",tipo:"",resenaId:"",tema:"Interacción final — ¿Cuál fue tu obra de mayo?",copy:"Mayo se va y nos lleva los mejores recuerdos. 🎭\n\n¿Cuál fue la obra que más te marcó este mes?\n\na) Una comedia que todavía me hace reír\nb) Un drama que no esperaba y me sorprendió\nc) Un musical que no puedo sacarme de la cabeza\nd) Aún no fui — pero junio ya está en el calendario\n\nCuéntanos en los comentarios 👇\nY si tienes foto de tu visita al teatro este mes — etiquétanos.\n\n#Teatrando #TeatroCDMX #Mayo2026 #ObrasDeCDMX #TeatroEnCDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""}
 ];
 
-const buildAbril = () => [
-  {id:"abr_s1_Mié_1_1",fecha:"Mié 1",dia:"Miércoles",mes:"Abril",semana:1,pub:1,redes:["Instagram Feed","Facebook"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"",resenaId:"",tema:"",copy:"",cta:"",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s1_Mié_1_2",fecha:"Mié 1",dia:"Miércoles",mes:"Abril",semana:1,pub:2,redes:["Instagram Feed","Facebook"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"",resenaId:"",tema:"",copy:"",cta:"",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s1_Jue_2_1",fecha:"Jue 2",dia:"Jueves",mes:"Abril",semana:1,pub:1,redes:["Instagram Feed","Facebook"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"",resenaId:"",tema:"",copy:"",cta:"",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s1_Jue_2_2",fecha:"Jue 2",dia:"Jueves",mes:"Abril",semana:1,pub:2,redes:["Instagram Feed","Facebook"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"",resenaId:"",tema:"",copy:"",cta:"",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s1_Vie_3_1",fecha:"Vie 3",dia:"Viernes",mes:"Abril",semana:1,pub:1,redes:["Instagram Feed","Facebook"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"",resenaId:"",tema:"",copy:"",cta:"",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s1_Vie_3_2",fecha:"Vie 3",dia:"Viernes",mes:"Abril",semana:1,pub:2,redes:["Instagram Feed","Facebook"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"",resenaId:"",tema:"",copy:"",cta:"",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s1_Sáb_4_1",fecha:"Sáb 4",dia:"Sábado",mes:"Abril",semana:1,pub:1,redes:["Instagram Feed","Facebook"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"",resenaId:"",tema:"",copy:"",cta:"",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s1_Sáb_4_2",fecha:"Sáb 4",dia:"Sábado",mes:"Abril",semana:1,pub:2,redes:["Instagram Feed","Facebook"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"",resenaId:"",tema:"",copy:"",cta:"",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s1_Dom_5_1",fecha:"Dom 5",dia:"Domingo",mes:"Abril",semana:1,pub:1,redes:["Instagram Feed","Facebook"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"",resenaId:"",tema:"",copy:"",cta:"",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s1_Dom_5_2",fecha:"Dom 5",dia:"Domingo",mes:"Abril",semana:1,pub:2,redes:["Instagram Feed","Facebook"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"",resenaId:"",tema:"",copy:"",cta:"",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s2_01",fecha:"Lun 6",dia:"Lunes",mes:"Abril",semana:2,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"RECOMENDACION",resenaId:"",tema:"Recomendación de la semana — Matilda el Musical",copy:"LA RECOMENDACIÓN TEATRANDO DE ESTA SEMANA:\nMATILDA EL MUSICAL\nLa obra que toda la familia necesita ver este mes.\nViernes 8pm / Sábados 5 y 8:30pm / Domingos 5pm\nCentro Cultural Teatro 1\nBoletos en Teatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s2_02",fecha:"Lun 6",dia:"Lunes",mes:"Abril",semana:2,pub:2,redes:["Instagram Feed", "Facebook"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"FRASE",resenaId:"",tema:"Frase de la semana",copy:"El teatro es el lugar donde los sueños de la humanidad se hacen visibles.\n— Federico García Lorca\nGuárdala y compártela con alguien que ama el teatro.",cta:"Guardar y compartir",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s2_03",fecha:"Mar 7",dia:"Martes",mes:"Abril",semana:2,pub:1,redes:["Instagram Reels", "TikTok", "YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"r_1775522611354_qiaq",tema:"Frida Kahlo el Musical — Reseña Teatrando",copy:"RESEÑA TEATRANDO: FRIDA KAHLO EL MUSICAL\nNo es solo la vida de Frida. Es su universo entero en el escenario.\nSu dolor convertido en música. Su arte en movimiento.\nSu historia en voz de actores que la hacen vivir de nuevo.\nSábados 6 y 8pm / Domingos 6pm · Teatro Centenario Coyoacán\nLee la reseña completa en Teatrando.com.mx",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s2_04",fecha:"Mar 7",dia:"Martes",mes:"Abril",semana:2,pub:2,redes:["Instagram Stories", "Facebook"],pilar:"P4 – Servicio",formato:"Story estática",tipo:"",resenaId:"",tema:"Cómo reservar en Teatrando — 3 pasos",copy:"Reservar es facilísimo:\n1 Entra a Teatrando.com.mx\n2 Elige tu obra y función\n3 Paga y recibe tu boleto digital\n¿Dudas? Te ayudamos por WhatsApp en minutos.",cta:"WhatsApp para dudas",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s2_05",fecha:"Mié 8",dia:"Miércoles",mes:"Abril",semana:2,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Plan familiar por zona — dónde llevar a los peques",copy:"¿En qué zona de CDMX vives?\nSur Coapa: Gato con Botas · Merlina · Caperucita · Los Tres Cerditos\nCoyoacán: Caperucita en Coyoacán · Frida Kahlo Musical\nCentro: Teatro Hidalgo · Cri Cri\nForo Shakespeare: El Molino Mágico\nDesliza y encuentra tu plan.\nWhatsApp para recomendación por zona",cta:"WhatsApp por zona",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s2_06",fecha:"Mié 8",dia:"Miércoles",mes:"Abril",semana:2,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P3 – Experiencia",formato:"Carrusel",tipo:"5 RAZONES",resenaId:"",tema:"5 razones para ver Matilda el Musical este fin",copy:"5 RAZONES PARA VER MATILDA\n1 La música te queda en la cabeza por días\n2 Los niños salen queriendo leer más libros — en serio\n3 Actuación de otro nivel en cada función\n4 Viernes · Sábado · Domingo con múltiples horarios\n5 Centro Cultural Teatro 1 — accesible desde cualquier zona\nReserva en Teatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s2_07",fecha:"Jue 9",dia:"Jueves",mes:"Abril",semana:2,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"ESTRENO",resenaId:"",tema:"Estreno — Paw Patrol en CDMX",copy:"ESTRENO ESTA SEMANA\nPAW PATROL llega a CDMX\nSábados 16 y 23 a las 11 y 1:30pm\nDomingos 17 y 24 a las 11 y 1:30pm\nEl plan perfecto si en casa hay fans de la patrulla.\nReserva antes de que se agoten.\nBoletos en Teatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s2_08",fecha:"Jue 9",dia:"Jueves",mes:"Abril",semana:2,pub:2,redes:["Instagram Stories"],pilar:"P4 – Servicio",formato:"Story interactiva",tipo:"",resenaId:"",tema:"Teatrando Responde — dudas sobre teatro con niños",copy:"Las preguntas que más nos hacen los papás:\n¿Desde qué edad pueden ir los niños?\n¿Cuánto duran las obras infantiles?\n¿Hay que llevar algo especial?\n¿Se puede llevar comida?\nTodas las respuestas en Teatrando.com.mx\nO escríbenos por WhatsApp",cta:"WhatsApp para dudas",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s2_09",fecha:"Vie 10",dia:"Viernes",mes:"Abril",semana:2,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"",resenaId:"",tema:"Cartelera del fin — familiar y para todos",copy:"Viernes 10 y el plan está listo.\nPARA PEQUES: Matilda · Gato con Botas · Cri Cri · Caperucita\nPARA PAREJA: Las Leonas · Malinche · Señora Presidenta\nPARA AMIGOS: Mentidrags · Qué Desastre de Función\nDesliza y elige.\nReserva en Teatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s2_10",fecha:"Vie 10",dia:"Viernes",mes:"Abril",semana:2,pub:2,redes:["Instagram Reels", "TikTok"],pilar:"P2 – Planes",formato:"Reel",tipo:"SI TE GUSTO",resenaId:"",tema:"Si te gustó Matilda la película, vas a amar el musical en vivo",copy:"Si lloraste con Matilda en Netflix...\nEspera a ver lo que pasa cuando la misma historia cobra vida en el escenario.\nMúsica en vivo · actuación real · una magia que la pantalla no puede replicar.\nMatilda el Musical · Centro Cultural Teatro 1\nViernes 8pm · Sábados 5 y 8:30pm · Domingos 5pm",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s2_11",fecha:"Sáb 11",dia:"Sábado",mes:"Abril",semana:2,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Notre Dame de París — hoy en Teatro Rafael Solana",copy:"NOTRE DAME DE PARÍS · Sábado 11 de abril · 6 y 8:30pm\nTeatro Rafael Solana\nUna obra que te quita el aliento.\nMúsica, drama y una puesta en escena que no olvidarás.\nQuedan lugares — reserva ya.\nTeatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s2_12",fecha:"Sáb 11",dia:"Sábado",mes:"Abril",semana:2,pub:2,redes:["Instagram Feed", "Facebook"],pilar:"P5 – Prueba social",formato:"Post estático",tipo:"",resenaId:"",tema:"Lo que dice el público — Señora Presidenta",copy:"\"La vi el domingo y me reí sin parar desde el principio.\"\nSEÑORA PRESIDENTA sigue siendo la comedia más recomendada de CDMX.\nDomingos 8:30pm · Centro Cultural Teatro 2\n¿Y tú cuándo vas?\nTeatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s2_13",fecha:"Dom 12",dia:"Domingo",mes:"Abril",semana:2,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Domingo en familia — mejores opciones de hoy",copy:"Domingo de plan familiar.\nHOY EN CDMX:\nCaperucita en Coyoacán · Dom 2:30 y 4:30pm · Foro Ricardo Villareal\nEl Molino Mágico · Dom 1pm · Foro Shakespeare\nGarfio · Dom 5pm · Danzite\nGato con Botas Vaqueras · Dom 4pm · Foro Coapa\nElige y reserva.\nTeatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s2_14",fecha:"Dom 12",dia:"Domingo",mes:"Abril",semana:2,pub:2,redes:["Instagram Feed", "Facebook"],pilar:"P6 – Cultura",formato:"Post estático",tipo:"",resenaId:"",tema:"El teatro como primer regalo cultural de tu hijo",copy:"El teatro es el primer contacto de muchos niños con el arte en vivo.\nVerlo reírse, asombrarse o emocionarse en la butaca...\nEso no se olvida.\nEste mes hay más de 20 obras infantiles en CDMX.\nRegala algo que se recuerda para siempre.\nTeatrando.com.mx",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s3_01",fecha:"Lun 13",dia:"Lunes",mes:"Abril",semana:3,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"RECOMENDACION",resenaId:"",tema:"Recomendación de la semana — Garfio",copy:"LA RECOMENDACIÓN TEATRANDO DE ESTA SEMANA:\nGARFIO\nAventura, piratas y magia en escena — la obra infantil que más emociona este mes.\nDomingos 5pm · Espacio Teatral Danzite\nBoletos en Teatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s3_02",fecha:"Lun 13",dia:"Lunes",mes:"Abril",semana:3,pub:2,redes:["Instagram Feed", "Facebook"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"FRASE",resenaId:"",tema:"Frase de la semana",copy:"El actor es un atleta del corazón.\n— Antonin Artaud\nGuárdala y compártela con alguien que ama el teatro.",cta:"Guardar y compartir",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s3_03",fecha:"Mar 14",dia:"Martes",mes:"Abril",semana:3,pub:1,redes:["Instagram Reels", "TikTok", "YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"r_1775522611356_eu8p",tema:"Descubriendo a Cri Cri — Reseña Teatrando",copy:"RESEÑA TEATRANDO: DESCUBRIENDO A CRI CRI\nHay artistas que no pasan de moda porque tocan algo eterno.\nFrancisco Gabilondo Soler es uno de ellos.\nEsta obra lleva sus canciones al escenario y hace algo increíble:\nconecta a los niños de hoy con el México de siempre.\nSábados y Domingos 1pm · Teatro Hidalgo\nLee la reseña completa en Teatrando.com.mx",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s3_04",fecha:"Mar 14",dia:"Martes",mes:"Abril",semana:3,pub:2,redes:["Instagram Feed", "Facebook"],pilar:"P4 – Servicio",formato:"Post estático",tipo:"",resenaId:"",tema:"Cómo comprar tus boletos para el Día del Niño — paso a paso",copy:"RESERVA FÁCIL EN TEATRANDO\n1 Entra a Teatrando.com.mx\n2 Busca la obra por nombre o zona\n3 Elige la función y el número de boletos\n4 Paga de forma segura\n5 Recibe tu boleto digital al instante\nSin filas · sin complicaciones · sin sorpresas.\n¿Dudas? WhatsApp en minutos.",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s3_05",fecha:"Mié 15",dia:"Miércoles",mes:"Abril",semana:3,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Guía primera vez en teatro con peques — paso a paso",copy:"¿Es la primera vez de tu peque en el teatro?\nTe guiamos:\n1 Elige obra corta y divertida\n2 Llega temprano — el ambiente es parte del show\n3 Explícale antes lo que verá\n4 Disfruten juntos\nDesliza para tips completos.\nWhatsApp si tienes dudas",cta:"WhatsApp para asesoría",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s3_06",fecha:"Mié 15",dia:"Miércoles",mes:"Abril",semana:3,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P3 – Experiencia",formato:"Carrusel",tipo:"5 RAZONES",resenaId:"",tema:"5 razones para ver Garfio con los peques",copy:"5 RAZONES PARA VER GARFIO\n1 Piratas, aventura y magia en escena — sin efectos digitales\n2 Una versión de Peter Pan que los niños no conocían\n3 Domingos 5pm en Espacio Teatral Danzite — horario perfecto\n4 Duración ideal para niños: no los aburre, no los cansa\n5 Los niños salen queriendo ser piratas — o héroes\nReserva en Teatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s3_07",fecha:"Jue 16",dia:"Jueves",mes:"Abril",semana:3,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P2 – Planes",formato:"Post estático",tipo:"",resenaId:"",tema:"Obras por zona — dónde llevar a los peques este fin",copy:"GUÍA POR ZONA PARA EL DÍA DEL NIÑO\nSur Coapa: Gato con Botas · Merlina · Los Tres Cerditos · K-Pop · Caperucita\nCoyoacán: Teatro Centenario · Caperucita en Coyoacán\nCentro: Cri Cri · Teatro Hidalgo\nNorte: El Reino de los Desobedientes · Teatro Enrique Elizalde\nEscríbenos tu zona y te recomendamos la mejor opción\nWhatsApp",cta:"WhatsApp por zona",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s3_08",fecha:"Jue 16",dia:"Jueves",mes:"Abril",semana:3,pub:2,redes:["Instagram Stories"],pilar:"P4 – Servicio",formato:"Story interactiva",tipo:"",resenaId:"",tema:"Alerta — quedan pocos boletos para el Día del Niño",copy:"ALERTA BOLETOS\nLas obras del Día del Niño se están llenando.\nMatilda · Paw Patrol · Las Princesas Monsters ya tienen poca disponibilidad.\nNo dejes para mañana lo que puedes reservar hoy.\nTeatrando.com.mx — rápido, seguro y sin filas.",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s3_09",fecha:"Vie 17",dia:"Viernes",mes:"Abril",semana:3,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"",resenaId:"",tema:"Cartelera del fin — Semana del Día del Niño",copy:"Falta menos de 2 semanas para el Día del Niño — 30 de abril.\nEste fin de semana elige:\nMatilda el Musical · Centro Cultural Teatro 1\nPaw Patrol · Sáb y Dom con horarios especiales\nLas Princesas Monsters · Dom 1:30pm · Teatro Ismael Rdz\nGarfio · Dom 5pm · Danzite\nDescubriendo a Cri Cri · Sáb y Dom 1pm · Teatro Hidalgo\nReserva antes de que se llenen.\nTeatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s3_10",fecha:"Vie 17",dia:"Viernes",mes:"Abril",semana:3,pub:2,redes:["Instagram Feed", "Facebook"],pilar:"P2 – Planes",formato:"Post estático",tipo:"",resenaId:"",tema:"31 Minutos en CDMX — el Sábado 25 de abril",copy:"YA MERO\n31 MINUTOS en CDMX el SÁBADO 25 DE ABRIL\nTulio, Bodoque y todo el elenco en vivo.\nPerfecto para los que crecieron viéndolos — y para los que los descubren ahora.\nReserva antes de que se agoten los lugares.\nTeatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s3_11",fecha:"Sáb 18",dia:"Sábado",mes:"Abril",semana:3,pub:1,redes:["Instagram Reels", "TikTok"],pilar:"P3 – Experiencia",formato:"Reel",tipo:"",resenaId:"",tema:"Paw Patrol en vivo — la reacción de los peques lo dice todo",copy:"PAW PATROL en vivo en CDMX.\nLa patrulla canina que conocen de la tele ahora en el escenario.\nSábados 16 y 23 · 11 y 1:30pm\nDomingos 17 y 24 · 11 y 1:30pm\nLa cara de los niños al ver a sus personajes favoritos en vivo no tiene precio.\nReserva en Teatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s3_12",fecha:"Sáb 18",dia:"Sábado",mes:"Abril",semana:3,pub:2,redes:["Instagram Feed", "Facebook"],pilar:"P5 – Prueba social",formato:"Post estático",tipo:"",resenaId:"",tema:"Lo más guardado esta semana — obras infantiles",copy:"Las obras infantiles más guardadas esta semana en nuestras redes:\n1 Matilda el Musical\n2 Paw Patrol\n3 Las Princesas Monsters\n4 Garfio\n5 Descubriendo a Cri Cri\nEl público ya eligió. Ahora falta tu reserva.\nTeatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s3_13",fecha:"Dom 19",dia:"Domingo",mes:"Abril",semana:3,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Domingo en familia — plan completo de hoy",copy:"Domingo de plan familiar.\nHOY EN CDMX:\nGarfio · 5pm · Espacio Teatral Danzite\nLas Princesas Monsters · 1:30pm · Teatro Ismael Rdz\nEl Reino de los Desobedientes · 1:30pm · Teatro Enrique Elizalde\nGato con Botas Vaqueras · 4pm · Foro Coapa\nDescubriendo a Cri Cri · 1pm · Teatro Hidalgo\nElige y reserva.\nTeatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s3_14",fecha:"Dom 19",dia:"Domingo",mes:"Abril",semana:3,pub:2,redes:["Instagram Feed", "Facebook"],pilar:"P6 – Cultura",formato:"Post estático",tipo:"",resenaId:"",tema:"El Día del Niño se acerca — ¿ya tienes el plan?",copy:"El 30 de abril es el Día del Niño y quedan pocos días para planear.\nCDMX tiene más de 20 obras infantiles en cartelera este mes.\nMatilda · Paw Patrol · Garfio · Las Princesas Monsters · Cri Cri\nNo dejes el plan para el último momento.\nReserva esta semana en Teatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s4_01",fecha:"Lun 20",dia:"Lunes",mes:"Abril",semana:4,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"RECOMENDACION",resenaId:"",tema:"Recomendación de la semana — Las Leonas",copy:"LA RECOMENDACIÓN TEATRANDO DE ESTA SEMANA:\nLAS LEONAS\nLa comedia que CDMX no para de recomendar.\nViernes 6:30 y 8:45pm / Sábados 6 y 8:30pm / Domingos 5 y 7pm\nTeatro México\nBoletos en Teatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s4_02",fecha:"Lun 20",dia:"Lunes",mes:"Abril",semana:4,pub:2,redes:["Instagram Feed", "Facebook"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"FRASE",resenaId:"",tema:"Frase de la semana",copy:"Todo el mundo tiene una historia que contar.\nEl teatro es el arte de contarla en vivo.\n— Alejandro Jodorowsky\nGuárdala y compártela con alguien que lo necesita hoy.",cta:"Guardar y compartir",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s4_03",fecha:"Mar 21",dia:"Martes",mes:"Abril",semana:4,pub:1,redes:["Instagram Reels", "TikTok", "YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"r_1775523069498_7kme",tema:"Alberto y el Sueño — Reseña Teatrando",copy:"RESEÑA TEATRANDO: ALBERTO Y EL SUEÑO\nHay obras que parecen simples y resultan ser profundas.\nAlberto y el Sueño es una de ellas.\nUn mensaje sobre soñar y trabajar que los niños entienden\n— y los adultos necesitan recordar.\nViernes · Sábados · Domingos · Por Línea\nLee la reseña completa en Teatrando.com.mx",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s4_04",fecha:"Mar 21",dia:"Martes",mes:"Abril",semana:4,pub:2,redes:["Instagram Stories"],pilar:"P2 – Planes",formato:"Story interactiva",tipo:"",resenaId:"",tema:"Plan amigos — ¿cuál es la tuya este fin?",copy:"Plan de amigos este fin de semana.\n¿Cuál es la tuya?\nA) Las Leonas — comedia con mensaje\nB) Qué Desastre de Función — puro caos divertido\nC) Mentidrags — comedia y diversidad\nD) 12 Princesas en Pugna — absurdo genial\nMándalo al grupo y organicen el plan",cta:"WhatsApp para recomendación",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s4_05",fecha:"Mié 22",dia:"Miércoles",mes:"Abril",semana:4,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P3 – Experiencia",formato:"Carrusel",tipo:"3 RAZONES",resenaId:"",tema:"3 razones para ver Las Leonas antes de que termine abril",copy:"3 RAZONES PARA VER LAS LEONAS\nRazón 1: Actuación de otro nivel — cada función es diferente y eso se siente\nRazón 2: Comedia inteligente que hace reír y pensar al mismo tiempo\nRazón 3: Viernes 6:30 y 8:45pm / Sábados 6 y 8:30pm / Domingos 5 y 7pm en Teatro México\nSi no la has visto, abril es tu última oportunidad.\nReserva en Teatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s4_06",fecha:"Mié 22",dia:"Miércoles",mes:"Abril",semana:4,pub:2,redes:["Instagram Feed", "Facebook"],pilar:"P2 – Planes",formato:"Post estático",tipo:"",resenaId:"",tema:"Plan pareja — cita de teatro este fin de semana",copy:"Plan de cita diferente este fin.\nOpciones para una noche que no se olvida:\nLa Dama de Negro · Teatro 11 de Julio\n¿Cómo te va mi amor? · Nuevo Teatro Versalles · Sáb 8pm\nLas Leonas · Teatro México\nLa Obscenidad de la Carne · Teatro Renacimiento\nElige el mood y reserva.\nTeatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s4_07",fecha:"Jue 23",dia:"Jueves",mes:"Abril",semana:4,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"31 Minutos — este sábado 25, el día más esperado",copy:"YA ES EL DÍA\n31 MINUTOS en CDMX · Sábado 25 de abril · 12:30pm\nTeatro 11 de Julio\nTulio, Bodoque y todo el elenco en vivo.\nUna experiencia que une a niños y adultos en el mismo público.\nSi tienes tu boleto — disfruta cada segundo.\nSi no — corre a Teatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s4_08",fecha:"Jue 23",dia:"Jueves",mes:"Abril",semana:4,pub:2,redes:["Instagram Stories"],pilar:"P4 – Servicio",formato:"Story interactiva",tipo:"",resenaId:"",tema:"Teatrando Responde — últimas dudas de la semana",copy:"¿Tienes alguna duda antes de reservar?\nHorarios · zonas · precio · edad recomendada\nEstamos en WhatsApp y respondemos en minutos.\nNo te quedes sin tu plan de teatro este fin.",cta:"WhatsApp para dudas",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s4_09",fecha:"Vie 24",dia:"Viernes",mes:"Abril",semana:4,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"",resenaId:"",tema:"Cartelera curada — último fin de semana completo de abril",copy:"Último fin completo de abril.\n¿Qué vas a ver antes de que se acabe el mes?\nPARA PEQUES: Matilda · Gato con Botas · Merlina · K-Pop\nPARA PAREJA: Las Leonas · Malinche · ¿Cómo te va mi amor?\nPARA AMIGOS: Qué Desastre de Función · Mentidrags · Sor-presas Amén\nELECCIÓN ESPECIAL: 31 Minutos el Sábado 25\nDesliza y elige.\nTeatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s4_10",fecha:"Vie 24",dia:"Viernes",mes:"Abril",semana:4,pub:2,redes:["Instagram Stories", "Facebook"],pilar:"P4 – Servicio",formato:"Story estática",tipo:"",resenaId:"",tema:"Últimas funciones de abril — no te las pierdas",copy:"ÚLTIMAS FUNCIONES DE ABRIL\nEstas obras terminan pronto su temporada.\nMuchas no estarán en mayo.\nNo esperes al último momento.\nReserva antes de que se agoten los lugares.\nTeatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s4_11",fecha:"Sáb 25",dia:"Sábado",mes:"Abril",semana:4,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"31 Minutos — HOY en CDMX",copy:"HOY ES EL DÍA\n31 MINUTOS en CDMX\nSábado 25 de abril · 12:30pm · Teatro 11 de Julio\nTulio, Bodoque y todo el elenco en vivo.\nPara los que crecieron con ellos — y para los que los descubren hoy.\nSi tienes boleto: disfruta al máximo.",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s4_12",fecha:"Sáb 25",dia:"Sábado",mes:"Abril",semana:4,pub:2,redes:["Instagram Feed", "Facebook"],pilar:"P5 – Prueba social",formato:"Post estático",tipo:"",resenaId:"",tema:"Lo más visto de abril — el público ha hablado",copy:"Las obras más comentadas y recomendadas de abril:\n1 Matilda el Musical\n2 Las Leonas\n3 Malinche el Musical\n4 Paw Patrol\n5 Qué Desastre de Función\n¿Coincides con la lista? ¿Cuál fue tu favorita?\nCuéntanos en los comentarios.",cta:"Guardar y compartir",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s4_13",fecha:"Dom 26",dia:"Domingo",mes:"Abril",semana:4,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"",resenaId:"",tema:"Top 3 obras de Abril — cierre de mes",copy:"CERRAMOS ABRIL con el Top 3 del mes:\nMATILDA EL MUSICAL — la producción que enamoró a toda la familia\nLAS LEONAS — la comedia que CDMX no para de recomendar\nMALINCHE EL MUSICAL — la épica del mes en Frontón México\n¿Fuiste a alguna? ¿Cuál fue tu favorita?\nCuéntanos en comentarios.",cta:"Guardar y compartir",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s4_14",fecha:"Dom 26",dia:"Domingo",mes:"Abril",semana:4,pub:2,redes:["Instagram Feed", "Facebook"],pilar:"P6 – Cultura",formato:"Post estático",tipo:"",resenaId:"",tema:"Gracias por su confianza — resumen de abril",copy:"Cerramos abril con el corazón lleno.\nGracias a todos los que eligieron Teatrando para sus planes este mes.\nFamilias · parejas · amigos · peques\nCada boleto es una experiencia que se lleva para siempre.\nNos vemos en mayo con más cartelera y más planes.",cta:"Seguir en redes",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s5_01",fecha:"Lun 27",dia:"Lunes",mes:"Abril",semana:5,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"RECOMENDACION",resenaId:"",tema:"Recomendación de cierre — Qué Desastre de Función",copy:"LA RECOMENDACIÓN TEATRANDO DE CIERRE DE ABRIL:\nQUÉ DESASTRE DE FUNCIÓN\nSi aún no la has visto — esta es tu semana.\nViernes 8pm / Sábados 5 y 8:30pm / Domingos 5:30pm\nTeatro Jorge Negrete\nBoletos en Teatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s5_02",fecha:"Lun 27",dia:"Lunes",mes:"Abril",semana:5,pub:2,redes:["Instagram Stories"],pilar:"P4 – Servicio",formato:"Story interactiva",tipo:"",resenaId:"",tema:"Plan express entre semana — últimos días de abril",copy:"Quedan solo 4 días de abril.\nAún puedes ir al teatro esta semana.\nDinos tu zona y horario disponible y te mandamos opciones express.\nNada de filas · nada de complicaciones.\nWhatsApp — en minutos te respondemos.",cta:"WhatsApp por zona y horario",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s5_03",fecha:"Mar 28",dia:"Martes",mes:"Abril",semana:5,pub:1,redes:["Instagram Reels", "TikTok", "YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"r_dama_negro_s5",tema:"La Dama de Negro — Reseña Teatrando",copy:"RESEÑA TEATRANDO: LA DAMA DE NEGRO\nEl terror en el teatro tiene una dimensión que el cine no puede replicar.\nNo hay pantalla que te separe de lo que está pasando.\nLa Dama de Negro lo sabe — y lo usa perfectamente.\nViernes 8:30pm / Sábados 6 y 8:30pm / Domingos 6pm\nTeatro 11 de Julio\nLee la reseña completa en Teatrando.com.mx",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s5_04",fecha:"Mar 28",dia:"Martes",mes:"Abril",semana:5,pub:2,redes:["Instagram Stories", "Facebook"],pilar:"P4 – Servicio",formato:"Story estática",tipo:"",resenaId:"",tema:"Teatrando Responde — últimas preguntas de abril",copy:"Última semana de abril y ¿aún tienes dudas sobre alguna obra?\nEstamos aquí para ayudarte.\nHorarios · zonas · disponibilidad · precio\nWhatsApp — respondemos en minutos.\nNo te quedes sin tu plan de teatro.",cta:"WhatsApp para dudas",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s5_05",fecha:"Mié 29",dia:"Miércoles",mes:"Abril",semana:5,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"",resenaId:"",tema:"Adelanto Mayo — obras que vienen el próximo mes",copy:"MAYO EN TEATRANDO\nYa confirmamos algunas de las obras que vienen en mayo:\n1 One Vision of Queen — 14 mayo · Pepsi Center WTC\n2 El Hombre en el Baúl — Danzite · Sábados y Domingos\n3 Siempre los Hombres las Prefieren Cabronas — Danzite\n4 Velocidad del Otoño — Foro Silvia Pinal\n5 Comedy Factory — Terraza Cozumel\nSíguenos para la cartelera completa de mayo.",cta:"Seguir en redes",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s5_06",fecha:"Mié 29",dia:"Miércoles",mes:"Abril",semana:5,pub:2,redes:["Instagram Feed", "Facebook"],pilar:"P5 – Prueba social",formato:"Post estático",tipo:"FRASE",resenaId:"",tema:"Frase de cierre de mes",copy:"El público es el último autor de toda obra de teatro.\n— Bertolt Brecht\nAbril cerró. Mayo viene con más historias.\nGracias por elegirnos.",cta:"Seguir en redes",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s5_07",fecha:"Jue 30",dia:"Jueves",mes:"Abril",semana:5,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"FELIZ DÍA DEL NIÑO — 30 de abril celebra con teatro",copy:"FELIZ DÍA DEL NIÑO\nHoy 30 de abril es su día — y CDMX tiene el mejor plan para celebrarlo.\nLleva a tu peque al teatro hoy:\nMatilda el Musical · Centro Cultural Teatro 1\nGarfio · Espacio Teatral Danzite\nLas Princesas Monsters · Teatro Ismael Rdz\nDescubriendo a Cri Cri · Teatro Hidalgo\nGato con Botas Vaqueras · Foro Coapa\nReserva en Teatrando.com.mx",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
-  {id:"abr_s5_08",fecha:"Jue 30",dia:"Jueves",mes:"Abril",semana:5,pub:2,redes:["Instagram Feed", "Facebook"],pilar:"P6 – Cultura",formato:"Post estático",tipo:"",resenaId:"",tema:"Día del Niño y cierre de abril — gracias por un mes increíble",copy:"Hoy celebramos a los niños y cerramos un abril lleno de teatro en CDMX.\nGracias a todas las familias que eligieron Teatrando para celebrar con sus peques.\nGracias a las parejas, amigos y amantes del teatro que nos acompañaron este mes.\nAbril cerró. Mayo abre — y ya viene con todo.\nNos vemos el mes que entra.",cta:"Seguir en redes",estado:"Pendiente",notas:"",disenho:""}
-];
 
-// ─── STORAGE PERSISTENTE ──────────────────────────────────────────────────────
 const POLL_INTERVAL = 4000;
 
 async function saveData(data) {
@@ -184,47 +208,121 @@ async function loadData() {
   } catch(e) { console.warn("load error", e); }
   return null;
 }
+ = 4000;
 
-// ─── COMPONENTE PRINCIPAL ─────────────────────────────────────────────────────
-export default function TeatrandoApp(){
-  // AUTH
-  const [modoCliente,setModoCliente]=useState(true);
-  const [passInput,setPassInput]=useState("");
-  const [passError,setPassError]=useState(false);
-  const [showAdminLogin,setShowAdminLogin]=useState(false);
+const BRIEFINGS_INIT = {"Mayo":"📌 LÍNEA EDITORIAL MAYO 2026\n\n🎯 OBJETIVO\n• Generar engagement orgánico\n• Posicionar marca como referente teatral\n• Convertir a WhatsApp (ventas) 👉 alineado al modelo de negocio\n\n📅 ENFOQUE POR SEMANA\nS1 (1–3 may): Arranque cultural + cartelera fin de semana.\nS2 (4–10 may): Día de las Madres.\nS3 (11–17 may): Día del Maestro + One Vision of Queen.\nS4 (18–24 may): Venta fuerte + curaduría + memes.\nS5 (25–31 may): Cierre de mes + adelanto junio."}
 
-  // DATA
-  const [mesesDisp,setMesesDisp]=useState(["Abril"]);
-  const [visitas,setVisitas]=useState([]);
-  const [mesActivo,setMesActivo]=useState("Abril");
-  const [mesExp,setMesExp]=useState("Abril");
-  const [semanaActiva,setSemanaActiva]=useState(1);
-  const [parrillas,setParrillas]=useState({"Abril":buildAbril()});
-  const [resenas,setResenas]=useState({"Abril":buildResenas()});
-  const [briefings,setBriefings]=useState(BRIEFINGS_INIT);
-  const [editandoBriefing,setEditandoBriefing]=useState(false);
+let _historial = [];
+const regCambio = (id,campo,ant,nuevo) => {
+  _historial = [{ts:new Date().toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit",second:"2-digit"}),id,campo,anterior:typeof ant==="object"?JSON.stringify(ant):String(ant),nuevo:typeof nuevo==="object"?JSON.stringify(nuevo):String(nuevo)},..._historial].slice(0,300);
+  return [..._historial];
+};
 
-  // UI ADMIN
-  const [vista,setVista]=useState("parrilla"); // parrilla | resenas | historial
-  const [cardAbierta,setCardAbierta]=useState(null);
-  const [filtros,setFiltros]=useState({pilar:"Todos",formato:"Todos",red:"Todas"});
-  const [modalAgregarDia,setModalAgregarDia]=useState(false);
-  const [nuevoDiaForm,setNuevoDiaForm]=useState({fecha:"",dia:"Lunes",semana:1,numPubs:2});
-  const [notifMsg,setNotifMsg]=useState("");
+async function callClaude(prompt,maxTokens=1200){
+  const r=await fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:maxTokens,messages:[{role:"user",content:prompt}]})
+  });
+  const d=await r.json();
+  return d.content?.[0]?.text||"";
+}
 
-  // UI CLIENTE
-  const [vistaCliente,setVistaCliente]=useState("parrilla"); // parrilla | resenas | bitacora
+async function generarCopyIA(item,obras=[]){
+  const ctx=obras.length>0?`\nObras en cartelera (${obras.length} totales): ${obras.map(o=>o.titulo+(o.teatro?` — ${o.teatro}`:"")+(o.dia?` (${o.dia})`:"")).join(", ")}`:"";
+  const prompt="Eres el community manager de Teatrando CDMX. Voz: cercana, entusiasta, confiable."+ctx+"\nGenera un copy DIFERENTE y CREATIVO para:\n- Pilar: "+item.pilar+"\n- Tema: "+item.tema+"\n- Formato: "+item.formato+"\n- Redes: "+(item.redes||[]).join(", ")+"\nREGLAS: Hook potente primera linea, beneficio en 2 segundos, frases cortas, emojis relevantes, maximo 6 lineas, cierre con urgencia suave.\nDevuelve SOLO el copy.";
+  return await callClaude(prompt);
+}
 
-  // SYNC
-  const [syncStatus,setSyncStatus]=useState("idle"); // idle | saving | saved | error
-  const [dataLoaded,setDataLoaded]=useState(false);
-  const [lastRefresh,setLastRefresh]=useState(null);
-  const isMounted=useRef(true);
+async function generarResenaIA(r,obrasCtx=[]){
+  const od=obrasCtx.find(o=>o.titulo===r.obra)||{};
+  const prompt="Eres critico teatral de Teatrando CDMX. Genera una resena breve para redes sociales.\nObra: "+r.obra+"\nGenero: "+(r.genero||od.genero||"Teatro")+(od.descripcion?"\nDescripcion: "+od.descripcion:"")+"\nDevuelve SOLO un JSON (sin markdown): {\"titulo\":\"max 8 palabras\",\"gancho\":\"max 15 palabras\",\"copy\":\"max 6 lineas con emojis\"}";
+  const txt=await callClaude(prompt,600);
+  try{const c=txt.replace(/```json|```/g,"").trim();return JSON.parse(c);}
+  catch(e){return{titulo:`Reseña: ${r.obra}`,gancho:"Una obra que no te puedes perder.",copy:`📖 ${r.obra}\n\nUna propuesta que vale la pena ver este mes en CDMX.\nLee la reseña completa en Teatrando.com.mx`};}
+}
 
-  const parrilla=parrillas[mesActivo]||[];
-  const resenasMes=resenas[mesActivo]||[];
-  const briefingMes=briefings[mesActivo]||"";
-  const semanasDelMes=mesActivo?[...new Set(parrilla.map(p=>p.semana))].sort((a,b)=>a-b):[];
+export default function App() {
+  const isMounted = useRef(true);
+  const [parrillas, setParrillas] = useState({"Abril": buildAbril()});
+  const [resenas, setResenas] = useState({"Abril": buildResenas()});
+  const [briefings, setBriefings] = useState(BRIEFINGS_INIT);
+  const [mesesDisp, setMesesDisp] = useState(["Mayo"]);
+  const [mesActivo, setMesActivo] = useState("Mayo");
+  const [mesExp, setMesExp] = useState(null);
+  const [semanaActiva, setSemanaActiva] = useState(1);
+  const [cardAbierta, setCardAbierta] = useState(null);
+  const [filtros, setFiltros] = useState({pilar:"Todos",formato:"Todos",red:"Todas"});
+  const [vista, setVista] = useState("parrilla");
+  const [vistaCliente, setVistaCliente] = useState("parrilla");
+  const [notifMsg, setNotifMsg] = useState("");
+  const [historial, setHistorial] = useState([]);
+  const [generando, setGenerando] = useState({});
+  const [restaurando, setRestaurando] = useState(null);
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const [syncStatus, setSyncStatus] = useState("idle");
+  const [lastRefresh, setLastRefresh] = useState("");
+  const [modoCliente, setModoCliente] = useState(true);
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
+  const [passInput, setPassInput] = useState("");
+  const [passError, setPassError] = useState(false);
+  const [modalAgregarDia, setModalAgregarDia] = useState(false);
+  const [nuevoDiaForm, setNuevoDiaForm] = useState({fecha:"",dia:"Lunes",semana:1,numPubs:2,tipo:""});
+  const [editandoBriefing, setEditandoBriefing] = useState(false);
+  const [guiaTab, setGuiaTab] = useState("flujo");
+  const [guiaEditando, setGuiaEditando] = useState(null);
+  const [guiaEditVal, setGuiaEditVal] = useState({});
+  const [guiaNuevoVal, setGuiaNuevoVal] = useState({});
+  const [guiaAgregando, setGuiaAgregando] = useState(null);
+  const [guia, setGuia] = useState({
+    flujo:[
+      {paso:"Semana 1",descripcion:"Apertura del mes",responsable:"Admin",cuando:"Lun-Mié",porque:"Establecer tono editorial",contenidos:[]},
+      {paso:"Semana 2",descripcion:"Construcción de cartelera familiar",responsable:"Admin",cuando:"Lun-Mié",porque:"Foco Día del Niño",contenidos:[]},
+      {paso:"Semana 3",descripcion:"Especial Día del Niño",responsable:"Admin",cuando:"Lun-Mié",porque:"Pico de demanda familiar",contenidos:[]},
+      {paso:"Semana 4",descripcion:"Cierre y conversión",responsable:"Admin",cuando:"Lun-Mié",porque:"Urgencia de cierre de mes",contenidos:[]},
+      {paso:"Semana 5",descripcion:"Últimos días y adelanto Mayo",responsable:"Admin",cuando:"Lun-Jue",porque:"Transición y retención",contenidos:[]}
+    ],
+    timing:[
+      {cuando:"Lunes–Martes",porque:"Planificación y reseñas",formatos:["Reel","Post estático"]},
+      {cuando:"Miércoles–Jueves",porque:"Cartelera y planes",formatos:["Carrusel","Story interactiva"]},
+      {cuando:"Viernes",porque:"Cartelera de fin",formatos:["Carrusel","Reel"]},
+      {cuando:"Sábado–Domingo",porque:"Experiencia y prueba social",formatos:["Post estático","Story"]}
+    ],
+    arcoNarrativo:[
+      {semana:1,contenido:"Apertura: Malinche + Frida + cartelera general"},
+      {semana:2,contenido:"Escalada: Matilda + especial infantil + Paw Patrol"},
+      {semana:3,contenido:"Clímax: Día del Niño + 31 Minutos + urgencia"},
+      {semana:4,contenido:"Resolución: cierre + Las Leonas + balance del mes"},
+      {semana:5,contenido:"Transición: últimas funciones + adelanto Mayo"}
+    ],
+    seriesPrioritarias:[
+      {nombre:"Recomendación de la semana",color:"#059669",desc:"1 obra destacada por semana, lunes. Carrusel o post estático."},
+      {nombre:"Reseña Teatrando",color:"#7c3aed",desc:"Martes. Reel o post. Vincula a resena web en Teatrando.com.mx."},
+      {nombre:"3/5 Razones para verla",color:"#0891b2",desc:"Miércoles o jueves. Carrusel. Hook potente en portada."},
+      {nombre:"Domingo en familia",color:"#C40803",desc:"Domingo. Carrusel con opciones del día por zona."},
+      {nombre:"Frase de la semana",color:"#b45309",desc:"Lunes. Post estático. Siempre con 'guárdala y compártela'."}
+    ],
+    ejemplosFormato:[
+      {tipo:"RECOMENDACION",nota:"Empieza con 'LA RECOMENDACIÓN TEATRANDO DE ESTA SEMANA:' en mayúsculas. Nombre de obra, descripción corta, horarios, teatro, CTA."},
+      {tipo:"RESENA",nota:"Empieza con 'RESEÑA TEATRANDO: NOMBRE OBRA'. Máx 6 líneas. Cierra con 'Lee la reseña completa en Teatrando.com.mx'."},
+      {tipo:"3 RAZONES",nota:"Portada: '3 RAZONES PARA VER [OBRA]'. Cada razón en slide. Cierre con CTA de reserva."},
+      {tipo:"FRASE",nota:"Cita + autor. Siempre cierra con 'Guárdala y compártela'."},
+      {tipo:"ESTRENO",nota:"'ESTRENO ESTA SEMANA' en mayúsculas. Nombre, fechas específicas, teatro, urgencia de reserva."}
+    ],
+    reglas:[
+      {num:1,texto:"Hook potente en primera línea",detalle:"La primera línea debe capturar atención en 2 segundos. Sin preámbulos."},
+      {num:2,texto:"Beneficio antes que información",detalle:"Primero el 'por qué te conviene', luego los detalles de horario/lugar."},
+      {num:3,texto:"Un solo CTA por publicación",detalle:"Elige entre Teatrando.com.mx O WhatsApp. Nunca los dos en el mismo copy."},
+      {num:4,texto:"Máximo 5 hashtags",detalle:"Siempre incluir #Teatrando. Resto según contexto: zona, género, audiencia."},
+      {num:5,texto:"Frases cortas y escaneo visual",detalle:"Saltos de línea frecuentes. Evitar párrafos densos. Bullets cuando aplica."},
+      {num:6,texto:"Urgencia suave al cierre",detalle:"'Hoy', 'este fin', 'últimas funciones', 'no te lo pierdas'. Sin presión agresiva."}
+    ]
+  });
+
+
+  const parrilla = parrillas[mesActivo] || [];
+  const resenasMes = resenas[mesActivo] || [];
+  const briefingMes = briefings[mesActivo] || "";
+  const semanasDelMes = [...new Set(parrilla.map(p=>p.semana))].sort((a,b)=>a-b);
 
   const notif=(msg)=>{setNotifMsg(msg);setTimeout(()=>setNotifMsg(""),2800);};
 
@@ -234,11 +332,20 @@ export default function TeatrandoApp(){
     (async()=>{
       const saved=await loadData();
       if(saved && isMounted.current){
-        if(saved.parrillas) setParrillas(saved.parrillas);
-        if(saved.resenas)   setResenas(saved.resenas);
-        if(saved.briefings) setBriefings(saved.briefings);
-        if(saved.mesesDisp) setMesesDisp(saved.mesesDisp);
-          if(saved.visitas) setVisitas(saved.visitas);
+        // Solo cargar si tiene publicaciones válidas de Abril (fechas 1-30)
+        const pubs=saved.parrillas?.["Abril"]||[];
+        const validas=pubs.filter(p=>{
+          const n=parseInt((p.fecha||"").replace(/[^0-9]/g,""));
+          return n>=1&&n<=30&&p.mes==="Abril";
+        });
+        if(validas.length>0&&validas.length===pubs.length){
+          // Storage limpio y válido
+          if(saved.parrillas) setParrillas(saved.parrillas);
+          if(saved.resenas)   setResenas(saved.resenas);
+          if(saved.briefings) setBriefings(saved.briefings);
+          if(saved.mesesDisp) setMesesDisp(saved.mesesDisp);
+        }
+        // Si storage inválido: los useState ya tienen buildAbril() como valor inicial
       }
       if(isMounted.current) setDataLoaded(true);
     })();
@@ -251,7 +358,7 @@ export default function TeatrandoApp(){
     setSyncStatus("saving");
     const t=setTimeout(async()=>{
       try{
-        await saveData({parrillas,resenas,briefings,mesesDisp,visitas});
+        await saveData({parrillas,resenas,briefings,mesesDisp});
         if(isMounted.current) setSyncStatus("saved");
         setTimeout(()=>{ if(isMounted.current) setSyncStatus("idle"); },2000);
       }catch(e){
@@ -259,26 +366,29 @@ export default function TeatrandoApp(){
       }
     },800); // debounce 800ms
     return()=>clearTimeout(t);
-  },[parrillas,resenas,briefings,mesesDisp,visitas,dataLoaded]);
+  },[parrillas,resenas,briefings,mesesDisp,dataLoaded]);
 
   // ── POLLING: refresca datos desde storage cada 4s (siempre activo) ──
   // El cliente ve los cambios del admin en tiempo real
   useEffect(()=>{
     const interval=setInterval(async()=>{
-      // No refrescar si admin está guardando — evita sobreescribir cambios locales
-      if(!modoCliente && syncStatus==="saving") return;
-      const saved=await loadData();
-      if(saved && isMounted.current){
-        if(saved.parrillas) setParrillas(saved.parrillas);
-        if(saved.resenas)   setResenas(saved.resenas);
-        if(saved.briefings) setBriefings(saved.briefings);
-        if(saved.mesesDisp) setMesesDisp(saved.mesesDisp);
-        if(saved.visitas)   setVisitas(saved.visitas);
-        setLastRefresh(new Date().toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit",second:"2-digit"}));
+      // En modo admin no sobreescribir con datos viejos del storage
+      // solo refrescar si no hay cambios locales recientes (syncStatus idle)
+      if(modoCliente){
+        // CLIENTE (modoCliente=true): siempre refresca desde storage
+        const saved=await loadData();
+        if(saved && isMounted.current){
+          if(saved.parrillas) setParrillas(saved.parrillas);
+          if(saved.resenas)   setResenas(saved.resenas);
+          if(saved.briefings) setBriefings(saved.briefings);
+          if(saved.mesesDisp) setMesesDisp(saved.mesesDisp);
+          setLastRefresh(new Date().toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit",second:"2-digit"}));
+        }
       }
+      // ADMIN (modoCliente=false): no refresca, el guardado automático tiene prioridad
     },POLL_INTERVAL);
     return()=>clearInterval(interval);
-  },[modoCliente,syncStatus]);
+  },[modoCliente]);
 
   // MIX — calcula solo sobre publicaciones (excluye reseñas programadas como pubs separadas)
   const mix=useCallback(()=>{
@@ -303,21 +413,51 @@ export default function TeatrandoApp(){
 
   const editarCampo=(id,campo,valor)=>{
     const item=parrilla.find(p=>p.id===id);if(!item)return;
+    const h=regCambio(id,campo,item[campo],valor);
+    setHistorial(h);
     setParrillas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(p=>p.id===id?{...p,[campo]:valor}:p)}));
   };
 
   const toggleRed=(id,red)=>{
     const item=parrilla.find(p=>p.id===id);if(!item)return;
     const nv=item.redes.includes(red)?item.redes.filter(r=>r!==red):[...item.redes,red];
+    const h=regCambio(id,"redes",item.redes,nv);setHistorial(h);
     setParrillas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(p=>p.id===id?{...p,redes:nv}:p)}));
   };
 
+  const restaurarCambio=(entrada)=>{
+    setParrillas(prev=>{
+      const mes=Object.keys(prev).find(m=>prev[m].some(p=>p.id===entrada.id))||mesActivo;
+      let val=entrada.anterior;try{val=JSON.parse(entrada.anterior);}catch(e){}
+      return{...prev,[mes]:prev[mes].map(p=>p.id===entrada.id?{...p,[entrada.campo]:val}:p)};
+    });
+    setRestaurando(entrada.ts+"_"+entrada.id);setTimeout(()=>setRestaurando(null),1200);
+    notif("↩ Cambio restaurado");
+  };
+
+
+  const handleGenerarCopy=async(item)=>{
+    setGenerando(prev=>({...prev,[item.id]:true}));
+    try{const nc=await generarCopyIA(item,[]);editarCampo(item.id,"copy",nc);notif("✨ Copy actualizado");}
+    catch(e){notif("⚠ Error al generar copy");}
+    setGenerando(prev=>({...prev,[item.id]:false}));
+  };
+
+  const handleGenerarResena=async(r)=>{
+    setGenerando(prev=>({...prev,[r.id]:true}));
+    try{
+      const res=await generarResenaIA(r,[]);
+      setResenas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(x=>x.id===r.id?{...x,...res}:x)}));
+      notif(`✅ Reseña actualizada: ${r.obra}`);
+    }catch(e){notif("⚠ Error al generar reseña");}
+    setGenerando(prev=>({...prev,[r.id]:false}));
+  };
 
   const handleAgregarDia=()=>{
-    if(!nuevoDiaForm.fecha){notif("⚠️ Escribe una fecha");return;}
+    if(!nuevoDiaForm.fecha){notif("⚠ Escribe una fecha");return;}
     const pubs=[];
     for(let i=1;i<=nuevoDiaForm.numPubs;i++){
-      pubs.push(buildPub({fecha:nuevoDiaForm.fecha,dia:nuevoDiaForm.dia,mes:mesActivo,semana:parseInt(nuevoDiaForm.semana),pub:i}));
+      pubs.push(buildPub({fecha:nuevoDiaForm.fecha,dia:nuevoDiaForm.dia,mes:mesActivo,semana:parseInt(nuevoDiaForm.semana),pub:i,...(nuevoDiaForm.tipo?{tipo:nuevoDiaForm.tipo}:{})}));
     }
     setParrillas(prev=>{
       const merged=[...prev[mesActivo],...pubs];
@@ -332,7 +472,7 @@ export default function TeatrandoApp(){
       });
       return {...prev,[mesActivo]:merged};
     });
-    setModalAgregarDia(false);setNuevoDiaForm({fecha:"",dia:"Lunes",semana:1,numPubs:2});
+    setModalAgregarDia(false);setNuevoDiaForm({fecha:"",dia:"Lunes",semana:1,numPubs:2,tipo:""});
     notif(`✅ Día "${nuevoDiaForm.fecha}" agregado`);
   };
 
@@ -345,12 +485,12 @@ export default function TeatrandoApp(){
 
   const handleEliminarPub=(id)=>{
     setParrillas(prev=>({...prev,[mesActivo]:prev[mesActivo].filter(p=>p.id!==id)}));
-    setCardAbierta(null);notif("🗑️ Publicación eliminada");
+    setCardAbierta(null);notif("🗑 Publicación eliminada");
   };
 
 
   const handleAgregarResena=()=>{
-    const nr=buildResena({semana:semanaActiva,obra:"Obra nueva",genero:"Teatro"});
+    const nr=buildResena({semana:semanaActiva,obra:"Obra nueva"});
     setResenas(prev=>({...prev,[mesActivo]:[...prev[mesActivo],nr]}));notif("✅ Reseña agregada");
   };
 
@@ -379,7 +519,7 @@ export default function TeatrandoApp(){
   if(!dataLoaded){
     return(
       <div style={{fontFamily:"Segoe UI,system-ui,sans-serif",background:"#0a0a0a",minHeight:"100vh",color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:16}}>
-        <div style={{fontSize:14,fontWeight:900,color:"#fff",letterSpacing:3,textTransform:"uppercase"}}>TEATRANDO</div>
+        <div style={{fontSize:36,fontWeight:900,color:"#C40803",letterSpacing:-1,textShadow:"0 0 24px rgba(196,8,3,0.9)"}}>🎭 Teatrando</div>
         <div style={{fontSize:12,color:"#666",letterSpacing:2,textTransform:"uppercase"}}>Cargando parrilla...</div>
         <div style={{width:120,height:3,background:"#1a1a1a",borderRadius:3,overflow:"hidden"}}>
           <div style={{width:"60%",height:"100%",background:"#C40803",borderRadius:3,animation:"slideIn 1.2s ease-in-out infinite"}}/>
@@ -431,12 +571,15 @@ export default function TeatrandoApp(){
     return(
       <div style={{fontFamily:"Segoe UI,system-ui,sans-serif",background:"#0a0a0a",minHeight:"100vh",color:"#fff"}}>
         {/* HEADER CLIENTE */}
-        <div style={{background:"#0a0a0a",padding:"12px 20px",borderBottom:"1px solid #1a1a1a"}}>
+        <div style={{background:"linear-gradient(135deg,#C40803 0%,#8B0000 60%,#0a0a0a 100%)",padding:"16px 20px",borderBottom:"2px solid #C40803"}}>
           <div style={{maxWidth:900,margin:"0 auto"}}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:10,marginBottom:12}}>
-              <div style={{display:"flex",flexDirection:"column",alignItems:"flex-start",gap:2}}>
-                <div style={{fontSize:8,color:"rgba(255,255,255,0.5)",letterSpacing:3,textTransform:"uppercase",fontWeight:600}}>Propuesta de Contenido 2026</div>
-                <div style={{fontSize:26,fontWeight:900,color:"#C40803",letterSpacing:-1,textShadow:"0 0 20px rgba(196,8,3,0.8)",lineHeight:1}}>Teatrando</div>
+              <div style={{display:"flex",alignItems:"center",gap:12}}>
+                <div style={{fontSize:28,fontWeight:900,color:"#C40803",letterSpacing:-1,textShadow:"0 0 20px rgba(196,8,3,0.8)",marginRight:4}}>🎭 Teatrando</div>
+                <div>
+                  <div style={{fontSize:8,color:"rgba(255,255,255,0.6)",letterSpacing:3,textTransform:"uppercase",fontWeight:700}}>Propuesta de Contenido 2026</div>
+                  <div style={{fontSize:22,fontWeight:900,letterSpacing:-0.5}}>TEATRANDO</div>
+                </div>
               </div>
               <BTN onClick={()=>setShowAdminLogin(true)} small style={{background:"rgba(0,0,0,0.3)",border:"1px solid rgba(255,255,255,0.2)"}}>🔐 Admin</BTN>
             </div>
@@ -451,7 +594,6 @@ export default function TeatrandoApp(){
               <BTN active={vistaCliente==="parrilla"} onClick={()=>setVistaCliente("parrilla")} small>📋 Parrilla</BTN>
               <BTN active={vistaCliente==="resenas"} onClick={()=>setVistaCliente("resenas")} small>📖 Reseñas</BTN>
               <BTN active={vistaCliente==="bitacora"} onClick={()=>setVistaCliente("bitacora")} small>📒 Bitácora</BTN>
-              <BTN active={vistaCliente==="visitas"} onClick={()=>setVistaCliente("visitas")} small>🎭 Obras a visitar</BTN>
             </div>
           </div>
         </div>
@@ -506,25 +648,35 @@ export default function TeatrandoApp(){
                   {pubs.map(p=>{
                     const ec=sc(p.estado);
                     return(
-                      <div key={p.id} style={{background:p.disenho==="para_disenar"?"#0d0000":p.disenho==="disenho_realizado"?"#001a0a":"#0d0d0d",border:p.disenho==="para_disenar"?"2px solid #C40803":p.disenho==="disenho_realizado"?"2px solid #059669":"1px solid #161616",borderLeft:`3px solid ${PILAR_COLOR[p.pilar]||"#333"}`,borderRadius:8,padding:"12px 14px",marginBottom:8}}>
+                      <div key={p.id} style={{background:"#0d0d0d",border:p.disenho==="para_disenar"?"2px solid #C40803":p.disenho==="disenho_realizado"?"2px solid #059669":"1px solid #161616",borderLeft:`3px solid ${PILAR_COLOR[p.pilar]||"#333"}`,borderRadius:8,padding:"12px 14px",marginBottom:8}}>
                         {p.disenho==="para_disenar"&&(
-                          <div style={{background:"#C40803",color:"#fff",fontSize:9,fontWeight:900,padding:"4px 12px",borderRadius:4,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between",letterSpacing:1}}>
-                            <span>🎨 Para diseñar</span>
-                            <button onClick={()=>editarCampo(p.id,"disenho","disenho_realizado")} style={{background:"#fff",color:"#C40803",border:"none",borderRadius:4,padding:"2px 10px",fontSize:8,fontWeight:900,cursor:"pointer"}}>✓ Marcar como realizado</button>
+                          <div style={{background:"#C40803",color:"#fff",fontSize:9,fontWeight:900,padding:"4px 12px",borderRadius:4,marginBottom:8,display:"flex",alignItems:"center",gap:6,letterSpacing:1,justifyContent:"space-between"}}>
+                            <div style={{display:"flex",alignItems:"center",gap:6}}>
+                              <span>Para disenar</span>
+                            </div>
+                            <button onClick={()=>editarCampo(p.id,"disenho","disenho_realizado")}
+                              style={{background:"#fff",color:"#C40803",border:"none",borderRadius:4,padding:"2px 10px",fontSize:8,fontWeight:900,cursor:"pointer",letterSpacing:0.5}}>
+                              Marcar como realizado
+                            </button>
                           </div>
                         )}
                         {p.disenho==="disenho_realizado"&&(
                           <div style={{background:"#059669",color:"#fff",fontSize:9,fontWeight:900,padding:"4px 12px",borderRadius:4,marginBottom:8,display:"flex",alignItems:"center",gap:6,letterSpacing:1}}>
-                            <span>✓ Diseño realizado</span>
+                            <span>Diseno realizado</span>
                           </div>
                         )}
                         <div style={{display:"flex",gap:5,marginBottom:6,flexWrap:"wrap",alignItems:"center"}}>
+                          {p.tipo&&<div style={{display:"inline-flex",alignItems:"center",gap:4,background:TIPO_COLOR[p.tipo]||"#555",color:"#fff",padding:"3px 10px",borderRadius:4,fontSize:9,fontWeight:900,letterSpacing:1,marginBottom:6,textTransform:"uppercase"}}><span>{"RESENA"===p.tipo?"RESENA":"RECOMENDACION"===p.tipo?"RECOMEND.":p.tipo}</span></div>}
                           <span style={{fontSize:8,color:"#fff",background:PILAR_COLOR[p.pilar]||"#333",padding:"2px 8px",borderRadius:6,fontWeight:700}}>{p.pilar}</span>
                           <span style={{fontSize:8,color:"#666"}}>{p.formato}</span>
                           <span style={{marginLeft:"auto",fontSize:10,color:ec.color,background:ec.bg,padding:"3px 12px",borderRadius:20,border:`1.5px solid ${ec.color}`,fontWeight:900,letterSpacing:0.5}}>{p.estado}</span>
                         </div>
-                        {p.tipo&&<div style={{display:"inline-flex",alignItems:"center",background:TIPO_COLOR[p.tipo]||"#555",color:"#fff",padding:"2px 8px",borderRadius:4,fontSize:8,fontWeight:900,letterSpacing:1,marginBottom:5,textTransform:"uppercase"}}>{p.tipo==="RESENA"?"RESEÑA":p.tipo==="RECOMENDACION"?"RECOMEND.":p.tipo}</div>}
-                        <div style={{fontSize:14,fontWeight:700,color:"#fff",marginBottom:8}}>{p.tema}</div>
+                        <div style={{fontSize:14,fontWeight:700,color:"#fff",marginBottom:p.resenaId?4:8}}>
+                          {p.tipo==="RESENA"&&p.resenaId&&(resenas[mesActivo]||[]).find(x=>x.id===p.resenaId)
+                            ?(resenas[mesActivo].find(x=>x.id===p.resenaId).titulo||p.tema)
+                            :p.tema}
+                        </div>
+                        {p.tipo==="RESENA"&&p.resenaId&&(()=>{const r=(resenas[mesActivo]||[]).find(x=>x.id===p.resenaId);return null;})()}
                         <pre style={{fontSize:11,color:"#bbb",lineHeight:1.7,whiteSpace:"pre-wrap",fontFamily:"inherit",margin:"0 0 10px"}}>{p.copy}</pre>
                         <div style={{display:"flex",gap:4,flexWrap:"wrap",alignItems:"center"}}>
                           {(p.redes||[]).map(r=><span key={r} style={{fontSize:9,color:RED_COLOR[r]||"#aaa",background:"#1a1a1a",padding:"2px 7px",borderRadius:6}}>{RED_ICON[r]} {r}</span>)}
@@ -547,13 +699,12 @@ export default function TeatrandoApp(){
           {vistaCliente==="resenas"&&(
             <div>
               <div style={{fontSize:11,color:"#555",marginBottom:16}}>
-                {resenasCliente.length} reseñas planificadas para {mesActivo} · <span style={{color:"#C40803"}}>⭐ = también se publica en redes sociales</span>
+                {resenasCliente.length} reseñas planificadas para {mesActivo} 
               </div>
               {[1,2,3,4].map(s=>{
                 const rs=resenasCliente.filter(r=>r.semana===s);
                 if(rs.length===0)return null;
-                const rsRedes=rs.filter(r=>r.redSocial);
-                const rsSoloWeb=rs.filter(r=>!r.redSocial);
+                
                 return(
                   <div key={s} style={{marginBottom:28}}>
                     <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
@@ -619,31 +770,6 @@ export default function TeatrandoApp(){
           )}
 
           {/* ── BITÁCORA CLIENTE ── */}
-          {vistaCliente==="visitas"&&(
-            <div style={{padding:"4px 0"}}>
-              <div style={{fontSize:11,fontWeight:700,color:"#fff",marginBottom:16,letterSpacing:1}}>OBRAS A VISITAR — ABRIL 2026</div>
-              {visitas.filter(v=>v.mes===mesActivo).length===0
-                ?<div style={{textAlign:"center",padding:40,color:"#333",fontSize:11,border:"1px dashed #1a1a1a",borderRadius:10}}>Aún no hay obras registradas para este mes.</div>
-                :<div style={{display:"flex",flexDirection:"column",gap:10}}>
-                  {visitas.filter(v=>v.mes===mesActivo).sort((a,b)=>a.dia-b.dia).map(v=>(
-                    <div key={v.id} style={{background:"#0d0d0d",border:"1px solid #1a1a1a",borderRadius:10,padding:"12px 16px",display:"flex",gap:14,alignItems:"flex-start"}}>
-                      <div style={{minWidth:40,textAlign:"center",background:"#C40803",borderRadius:8,padding:"6px 4px"}}>
-                        <div style={{fontSize:18,fontWeight:900,color:"#fff",lineHeight:1}}>{v.dia}</div>
-                        <div style={{fontSize:7,color:"rgba(255,255,255,0.8)",textTransform:"uppercase",letterSpacing:1}}>abr</div>
-                      </div>
-                      <div style={{flex:1}}>
-                        <div style={{fontSize:13,fontWeight:700,color:"#fff",marginBottom:3}}>{v.obra}</div>
-                        <div style={{fontSize:10,color:"#C40803",fontWeight:600,marginBottom:2}}>{v.teatro}</div>
-                        <div style={{fontSize:10,color:"#555"}}>{v.hora}</div>
-                        {v.notas&&<div style={{fontSize:9,color:"#444",marginTop:6,fontStyle:"italic"}}>{v.notas}</div>}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              }
-            </div>
-          )}
-
           {vistaCliente==="bitacora"&&(
             <div>
               {/* Tabs de meses */}
@@ -745,8 +871,31 @@ export default function TeatrandoApp(){
       {/* Modal agregar día */}
       {modalAgregarDia&&(
         <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.88)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:1000}}>
-          <div style={{background:"#111",border:"1px solid #C40803",borderRadius:12,padding:24,width:340,maxWidth:"90vw"}}>
-            <div style={{fontSize:14,fontWeight:700,marginBottom:14}}>➕ Agregar día — {mesActivo}</div>
+          <div style={{background:"#111",border:"1px solid #C40803",borderRadius:12,padding:24,width:360,maxWidth:"90vw"}}>
+            <div style={{fontSize:14,fontWeight:700,marginBottom:14}}>➕ Agregar publicación — {mesActivo}</div>
+
+            {/* Tipo de contenido — selector visual */}
+            <div style={{marginBottom:14}}>
+              <div style={{fontSize:9,color:"#555",textTransform:"uppercase",letterSpacing:1,marginBottom:6,fontWeight:700}}>Tipo de contenido</div>
+              <div style={{display:"flex",gap:5,flexWrap:"wrap"}}>
+                {[{v:"",l:"General"},{v:"RESENA",l:"Reseña"},{v:"3 RAZONES",l:"3 Razones"},{v:"5 RAZONES",l:"5 Razones"},{v:"FRASE",l:"Frase semana"},{v:"RECOMENDACION",l:"Recomendación"},{v:"ESTRENO",l:"Estreno"},{v:"SI TE GUSTO",l:"Si te gusto X..."}].map(t=>(
+                  <button key={t.v} onClick={()=>setNuevoDiaForm(p=>({...p,tipo:t.v}))}
+                    style={{padding:"4px 10px",borderRadius:16,fontSize:9,fontWeight:700,cursor:"pointer",
+                      background:nuevoDiaForm.tipo===t.v?(TIPO_COLOR[t.v]||"#C40803"):"#0d0d0d",
+                      color:"#fff",
+                      border:nuevoDiaForm.tipo===t.v?`2px solid ${TIPO_COLOR[t.v]||"#C40803"}`:"1.5px solid #222"}}>
+                    {t.l}
+                  </button>
+                ))}
+              </div>
+              {nuevoDiaForm.tipo&&(
+                <div style={{marginTop:6,fontSize:8,color:TIPO_COLOR[nuevoDiaForm.tipo]||"#C40803",fontWeight:700}}>
+                  Tipo seleccionado: {nuevoDiaForm.tipo}
+                </div>
+              )}
+            </div>
+
+            {/* Campos del día */}
             {[{l:"Fecha (ej: Mié 25)",k:"fecha",t:"text"},{l:"Día de la semana",k:"dia",t:"select",ops:DIAS_SEMANA},{l:"Semana #",k:"semana",t:"number"},{l:"# de publicaciones",k:"numPubs",t:"number"}].map(f=>(
               <div key={f.k} style={{marginBottom:10}}>
                 <div style={{fontSize:9,color:"#555",textTransform:"uppercase",letterSpacing:1,marginBottom:3,fontWeight:700}}>{f.l}</div>
@@ -766,12 +915,15 @@ export default function TeatrandoApp(){
 
       {/* HEADER ADMIN */}
       {/* HEADER ADMIN */}
-      <div style={{background:"#0a0a0a",padding:"12px 20px",borderBottom:"1px solid #1a1a1a"}}>
+      <div style={{background:"linear-gradient(135deg,#C40803 0%,#7f0000 50%,#0a0a0a 100%)",padding:"18px 20px 14px",borderBottom:"2px solid #C40803"}}>
         <div style={{maxWidth:980,margin:"0 auto"}}>
           <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:10}}>
             <div style={{display:"flex",alignItems:"center",gap:12}}>
-              <div style={{fontSize:13,fontWeight:900,color:"#fff",letterSpacing:2,textTransform:"uppercase"}}>TEATRANDO</div>
-              <div style={{fontSize:8,color:"rgba(255,255,255,0.35)",letterSpacing:2,textTransform:"uppercase",fontWeight:600}}>Sistema de Contenido · Admin</div>
+              <div style={{fontSize:28,fontWeight:900,color:"#C40803",letterSpacing:-1,textShadow:"0 0 20px rgba(196,8,3,0.8)",marginRight:4}}>🎭 Teatrando</div>
+              <div>
+                <div style={{fontSize:8,color:"rgba(255,255,255,0.6)",letterSpacing:3,textTransform:"uppercase",fontWeight:700}}>Sistema de Contenido · Admin</div>
+                <div style={{fontSize:22,fontWeight:900,letterSpacing:-0.5}}>TEATRANDO</div>
+              </div>
             </div>
             <div style={{display:"flex",gap:8,flexWrap:"wrap",alignItems:"center"}}>
               {/* Mix 70/20/10 */}
@@ -781,7 +933,7 @@ export default function TeatrandoApp(){
                   <div style={{fontSize:12,fontWeight:900,color:Math.abs(m.v-m.t)<=5?"#22c55e":"#f59e0b"}}>{m.v}%<span style={{fontSize:7,opacity:0.5,marginLeft:2}}>/{m.t}%</span></div>
                 </div>
               ))}
-              <BTN onClick={()=>setModoCliente(true)} style={{background:"rgba(0,0,0,0.4)",border:"1px solid rgba(255,255,255,0.2)"}} small>👁️ Vista cliente</BTN>
+              <BTN onClick={()=>setModoCliente(true)} style={{background:"rgba(0,0,0,0.4)",border:"1px solid rgba(255,255,255,0.2)"}} small>👁 Vista cliente</BTN>
               <div style={{fontSize:8,display:"flex",alignItems:"center",gap:4,padding:"3px 8px",borderRadius:10,background:"rgba(0,0,0,0.3)",border:`1px solid ${syncStatus==="saved"?"#22c55e":syncStatus==="saving"?"#f59e0b":syncStatus==="error"?"#ef4444":"#222"}`}}>
                 <span style={{width:6,height:6,borderRadius:"50%",background:syncStatus==="saved"?"#22c55e":syncStatus==="saving"?"#f59e0b":syncStatus==="error"?"#ef4444":"#333",display:"inline-block",animation:syncStatus==="saving"?"pulse 1s infinite":"none"}}/>
                 <span style={{color:syncStatus==="saved"?"#22c55e":syncStatus==="saving"?"#f59e0b":syncStatus==="error"?"#ef4444":"#555"}}>
@@ -790,14 +942,14 @@ export default function TeatrandoApp(){
               </div>
             </div>
           </div>
-          <div style={{fontSize:8,color:"rgba(255,255,255,0.4)",marginTop:4}}>⚠️ El mix 70/20/10 aplica solo sobre contenidos. Las reseñas son independientes y no afectan este indicador.</div>
+          <div style={{fontSize:8,color:"rgba(255,255,255,0.4)",marginTop:4}}>⚠ El mix 70/20/10 aplica solo sobre contenidos. Las reseñas son independientes y no afectan este indicador.</div>
           {alertasSemanas().length>0&&(
             <div style={{marginTop:8,display:"flex",gap:6,flexWrap:"wrap"}}>
-              {alertasSemanas().map(a=><div key={a.semana} style={{fontSize:9,color:"#f59e0b",background:"#2a1f00",border:"1px solid #f59e0b30",padding:"2px 8px",borderRadius:8}}>⚠️ S{a.semana} solo tiene {a.cnt} pub(s)</div>)}
+              {alertasSemanas().map(a=><div key={a.semana} style={{fontSize:9,color:"#f59e0b",background:"#2a1f00",border:"1px solid #f59e0b30",padding:"2px 8px",borderRadius:8}}>⚠ S{a.semana} solo tiene {a.cnt} pub(s)</div>)}
             </div>
           )}
           <div style={{display:"flex",gap:5,marginTop:12,flexWrap:"wrap"}}>
-            {[{v:"parrilla",l:"📋 Parrilla"},{v:"resenas",l:"📝 Reseñas"},{v:"visitas",l:"🎭 Obras a visitar"}].map(t=>(
+            {[{v:"parrilla",l:"📋 Parrilla"},{v:"resenas",l:"📝 Reseñas"},{v:"bitacora",l:"📒 Bitácora"},{v:"historial",l:`🕐 Historial${historial.length>0?` (${historial.length})`:""}`},{v:"guia",l:"📖 Guia Editorial"}].map(t=>(
               <BTN key={t.v} active={vista===t.v} onClick={()=>setVista(t.v)} small>{t.l}</BTN>
             ))}
           </div>
@@ -843,7 +995,7 @@ export default function TeatrandoApp(){
                         setBriefings(prev=>{const n={...prev};delete n[mes];return n;});
                         notif(`Mes "${mes}" eliminado`);
                       }
-                    }} style={{width:"100%",textAlign:"left",padding:"5px 8px",borderRadius:6,background:"#2d0000",border:"1px solid #7f1d1d",color:"#ff6b6b",cursor:"pointer",fontSize:10,fontWeight:600}}>🗑️ Eliminar este mes</button>}
+                    }} style={{width:"100%",textAlign:"left",padding:"5px 8px",borderRadius:6,background:"#2d0000",border:"1px solid #7f1d1d",color:"#ff6b6b",cursor:"pointer",fontSize:10,fontWeight:600}}>🗑 Eliminar este mes</button>}
                   </div>
                 </div>
               )}
@@ -856,7 +1008,7 @@ export default function TeatrandoApp(){
         <div style={{background:"#0a0a12",border:"1px solid #1a1a3a",borderRadius:10,padding:"10px 14px",marginBottom:12}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
             <div style={{fontSize:9,color:"#4455aa",textTransform:"uppercase",letterSpacing:1,fontWeight:700}}>📋 Línea editorial — {mesActivo} 2026</div>
-            <button onClick={()=>setEditandoBriefing(!editandoBriefing)} style={{fontSize:9,color:"#4455aa",background:"transparent",border:"1px solid #1a1a3a",borderRadius:6,padding:"2px 8px",cursor:"pointer"}}>{editandoBriefing?"✅ Guardar":"✏️ Editar"}</button>
+            <button onClick={()=>setEditandoBriefing(!editandoBriefing)} style={{fontSize:9,color:"#4455aa",background:"transparent",border:"1px solid #1a1a3a",borderRadius:6,padding:"2px 8px",cursor:"pointer"}}>{editandoBriefing?"✅ Guardar":"✏ Editar"}</button>
           </div>
           {editandoBriefing
             ?<textarea value={briefingMes} onChange={e=>setBriefings(prev=>({...prev,[mesActivo]:e.target.value}))} rows={6}
@@ -886,6 +1038,32 @@ export default function TeatrandoApp(){
             <div style={{fontSize:9,color:"#333",marginBottom:8,display:"flex",alignItems:"center",gap:8,flexWrap:"wrap"}}>
               <span><span style={{color:"#C40803",fontWeight:700}}>{filtradas.length}</span> publicaciones · {mesActivo} S{semanaActiva}</span>
               <span style={{color:"#555",fontSize:8}}>· reseñas en pestaña aparte</span>
+              <div style={{marginLeft:"auto",display:"flex",gap:6}}>
+                <button onClick={()=>{
+                  setParrillas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(p=>
+                    p.semana===semanaActiva?{...p,estado:"Publicado"}:p
+                  )}));
+                  notif(`✅ Semana ${semanaActiva} marcada como Publicada`);
+                }} style={{padding:"3px 10px",borderRadius:12,border:"1.5px solid #22c55e50",background:"#0a1a0a",color:"#22c55e",cursor:"pointer",fontSize:9,fontWeight:700}}>
+                  ✅ Marcar semana como Publicada
+                </button>
+                <button onClick={()=>{
+                  setParrillas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(p=>
+                    p.semana===semanaActiva?{...p,estado:"En producción"}:p
+                  )}));
+                  notif(`🔵 Semana ${semanaActiva} marcada En producción`);
+                }} style={{padding:"3px 10px",borderRadius:12,border:"1.5px solid #3b82f650",background:"#0a0d1a",color:"#3b82f6",cursor:"pointer",fontSize:9,fontWeight:700}}>
+                  🔵 En producción
+                </button>
+                <button onClick={()=>{
+                  setParrillas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(p=>
+                    p.semana===semanaActiva?{...p,estado:"Pendiente"}:p
+                  )}));
+                  notif(`Semana ${semanaActiva} regresada a Pendiente`);
+                }} style={{padding:"3px 10px",borderRadius:12,border:"1.5px solid #33333350",background:"#0a0a0a",color:"#555",cursor:"pointer",fontSize:9,fontWeight:700}}>
+                  ⬜ Pendiente
+                </button>
+              </div>
             </div>
 
             {Object.entries(byDate).map(([fecha,pubs])=>(
@@ -898,11 +1076,11 @@ export default function TeatrandoApp(){
                   const isOpen=cardAbierta===p.id;
                   const ec=sc(p.estado);
                   return(
-                    <div key={p.id} style={{background:"#0b0b0b",border:isOpen?`1.5px solid ${PILAR_COLOR[p.pilar]||"#333"}`:"1px solid #141414",borderRadius:9,marginBottom:5,overflow:"hidden"}}>
+                    <div key={p.id} style={{background:p.disenho==="para_disenar"?"#120000":p.disenho==="disenho_realizado"?"#001a0a":"#0b0b0b",border:isOpen?`1.5px solid ${PILAR_COLOR[p.pilar]||"#333"}`:(p.disenho==="para_disenar"?"1.5px solid #C4080350":p.disenho==="disenho_realizado"?"1.5px solid #05966950":"1px solid #141414"),borderRadius:9,marginBottom:5,overflow:"hidden"}}>
                       <div onClick={()=>setCardAbierta(isOpen?null:p.id)} style={{padding:"8px 11px",cursor:"pointer",display:"flex",alignItems:"center",gap:6,flexWrap:"wrap"}}>
                         <div style={{width:18,height:18,borderRadius:"50%",background:PILAR_COLOR[p.pilar]||"#333",display:"flex",alignItems:"center",justifyContent:"center",fontSize:8,fontWeight:900,flexShrink:0,color:"#fff"}}>{p.pub}</div>
+                        {p.tipo&&<span style={{fontSize:8,background:TIPO_COLOR[p.tipo]||"#555",color:"#fff",padding:"2px 8px",borderRadius:4,fontWeight:900,letterSpacing:0.5,textTransform:"uppercase"}}>{p.tipo==="RESENA"?"RESENA":p.tipo==="RECOMENDACION"?"RECOMEND.":p.tipo}</span>}
                         <span style={{fontSize:7,background:PILAR_COLOR[p.pilar],color:"#fff",padding:"1px 5px",borderRadius:6,fontWeight:700}}>{p.pilar.split("–")[0].trim()}</span>
-                        {p.tipo&&<span style={{fontSize:7,background:TIPO_COLOR[p.tipo]||"#555",color:"#fff",padding:"1px 5px",borderRadius:4,fontWeight:900,textTransform:"uppercase",letterSpacing:0.5}}>{p.tipo==="RESENA"?"RESEÑA":p.tipo==="RECOMENDACION"?"REC.":p.tipo}</span>}
                         <span style={{fontSize:11,fontWeight:700,color:"#fff",flex:1,minWidth:100}}>{p.tema}</span>
                         <div style={{display:"flex",gap:2,flexWrap:"wrap"}}>
                           {(p.redes||[]).slice(0,3).map(r=><span key={r} style={{fontSize:8,background:"#141414",color:RED_COLOR[r]||"#888",padding:"1px 4px",borderRadius:5}}>{RED_ICON[r]}</span>)}
@@ -914,7 +1092,7 @@ export default function TeatrandoApp(){
                       {isOpen&&(
                         <div style={{padding:"0 11px 11px",borderTop:"1px solid #141414"}}>
                           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:7,marginTop:9}}>
-                            {[{l:"Pilar",campo:"pilar",ops:PILARES},{l:"Formato",campo:"formato",ops:FORMATOS},{l:"Estado",campo:"estado",ops:ESTADOS}].map(f=>(
+                            {[{l:"Tipo",campo:"tipo",ops:["General","RESENA","3 RAZONES","5 RAZONES","FRASE","RECOMENDACION","ESTRENO","SI TE GUSTO"]},{l:"Pilar",campo:"pilar",ops:PILARES},{l:"Formato",campo:"formato",ops:FORMATOS},{l:"Estado",campo:"estado",ops:ESTADOS}].map(f=>(
                               <div key={f.campo}>
                                 <div style={{fontSize:7,color:"#333",textTransform:"uppercase",letterSpacing:1,marginBottom:2,fontWeight:700}}>{f.l}</div>
                                 <select value={p[f.campo]} onChange={e=>editarCampo(p.id,f.campo,e.target.value)}
@@ -924,7 +1102,47 @@ export default function TeatrandoApp(){
                               </div>
                             ))}
                           </div>
-                          <div style={{marginTop:7}}>
+                          {/* Selector de reseña vinculada — solo visible cuando tipo=RESENA */}
+                          {p.tipo==="RESENA"&&(
+                            <div style={{marginTop:7,padding:"8px 10px",background:"#0a001a",border:"1px solid #7c3aed40",borderRadius:7}}>
+                              <div style={{fontSize:8,color:"#7c3aed",fontWeight:700,textTransform:"uppercase",letterSpacing:1,marginBottom:5}}>Reseña vinculada — elige de las 40 del mes</div>
+                              <select value={p.resenaId||""} onChange={e=>{
+                                const rid=e.target.value;
+                                editarCampo(p.id,"resenaId",rid);
+                                if(rid){
+                                  
+                                  // Actualizar el tema de la pub con el titulo de la reseña
+                                  const r=resenas[mesActivo]?.find(x=>x.id===rid);
+                                  if(r&&r.titulo) editarCampo(p.id,"tema",r.titulo);
+                                }
+                              }} style={{...selectStyle,width:"100%",color:"#ddd",background:"#0d0d0d",border:"1px solid #7c3aed40",fontSize:9}}>
+                                <option value="" style={{background:"#111"}}>— Sin vincular —</option>
+                                {(resenas[mesActivo]||[]).filter(r=>r.semana===p.semana).map(r=>(
+                                  <option key={r.id} value={r.id} style={{background:"#111",color:"#ddd"}}>
+                                    {r.obra!=="Editorial"?`[${r.obra}] `:""}{r.titulo?.substring(0,60)||"Sin titulo"}
+                                  </option>
+                                ))}
+                              </select>
+                              {p.resenaId&&(()=>{const r=(resenas[mesActivo]||[]).find(x=>x.id===p.resenaId);return null;})()}
+                            </div>
+                          )}
+                          <div style={{marginTop:7,display:"flex",alignItems:"center",gap:10}}>
+                              <div style={{fontSize:9,fontWeight:700,color:"#555",textTransform:"uppercase",letterSpacing:1}}>Para diseñar:</div>
+                              <button onClick={()=>{
+                                  const next=p.disenho===""?"para_disenar":p.disenho==="para_disenar"?"disenho_realizado":"";
+                                  editarCampo(p.id,"disenho",next);
+                                }}
+                                style={{padding:"4px 16px",borderRadius:20,fontWeight:900,fontSize:10,cursor:"pointer",
+                                  background:p.disenho==="para_disenar"?"#C40803":p.disenho==="disenho_realizado"?"#059669":"#0a0a0a",
+                                  color:p.disenho?"#fff":"#444",
+                                  border:p.disenho==="para_disenar"?"2px solid #C40803":p.disenho==="disenho_realizado"?"2px solid #059669":"1.5px solid #333",
+                                  transition:"all 0.2s"}}>
+                                {p.disenho==="para_disenar"?"Para disenar":p.disenho==="disenho_realizado"?"Diseno realizado":"Enviar a disenar"}
+                              </button>
+                              {p.disenho==="para_disenar"&&<span style={{fontSize:8,color:"#C40803",fontWeight:700}}>● Para disenar</span>}
+                              {p.disenho==="disenho_realizado"&&<span style={{fontSize:8,color:"#059669",fontWeight:700}}>✓ Realizado</span>}
+                            </div>
+                            <div style={{marginTop:7}}>
                             <div style={{fontSize:7,color:"#333",textTransform:"uppercase",letterSpacing:1,marginBottom:3,fontWeight:700}}>Redes sociales</div>
                             <div style={{display:"flex",gap:3,flexWrap:"wrap"}}>
                               {REDES.map(r=>(
@@ -934,47 +1152,30 @@ export default function TeatrandoApp(){
                               ))}
                             </div>
                           </div>
-                          <div style={{marginTop:7,display:"grid",gridTemplateColumns:"1fr 1fr",gap:7}}>
-                            <div>
-                              <div style={{fontSize:7,color:"#333",textTransform:"uppercase",letterSpacing:1,marginBottom:2,fontWeight:700}}>📅 Fecha</div>
-                              <input value={p.fecha} placeholder="Ej: Lun 6" onChange={e=>{
-                                const val=e.target.value;
-                                const num=parseInt(val.replace(/\D/g,""))||0;
-                                const sem=num<=5?1:num<=12?2:num<=19?3:num<=26?4:5;
-                                editarCampo(p.id,"fecha",val);
-                                if(num>0) editarCampo(p.id,"semana",sem);
-                              }} style={inputStyle}/>
-                            </div>
-                            <div>
-                              <div style={{fontSize:7,color:"#333",textTransform:"uppercase",letterSpacing:1,marginBottom:2,fontWeight:700}}>Tema</div>
-                              <input value={p.tema} onChange={e=>editarCampo(p.id,"tema",e.target.value)} style={inputStyle}/>
-                            </div>
+                          <div style={{marginTop:7}}>
+                            <div style={{fontSize:7,color:"#333",textTransform:"uppercase",letterSpacing:1,marginBottom:2,fontWeight:700}}>Tema</div>
+                            <input value={p.tema} onChange={e=>editarCampo(p.id,"tema",e.target.value)} style={inputStyle}/>
                           </div>
                           <div style={{marginTop:7}}>
-                            <div style={{marginBottom:3}}><div style={{fontSize:7,color:"#333",textTransform:"uppercase",letterSpacing:1,fontWeight:700}}>📝 Copy</div></div>
+                            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3}}>
+                              <div style={{fontSize:7,color:"#333",textTransform:"uppercase",letterSpacing:1,fontWeight:700}}>📝 Copy</div>
+                              <button onClick={()=>handleGenerarCopy(p)} disabled={generando[p.id]} style={{background:generando[p.id]?"#1a1a1a":"#1a0000",color:generando[p.id]?"#444":"#C40803",border:`1px solid ${generando[p.id]?"#222":"#C40803"}`,borderRadius:12,padding:"2px 9px",fontSize:8,fontWeight:700,cursor:generando[p.id]?"not-allowed":"pointer"}}>
+                                {generando[p.id]?"⏳ Generando...":"✨ Nueva propuesta IA"}
+                              </button>
+                            </div>
                             <textarea value={p.copy} onChange={e=>editarCampo(p.id,"copy",e.target.value)} rows={4}
                               style={{...inputStyle,background:"#060606",lineHeight:1.65,resize:"vertical"}}/>
                           </div>
-                          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:7,marginTop:7}}>
-                            {[{l:"🗒️ Notas",k:"notas",ph:"Pendiente..."}].map(f=>(
+                          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:7,marginTop:7}}>
+                            {[{l:"🎯 CTA",k:"cta"},{l:"🎨 Link diseño",k:"linkDiseno",ph:"https://drive.google.com/..."},{l:"🗒 Notas",k:"notas",ph:"Pendiente..."}].map(f=>(
                               <div key={f.k}>
                                 <div style={{fontSize:7,color:"#333",textTransform:"uppercase",letterSpacing:1,marginBottom:2,fontWeight:700}}>{f.l}</div>
-                                <input value={p[f.k]||""} placeholder={f.ph||""} onChange={e=>editarCampo(p.id,f.k,e.target.value)} style={{...inputStyle,background:"#060606",border:"1px dashed #1a1a1a",color:"#666"}}/>
+                                <input value={p[f.k]||""} placeholder={f.ph||""} onChange={e=>editarCampo(p.id,f.k,e.target.value)} style={{...inputStyle,background:f.k==="notas"?"#060606":"#0a0a0a",border:f.k==="notas"?"1px dashed #1a1a1a":"1px solid #1e1e1e",color:f.k==="notas"?"#666":"#fff"}}/>
                               </div>
                             ))}
-                            <div>
-                              <div style={{fontSize:7,color:"#333",textTransform:"uppercase",letterSpacing:1,marginBottom:2,fontWeight:700}}>🎨 Diseño</div>
-                              <button onClick={()=>{const cur=p.disenho||"";const next=cur===""?"para_disenar":cur==="para_disenar"?"disenho_realizado":"";editarCampo(p.id,"disenho",next);}}
-                                style={{width:"100%",padding:"4px 8px",borderRadius:6,fontSize:9,fontWeight:700,cursor:"pointer",
-                                  background:p.disenho==="para_disenar"?"#C40803":p.disenho==="disenho_realizado"?"#059669":"#0a0a0a",
-                                  color:p.disenho?"#fff":"#444",
-                                  border:p.disenho==="para_disenar"?"2px solid #C40803":p.disenho==="disenho_realizado"?"2px solid #059669":"1.5px solid #333"}}>
-                                {p.disenho==="para_disenar"?"🎨 Para diseñar":p.disenho==="disenho_realizado"?"✓ Diseño realizado":"Enviar a diseñar"}
-                              </button>
-                            </div>
                           </div>
                           <div style={{marginTop:10,display:"flex",justifyContent:"flex-end"}}>
-                            <button onClick={()=>handleEliminarPub(p.id)} style={{fontSize:9,color:"#7f1d1d",background:"transparent",border:"none",cursor:"pointer"}}>🗑️ Eliminar</button>
+                            <button onClick={()=>handleEliminarPub(p.id)} style={{fontSize:9,color:"#7f1d1d",background:"transparent",border:"none",cursor:"pointer"}}>🗑 Eliminar</button>
                           </div>
                         </div>
                       )}
@@ -1002,7 +1203,7 @@ export default function TeatrandoApp(){
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
               <div>
                 <div style={{fontSize:12,fontWeight:700}}>Reseñas — {mesActivo}</div>
-                <div style={{fontSize:9,color:"#444",marginTop:2}}>{resenasMes.length} reseñas · {resenasMes.filter(r=>r.redSocial).length} programadas a redes</div>
+                <div style={{fontSize:9,color:"#444",marginTop:2}}>{resenasMes.length} reseñas planificadas para {mesActivo}</div>
               </div>
               <div style={{display:"flex",gap:6}}>
                 
@@ -1022,35 +1223,22 @@ export default function TeatrandoApp(){
                   <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
                     <span style={{fontSize:8,color:"#C40803",fontWeight:700,textTransform:"uppercase",letterSpacing:2}}>Semana {s}</span>
                     <div style={{flex:1,height:1,background:"#141414"}}/>
-                    <span style={{fontSize:8,color:"#444"}}>{rs.filter(r=>r.redSocial).length}/3 a redes</span>
+                    
                   </div>
                   {rs.map(r=>(
-                    <div key={r.id} style={{background:"#0b0b0b",border:r.redSocial?"1.5px solid #C40803":"1px solid #141414",borderRadius:9,padding:"9px 12px",marginBottom:6,display:"flex",gap:9}}>
-                      <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:6,flexShrink:0}}>
-                        <button onClick={()=>setResenas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(x=>x.id===r.id?{...x,redSocial:!x.redSocial}:x)}))}
-                          style={{width:28,height:28,borderRadius:7,background:r.redSocial?"#C40803":"#141414",border:r.redSocial?"none":"1px solid #222",cursor:"pointer",fontSize:13,display:"flex",alignItems:"center",justifyContent:"center"}} title="Marcar para redes">
-                          {r.redSocial?"⭐":"○"}
-                        </button>
-                      </div>
-                      <div style={{flex:1}}>
-                        <div style={{display:"flex",gap:5,marginBottom:5,flexWrap:"wrap",alignItems:"center"}}>
-                          <span style={{fontSize:8,color:"#C40803",background:"#1a0000",padding:"1px 5px",borderRadius:6,fontWeight:700}}>{r.genero}</span>
-                          {r.redSocial&&<span style={{fontSize:7,color:"#C40803",background:"#1a0000",padding:"1px 5px",borderRadius:6,border:"1px solid #C40803",fontWeight:700}}>📱 A redes</span>}
-                          <select value={r.estado} onChange={e=>setResenas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(x=>x.id===r.id?{...x,estado:e.target.value}:x)}))}
-                            style={{marginLeft:"auto",background:sc(r.estado).bg,color:sc(r.estado).color,border:`1px solid ${sc(r.estado).color}40`,borderRadius:5,padding:"2px 6px",fontSize:8,fontWeight:700}}>
-                            {ESTADOS.map(e=><option key={e} style={{background:"#111",color:"#fff"}}>{e}</option>)}
-                          </select>
-                        </div>
-                        {[{l:"Obra",k:"obra"},{l:"Género",k:"genero"},{l:"Título de la reseña",k:"titulo"},{l:"Gancho",k:"gancho"}].map(f=>(
-                          <div key={f.k} style={{marginBottom:4}}>
-                            <div style={{fontSize:7,color:"#333",textTransform:"uppercase",letterSpacing:1,marginBottom:1,fontWeight:700}}>{f.l}</div>
-                            <input value={r[f.k]||""} onChange={e=>setResenas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(x=>x.id===r.id?{...x,[f.k]:e.target.value}:x)}))} style={{...inputStyle,fontSize:f.k==="titulo"?11:10}}/>
+                    <div key={r.id} style={{background:"#0b0b0b",border:"1px solid #1a1a1a",borderRadius:9,padding:"9px 12px",marginBottom:6}}>
+                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8}}>
+                          <div style={{flex:1}}>
+                            <div style={{fontSize:11,fontWeight:700,color:"#fff",marginBottom:4}}>{r.obra||"Sin título"}</div>
+                            <input value={r.obra||""} onChange={e=>setResenas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(x=>x.id===r.id?{...x,obra:e.target.value}:x)}))}
+                              placeholder="Nombre de la obra" style={{width:"100%",background:"#111",border:"1px solid #222",borderRadius:5,padding:"3px 7px",color:"#fff",fontSize:10,marginBottom:4}}/>
+                            <input value={r.titulo||""} onChange={e=>setResenas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(x=>x.id===r.id?{...x,titulo:e.target.value}:x)}))}
+                              placeholder="Título de la reseña" style={{width:"100%",background:"#111",border:"1px solid #222",borderRadius:5,padding:"3px 7px",color:"#fff",fontSize:10}}/>
                           </div>
-                        ))}
-                        <input value={r.notas||""} placeholder="Notas internas..." onChange={e=>setResenas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(x=>x.id===r.id?{...x,notas:e.target.value}:x)}))}
-                          style={{...inputStyle,background:"#060606",border:"1px dashed #141414",color:"#555",fontSize:9,marginTop:4}}/>
+                          <button onClick={()=>setResenas(prev=>({...prev,[mesActivo]:prev[mesActivo].filter(x=>x.id!==r.id)}))}
+                            style={{background:"transparent",border:"none",color:"#555",cursor:"pointer",fontSize:14,padding:"2px 4px"}}>✕</button>
+                        </div>
                       </div>
-                    </div>
                   ))}
                 </div>
               );
@@ -1059,52 +1247,518 @@ export default function TeatrandoApp(){
         )}
 
         {/* ══ POR RED ══ */}
-        {vista==="visitas"&&(
+        {/* ══ BITÁCORA ADMIN ══ */}
+        {vista==="bitacora"&&(
           <div style={{marginTop:12}}>
-            <div style={{fontSize:11,fontWeight:700,color:"#fff",marginBottom:16,letterSpacing:1}}>OBRAS A VISITAR — {mesActivo.toUpperCase()} 2026</div>
-            <div style={{background:"#0d0d0d",border:"1.5px dashed #C40803",borderRadius:10,padding:"14px 16px",marginBottom:20}}>
-              <div style={{fontSize:9,color:"#C40803",fontWeight:700,marginBottom:10,textTransform:"uppercase",letterSpacing:1}}>+ Agregar obra</div>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:8}}>
-                <div><div style={{fontSize:8,color:"#555",marginBottom:3}}>Obra</div><input id="v_obra" placeholder="Nombre de la obra" style={{width:"100%",background:"#111",border:"1px solid #1e1e1e",color:"#fff",borderRadius:6,padding:"5px 8px",fontSize:10,boxSizing:"border-box"}}/></div>
-                <div><div style={{fontSize:8,color:"#555",marginBottom:3}}>Teatro / Venue</div><input id="v_teatro" placeholder="Teatro o foro" style={{width:"100%",background:"#111",border:"1px solid #1e1e1e",color:"#fff",borderRadius:6,padding:"5px 8px",fontSize:10,boxSizing:"border-box"}}/></div>
-                <div><div style={{fontSize:8,color:"#555",marginBottom:3}}>Día del mes</div><input id="v_dia" type="number" min="1" max="31" placeholder="Ej: 15" style={{width:"100%",background:"#111",border:"1px solid #1e1e1e",color:"#fff",borderRadius:6,padding:"5px 8px",fontSize:10,boxSizing:"border-box"}}/></div>
-                <div><div style={{fontSize:8,color:"#555",marginBottom:3}}>Hora</div><input id="v_hora" placeholder="Ej: 8:00 PM" style={{width:"100%",background:"#111",border:"1px solid #1e1e1e",color:"#fff",borderRadius:6,padding:"5px 8px",fontSize:10,boxSizing:"border-box"}}/></div>
-              </div>
-              <div style={{marginBottom:8}}><div style={{fontSize:8,color:"#555",marginBottom:3}}>Notas (opcional)</div><input id="v_notas" placeholder="Ej: Invitación de prensa..." style={{width:"100%",background:"#111",border:"1px solid #1e1e1e",color:"#fff",borderRadius:6,padding:"5px 8px",fontSize:10,boxSizing:"border-box"}}/></div>
-              <button onClick={()=>{
-                const obra=document.getElementById("v_obra").value.trim();
-                const teatro=document.getElementById("v_teatro").value.trim();
-                const dia=parseInt(document.getElementById("v_dia").value)||0;
-                const hora=document.getElementById("v_hora").value.trim();
-                const notas=document.getElementById("v_notas").value.trim();
-                if(!obra||!dia){notif("⚠ Escribe al menos obra y día");return;}
-                setVisitas(prev=>[...prev,{id:"v_"+Date.now(),mes:mesActivo,obra,teatro,dia,hora,notas}]);
-                ["v_obra","v_teatro","v_dia","v_hora","v_notas"].forEach(id=>document.getElementById(id).value="");
-                notif("✅ Obra agregada");
-              }} style={{padding:"5px 16px",background:"#C40803",color:"#fff",border:"none",borderRadius:8,fontSize:10,fontWeight:700,cursor:"pointer"}}>Agregar</button>
+            {/* Tabs meses */}
+            <div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:20}}>
+              {mesesDisp.map(m=>(
+                <button key={m} onClick={()=>{setMesActivo(m);setSemanaActiva(1);}}
+                  style={{padding:"4px 14px",borderRadius:16,fontWeight:700,fontSize:10,cursor:"pointer",
+                    background:mesActivo===m?"#C40803":"#0d0d0d",color:mesActivo===m?"#fff":"#555",
+                    border:mesActivo===m?"2px solid #C40803":"1.5px solid #1a1a1a"}}>
+                  {m}
+                </button>
+              ))}
             </div>
-            {visitas.filter(v=>v.mes===mesActivo).length===0
-              ?<div style={{textAlign:"center",padding:32,color:"#222",fontSize:11,border:"1px dashed #141414",borderRadius:10}}>No hay obras registradas aún.</div>
-              :<div style={{display:"flex",flexDirection:"column",gap:8}}>
-                {visitas.filter(v=>v.mes===mesActivo).sort((a,b)=>a.dia-b.dia).map(v=>(
-                  <div key={v.id} style={{background:"#0b0b0b",border:"1px solid #141414",borderRadius:8,padding:"10px 14px",display:"flex",gap:12,alignItems:"center"}}>
-                    <div style={{minWidth:36,textAlign:"center",background:"#C40803",borderRadius:6,padding:"4px"}}>
-                      <div style={{fontSize:16,fontWeight:900,color:"#fff",lineHeight:1}}>{v.dia}</div>
+
+            {(()=>{
+              const pubsMes=parrillas[mesActivo]||[];
+              const semanasMes=[...new Set(pubsMes.map(p=>p.semana))].sort((a,b)=>a-b);
+              const totalPub=pubsMes.filter(p=>p.estado==="Publicado").length;
+              const totalProd=pubsMes.filter(p=>p.estado==="En producción").length;
+              const totalPend=pubsMes.filter(p=>p.estado==="Pendiente").length;
+
+              return(
+                <div>
+                  {/* Contadores del mes */}
+                  <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:20}}>
+                    {[
+                      {l:"Total",v:pubsMes.length,c:"#fff"},
+                      {l:"Publicadas",v:totalPub,c:"#22c55e"},
+                      {l:"En producción",v:totalProd,c:"#3b82f6"},
+                      {l:"Pendientes",v:totalPend,c:"#555"},
+                    ].map(item=>(
+                      <div key={item.l} style={{background:"#0b0b0b",border:"1px solid #1a1a1a",borderRadius:8,
+                        padding:"8px 14px",textAlign:"center",minWidth:70}}>
+                        <div style={{fontSize:22,fontWeight:900,color:item.c}}>{item.v}</div>
+                        <div style={{fontSize:7,color:"#333",textTransform:"uppercase",letterSpacing:1,marginTop:2}}>{item.l}</div>
+                      </div>
+                    ))}
+                    {/* Barra de progreso */}
+                    <div style={{flex:1,minWidth:160,display:"flex",flexDirection:"column",justifyContent:"center",gap:4}}>
+                      <div style={{fontSize:8,color:"#444",marginBottom:3}}>Progreso del mes</div>
+                      <div style={{height:6,background:"#1a1a1a",borderRadius:3,overflow:"hidden"}}>
+                        <div style={{height:"100%",background:"#22c55e",borderRadius:3,
+                          width:pubsMes.length>0?`${Math.round(totalPub/pubsMes.length*100)}%`:"0%",
+                          transition:"width 0.4s"}}/>
+                      </div>
+                      <div style={{fontSize:8,color:"#22c55e"}}>
+                        {pubsMes.length>0?Math.round(totalPub/pubsMes.length*100):0}% publicado
+                      </div>
                     </div>
-                    <div style={{flex:1}}>
-                      <div style={{fontSize:11,fontWeight:700,color:"#fff"}}>{v.obra}</div>
-                      <div style={{fontSize:9,color:"#C40803"}}>{v.teatro}</div>
-                      <div style={{fontSize:9,color:"#444"}}>{v.hora}{v.notas?" · "+v.notas:""}</div>
-                    </div>
-                    <button onClick={()=>{setVisitas(prev=>prev.filter(x=>x.id!==v.id));notif("🗑 Eliminada");}}
-                      style={{background:"transparent",border:"1px solid #2d0000",color:"#ff4444",borderRadius:6,padding:"2px 8px",fontSize:9,cursor:"pointer"}}>✕</button>
                   </div>
-                ))}
-              </div>
-            }
+
+                  {/* Semanas con desglose */}
+                  {semanasMes.map(s=>{
+                    const pubsSemana=pubsMes.filter(p=>p.semana===s);
+                    const pub=pubsSemana.filter(p=>p.estado==="Publicado");
+                    const prod=pubsSemana.filter(p=>p.estado==="En producción");
+                    const pend=pubsSemana.filter(p=>p.estado==="Pendiente");
+                    return(
+                      <div key={s} style={{marginBottom:24,background:"#0b0b0b",border:"1px solid #141414",borderRadius:10,padding:"12px 14px"}}>
+                        {/* Header semana con números */}
+                        <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12,flexWrap:"wrap"}}>
+                          <div style={{background:"#C40803",color:"#fff",fontWeight:900,fontSize:9,
+                            padding:"3px 12px",borderRadius:5,letterSpacing:1,textTransform:"uppercase"}}>
+                            Semana {s}
+                          </div>
+                          <span style={{fontSize:8,color:"#fff",fontWeight:700}}>{pubsSemana.length} pubs</span>
+                          <div style={{flex:1,height:1,background:"#1a1a1a"}}/>
+                          {pub.length>0&&<span style={{fontSize:8,color:"#22c55e",fontWeight:700}}>✅ {pub.length}</span>}
+                          {prod.length>0&&<span style={{fontSize:8,color:"#3b82f6",fontWeight:700}}>🔵 {prod.length}</span>}
+                          {pend.length>0&&<span style={{fontSize:8,color:"#444"}}>⬜ {pend.length}</span>}
+                        </div>
+
+                        {/* Publicadas */}
+                        {pub.length>0&&(
+                          <div style={{marginBottom:10}}>
+                            <div style={{fontSize:7,color:"#22c55e",fontWeight:700,textTransform:"uppercase",letterSpacing:1,marginBottom:5}}>✅ Publicado</div>
+                            <div style={{display:"flex",flexDirection:"column",gap:4}}>
+                              {pub.map((p,i)=>(
+                                <div key={p.id} style={{display:"flex",gap:8,alignItems:"baseline",paddingLeft:8,borderLeft:"2px solid #22c55e30"}}>
+                                  <span style={{fontSize:8,color:"#22c55e",fontWeight:700,minWidth:14}}>{i+1}.</span>
+                                  <span style={{fontSize:9,color:"#666",minWidth:44,flexShrink:0}}>{p.fecha}</span>
+                                  <span style={{fontSize:11,color:"#ccc",fontWeight:500}}>{p.tema}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* En producción */}
+                        {prod.length>0&&(
+                          <div style={{marginBottom:10}}>
+                            <div style={{fontSize:7,color:"#3b82f6",fontWeight:700,textTransform:"uppercase",letterSpacing:1,marginBottom:5}}>🔵 En producción</div>
+                            <div style={{display:"flex",flexDirection:"column",gap:4}}>
+                              {prod.map((p,i)=>(
+                                <div key={p.id} style={{display:"flex",gap:8,alignItems:"baseline",paddingLeft:8,borderLeft:"2px solid #3b82f630"}}>
+                                  <span style={{fontSize:8,color:"#3b82f6",fontWeight:700,minWidth:14}}>{i+1}.</span>
+                                  <span style={{fontSize:9,color:"#666",minWidth:44,flexShrink:0}}>{p.fecha}</span>
+                                  <span style={{fontSize:11,color:"#888",fontWeight:500}}>{p.tema}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Pendientes */}
+                        {pend.length>0&&(
+                          <div>
+                            <div style={{fontSize:7,color:"#333",fontWeight:700,textTransform:"uppercase",letterSpacing:1,marginBottom:5}}>⬜ Pendiente ({pend.length})</div>
+                            <div style={{display:"flex",flexDirection:"column",gap:4}}>
+                              {pend.map((p,i)=>(
+                                <div key={p.id} style={{display:"flex",gap:8,alignItems:"baseline",paddingLeft:8,borderLeft:"2px solid #1a1a1a"}}>
+                                  <span style={{fontSize:8,color:"#2a2a2a",fontWeight:700,minWidth:14}}>{i+1}.</span>
+                                  <span style={{fontSize:9,color:"#2a2a2a",minWidth:44,flexShrink:0}}>{p.fecha}</span>
+                                  <span style={{fontSize:11,color:"#333",fontWeight:500}}>{p.tema}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })()}
           </div>
         )}
 
+        {vista==="historial"&&(
+          <div style={{marginTop:12}}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+              <div>
+                <div style={{fontSize:12,fontWeight:700}}>Historial de cambios</div>
+                <div style={{fontSize:9,color:"#444",marginTop:1}}>{historial.length} cambios esta sesión</div>
+              </div>
+              {historial.length>0&&<BTN onClick={()=>setHistorial([])} danger small>Limpiar</BTN>}
+            </div>
+            {historial.length===0&&<div style={{textAlign:"center",padding:32,color:"#222",fontSize:12,border:"1px dashed #141414",borderRadius:10}}>🕐 Aún no hay cambios registrados.</div>}
+            {historial.map((h,i)=>{
+              const esRec=restaurando===h.ts+"_"+h.id;
+              return(
+                <div key={i} style={{background:esRec?"#002a00":"#0b0b0b",border:`1px solid ${esRec?"#22c55e":"#141414"}`,borderRadius:7,padding:"7px 11px",marginBottom:4,display:"flex",alignItems:"center",gap:8,flexWrap:"wrap",transition:"all 0.3s"}}>
+                  <span style={{fontSize:8,color:"#333",fontFamily:"monospace",minWidth:55}}>{h.ts}</span>
+                  <span style={{fontSize:8,color:"#555",background:"#141414",padding:"1px 5px",borderRadius:4,fontFamily:"monospace"}}>{h.id.split("_")[0]}</span>
+                  <span style={{fontSize:9,color:"#C40803",fontWeight:700,minWidth:55}}>{h.campo}</span>
+                  <div style={{flex:1,display:"flex",gap:5,alignItems:"center",flexWrap:"wrap",minWidth:180}}>
+                    <span style={{fontSize:8,color:"#444",background:"#100000",padding:"1px 6px",borderRadius:4,maxWidth:160,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}} title={h.anterior}>← {h.anterior.substring(0,35)}{h.anterior.length>35?"…":""}</span>
+                    <span style={{fontSize:8,color:"#22c55e",background:"#001800",padding:"1px 6px",borderRadius:4,maxWidth:160,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}} title={h.nuevo}>{h.nuevo.substring(0,35)}{h.nuevo.length>35?"…":""}</span>
+                  </div>
+                  <button onClick={()=>restaurarCambio(h)} style={{background:"#0a0a1e",color:"#5577ff",border:"1px solid #1a1a4a",borderRadius:7,padding:"2px 9px",cursor:"pointer",fontSize:8,fontWeight:700,flexShrink:0}}>↩ Restaurar</button>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+
+      {/* ── GUIA EDITORIAL ── */}
+      {vista==="guia"&&(
+        <div style={{marginTop:12}}>
+          {/* Sub-tabs de la guia */}
+          <div style={{display:"flex",gap:4,marginBottom:14,flexWrap:"wrap"}}>
+            {[{v:"flujo",l:"Flujo mensual"},{v:"timing",l:"Timing"},{v:"arco",l:"Arco semanal"},{v:"series",l:"Series fijas"},{v:"efemerides",l:"Efemerides"},{v:"reglas",l:"Reglas de oro"}].map(t=>(
+              <button key={t.v} onClick={()=>setGuiaTab(t.v)}
+                style={{padding:"4px 12px",borderRadius:16,fontSize:10,fontWeight:700,cursor:"pointer",
+                  background:guiaTab===t.v?"#C40803":"transparent",
+                  color:guiaTab===t.v?"#fff":"#555",
+                  border:guiaTab===t.v?"1.5px solid #C40803":"1.5px solid #222"}}>
+                {t.l}
+              </button>
+            ))}
+          </div>
+
+          {/* TIMING */}
+          {guiaTab==="flujo"&&(
+            <div>
+              <div style={{fontSize:10,color:"#C40803",fontWeight:700,marginBottom:8,textTransform:"uppercase",letterSpacing:1}}>Flujo de construccion de parrilla mensual</div>
+              <div style={{background:"#0d0d0d",border:"1px solid #C4080330",borderRadius:8,padding:"10px 14px",marginBottom:14,fontSize:10,color:"#888",lineHeight:1.6}}>
+                Este es el orden definitivo de trabajo cada mes. Seguirlo garantiza que la parrilla llegue completa, sin retrabajos y con las reseñas ya vinculadas desde el inicio.
+              </div>
+              <button onClick={()=>{setGuiaAgregando("flujo");setGuiaNuevoVal({titulo:"",desc:"",responsable:"Aarón"});}} style={{padding:"4px 14px",borderRadius:16,fontSize:9,fontWeight:700,cursor:"pointer",background:"transparent",color:"#C40803",border:"1.5px dashed #C40803",marginBottom:10}}>+ Agregar paso</button>
+              {guiaAgregando==="flujo"&&(
+                <div style={{background:"#0d0d0d",border:"1.5px solid #C40803",borderRadius:8,padding:"12px 14px",marginBottom:12}}>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Titulo del paso</label>
+                  <input value={guiaNuevoVal.titulo||""} onChange={e=>setGuiaNuevoVal(p=>({...p,titulo:e.target.value}))} placeholder="Ej: Revision de arte final" style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Descripcion</label>
+                  <textarea value={guiaNuevoVal.desc||""} onChange={e=>setGuiaNuevoVal(p=>({...p,desc:e.target.value}))} placeholder="Que sucede en este paso..." style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:48,resize:"vertical",marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Responsable</label>
+                  <select value={guiaNuevoVal.responsable||"Aaron"} onChange={e=>setGuiaNuevoVal(p=>({...p,responsable:e.target.value}))} style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6}}>
+                    {["Aaron","Claude","Aaron + Claude","Aaron + Diseñadora","Diseñadora","Ana"].map(r=><option key={r} style={{background:"#111"}}>{r}</option>)}
+                  </select>
+                  <div style={{display:"flex",gap:6}}>
+                    <button onClick={()=>{if(!guiaNuevoVal.titulo)return;const nextPaso=guia.flujo.length+1;setGuia(g=>({...g,flujo:[...g.flujo,{paso:nextPaso,titulo:guiaNuevoVal.titulo,desc:guiaNuevoVal.desc||"",responsable:guiaNuevoVal.responsable||"Aaron"}]}));setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Agregar</button>
+                    <button onClick={()=>{setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                  </div>
+                </div>
+              )}
+              {guia.flujo.map((f,i)=>{
+                const respColor=f.responsable==="Claude"?"#0891b2":f.responsable==="Aaron"?"#C40803":f.responsable==="Diseñadora"?"#7c3aed":"#059669";
+                return(
+                  <div key={i} style={{background:"#0b0b0b",border:"1px solid #1a1a1a",borderRadius:8,padding:"12px 14px",marginBottom:8,display:"flex",gap:12,alignItems:"flex-start"}}>
+                    <div style={{minWidth:28,height:28,borderRadius:"50%",background:"#C40803",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+                      <span style={{fontSize:11,fontWeight:900,color:"#fff"}}>{f.paso}</span>
+                    </div>
+                    <div style={{flex:1}}>
+                      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8,marginBottom:4}}>
+                        <div style={{fontSize:11,fontWeight:700,color:"#fff"}}>{f.titulo}</div>
+                        <div style={{display:"flex",gap:6,alignItems:"center",flexShrink:0}}>
+                          <span style={{fontSize:8,fontWeight:700,color:respColor,border:`1px solid ${respColor}`,padding:"1px 7px",borderRadius:8}}>{f.responsable}</span>
+                          {guiaEditando!==`flujo-${i}`&&<button onClick={()=>{setGuiaEditando(`flujo-${i}`);setGuiaEditVal({desc:f.desc,responsable:f.responsable});}} style={{padding:"2px 8px",background:"transparent",color:"#444",border:"1px solid #222",borderRadius:4,fontSize:9,cursor:"pointer"}}>Editar</button>}
+                        </div>
+                      </div>
+                      {guiaEditando===`flujo-${i}`?(
+                        <div>
+                          <textarea value={guiaEditVal.desc||""} onChange={e=>setGuiaEditVal(p=>({...p,desc:e.target.value}))} style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:48,resize:"vertical",marginBottom:6,boxSizing:"border-box"}}/>
+                          <select value={guiaEditVal.responsable||"Aaron"} onChange={e=>setGuiaEditVal(p=>({...p,responsable:e.target.value}))} style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6}}>
+                            {["Aaron","Claude","Aaron + Claude","Aaron + Diseñadora","Diseñadora","Ana"].map(r=><option key={r} style={{background:"#111"}}>{r}</option>)}
+                          </select>
+                          <div style={{display:"flex",gap:6}}>
+                            <button onClick={()=>{setGuia(g=>({...g,flujo:g.flujo.map((x,j)=>j===i?{...x,desc:guiaEditVal.desc,responsable:guiaEditVal.responsable}:x)}));setGuiaEditando(null);}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Guardar</button>
+                            <button onClick={()=>setGuiaEditando(null)} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                          </div>
+                        </div>
+                      ):(
+                        <div style={{fontSize:10,color:"#666",lineHeight:1.5}}>{f.desc}</div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {guiaTab==="timing"&&(
+            <div>
+              <div style={{fontSize:10,color:"#C40803",fontWeight:700,marginBottom:8,textTransform:"uppercase",letterSpacing:1}}>Cuando publicar segun el tipo de funcion</div>
+              <div style={{background:"#0d0d0d",border:"1px solid #C4080330",borderRadius:8,padding:"10px 14px",marginBottom:10,fontSize:10,color:"#888",lineHeight:1.6}}>
+                Regla central: publicar siempre ANTES de que la decision se tome. Nunca el mismo dia de la funcion.
+              </div>
+              <button onClick={()=>{setGuiaAgregando("timing");setGuiaNuevoVal({titulo:"",cuando:"",porque:"",});}} style={{padding:"4px 14px",borderRadius:16,fontSize:9,fontWeight:700,cursor:"pointer",background:"transparent",color:"#C40803",border:"1.5px dashed #C40803",marginBottom:10}}>+ Agregar regla de timing</button>
+              {guiaAgregando==="timing"&&(
+                <div style={{background:"#0d0d0d",border:"1.5px solid #C40803",borderRadius:8,padding:"12px 14px",marginBottom:12}}>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Tipo de funcion</label>
+                  <input value={guiaNuevoVal.titulo||""} onChange={e=>setGuiaNuevoVal(p=>({...p,titulo:e.target.value}))} placeholder="Ej: Obras de martes..." style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Cuando publicar</label>
+                  <input value={guiaNuevoVal.cuando||""} onChange={e=>setGuiaNuevoVal(p=>({...p,cuando:e.target.value}))} placeholder="Ej: Publicar el lunes anterior..." style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Por que</label>
+                  <textarea value={guiaNuevoVal.porque||""} onChange={e=>setGuiaNuevoVal(p=>({...p,porque:e.target.value}))} placeholder="Razon o logica de este timing..." style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:48,resize:"vertical",marginBottom:6,boxSizing:"border-box"}}/>
+                  <div style={{display:"flex",gap:6}}>
+                    <button onClick={()=>{if(!guiaNuevoVal.titulo)return;setGuia(g=>({...g,timing:[...g.timing,{titulo:guiaNuevoVal.titulo,cuando:guiaNuevoVal.cuando||"",porque:guiaNuevoVal.porque||""}]}));setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Agregar</button>
+                    <button onClick={()=>{setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                  </div>
+                </div>
+              )}
+              {guia.timing.map((t,i)=>(
+                <div key={i} style={{background:"#0b0b0b",border:"1px solid #1a1a1a",borderLeft:"3px solid #C40803",borderRadius:8,padding:"10px 14px",marginBottom:8}}>
+                  {guiaEditando===`timing-${i}`?(
+                    <div>
+                      <div style={{fontSize:9,color:"#555",marginBottom:4}}>Cuando:</div>
+                      <input value={guiaEditVal.cuando||""} onChange={e=>setGuiaEditVal(p=>({...p,cuando:e.target.value}))}
+                        style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6}}/>
+                      <div style={{fontSize:9,color:"#555",marginBottom:4}}>Por que:</div>
+                      <textarea value={guiaEditVal.porque||""} onChange={e=>setGuiaEditVal(p=>({...p,porque:e.target.value}))}
+                        style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:50,resize:"vertical"}}/>
+                      <div style={{display:"flex",gap:6,marginTop:6}}>
+                        <button onClick={()=>{setGuia(g=>({...g,timing:g.timing.map((x,j)=>j===i?{...x,...guiaEditVal}:x)}));setGuiaEditando(null);}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Guardar</button>
+                        <button onClick={()=>setGuiaEditando(null)} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                      </div>
+                    </div>
+                  ):(
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8}}>
+                      <div style={{flex:1}}>
+                        <div style={{fontSize:11,fontWeight:700,color:"#fff",marginBottom:4}}>{t.titulo}</div>
+                        <div style={{fontSize:10,color:"#C40803",fontWeight:700,marginBottom:3}}>{t.cuando}</div>
+                        <div style={{fontSize:10,color:"#666",lineHeight:1.5}}>{t.porque}</div>
+                      </div>
+                      <button onClick={()=>{setGuiaEditando(`timing-${i}`);setGuiaEditVal({cuando:t.cuando,porque:t.porque});}}
+                        style={{padding:"2px 8px",background:"transparent",color:"#444",border:"1px solid #222",borderRadius:4,fontSize:9,cursor:"pointer",flexShrink:0}}>✏ Editar</button>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* ARCO SEMANAL */}
+          {guiaTab==="arco"&&(
+            <div>
+              <div style={{fontSize:10,color:"#C40803",fontWeight:700,marginBottom:8,textTransform:"uppercase",letterSpacing:1}}>Rol de cada dia de la semana</div>
+              <button onClick={()=>{setGuiaAgregando("arco");setGuiaNuevoVal({dia:"",rol:"",contenido:""});}} style={{padding:"4px 14px",borderRadius:16,fontSize:9,fontWeight:700,cursor:"pointer",background:"transparent",color:"#C40803",border:"1.5px dashed #C40803",marginBottom:10}}>+ Agregar dia</button>
+              {guiaAgregando==="arco"&&(
+                <div style={{background:"#0d0d0d",border:"1.5px solid #C40803",borderRadius:8,padding:"12px 14px",marginBottom:12}}>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Dia de la semana</label>
+                  <input value={guiaNuevoVal.dia||""} onChange={e=>setGuiaNuevoVal(p=>({...p,dia:e.target.value}))} placeholder="Ej: Viernes" style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Rol del dia</label>
+                  <input value={guiaNuevoVal.rol||""} onChange={e=>setGuiaNuevoVal(p=>({...p,rol:e.target.value}))} placeholder="Ej: Decidir" style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Contenido sugerido</label>
+                  <textarea value={guiaNuevoVal.contenido||""} onChange={e=>setGuiaNuevoVal(p=>({...p,contenido:e.target.value}))} placeholder="Que publicar este dia y por que..." style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:48,resize:"vertical",marginBottom:6,boxSizing:"border-box"}}/>
+                  <div style={{display:"flex",gap:6}}>
+                    <button onClick={()=>{if(!guiaNuevoVal.dia)return;setGuia(g=>({...g,arco:[...g.arco,{dia:guiaNuevoVal.dia,rol:guiaNuevoVal.rol||"",contenido:guiaNuevoVal.contenido||""}]}));setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Agregar</button>
+                    <button onClick={()=>{setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                  </div>
+                </div>
+              )}
+              {guia.arco.map((d,i)=>(
+                <div key={i} style={{background:"#0b0b0b",border:"1px solid #1a1a1a",borderRadius:8,padding:"10px 14px",marginBottom:8,display:"flex",gap:12,alignItems:"flex-start"}}>
+                  <div style={{minWidth:70,fontSize:12,fontWeight:700,color:"#C40803"}}>{d.dia}</div>
+                  <div style={{flex:1}}>
+                    <div style={{fontSize:9,color:"#555",textTransform:"uppercase",letterSpacing:0.5,marginBottom:3}}>{d.rol}</div>
+                    {guiaEditando===`arco-${i}`?(
+                      <div>
+                        <textarea value={guiaEditVal.contenido||""} onChange={e=>setGuiaEditVal(p=>({...p,contenido:e.target.value}))}
+                          style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:50,resize:"vertical"}}/>
+                        <div style={{display:"flex",gap:6,marginTop:6}}>
+                          <button onClick={()=>{setGuia(g=>({...g,arco:g.arco.map((x,j)=>j===i?{...x,contenido:guiaEditVal.contenido}:x)}));setGuiaEditando(null);}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Guardar</button>
+                          <button onClick={()=>setGuiaEditando(null)} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                        </div>
+                      </div>
+                    ):(
+                      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8}}>
+                        <div style={{fontSize:10,color:"#aaa",lineHeight:1.5,flex:1}}>{d.contenido}</div>
+                        <button onClick={()=>{setGuiaEditando(`arco-${i}`);setGuiaEditVal({contenido:d.contenido});}}
+                          style={{padding:"2px 8px",background:"transparent",color:"#444",border:"1px solid #222",borderRadius:4,fontSize:9,cursor:"pointer",flexShrink:0}}>✏ Editar</button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* SERIES FIJAS */}
+          {guiaTab==="series"&&(
+            <div>
+              <div style={{fontSize:10,color:"#C40803",fontWeight:700,marginBottom:8,textTransform:"uppercase",letterSpacing:1}}>Series de contenido recurrente</div>
+              <button onClick={()=>{setGuiaAgregando("series");setGuiaNuevoVal({nombre:"",color:"#555",freq:"",dia:"",desc:""});}} style={{padding:"4px 14px",borderRadius:16,fontSize:9,fontWeight:700,cursor:"pointer",background:"transparent",color:"#C40803",border:"1.5px dashed #C40803",marginBottom:10}}>+ Agregar serie</button>
+              {guiaAgregando==="series"&&(
+                <div style={{background:"#0d0d0d",border:"1.5px solid #C40803",borderRadius:8,padding:"12px 14px",marginBottom:12}}>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Nombre de la serie (en mayusculas)</label>
+                  <input value={guiaNuevoVal.nombre||""} onChange={e=>setGuiaNuevoVal(p=>({...p,nombre:e.target.value.toUpperCase()}))} placeholder="Ej: BEHIND THE SCENES" style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Color del badge (hex)</label>
+                  <div style={{display:"flex",gap:6,alignItems:"center",marginBottom:6}}>
+                    <input value={guiaNuevoVal.color||"#555"} onChange={e=>setGuiaNuevoVal(p=>({...p,color:e.target.value}))} placeholder="#C40803" style={{flex:1,background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,boxSizing:"border-box"}}/>
+                    <div style={{width:28,height:28,borderRadius:6,background:guiaNuevoVal.color||"#555",border:"1px solid #333",flexShrink:0}}/>
+                  </div>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Frecuencia</label>
+                  <input value={guiaNuevoVal.freq||""} onChange={e=>setGuiaNuevoVal(p=>({...p,freq:e.target.value}))} placeholder="Ej: 1 por semana / 2 por mes" style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Mejor dia para publicar</label>
+                  <input value={guiaNuevoVal.dia||""} onChange={e=>setGuiaNuevoVal(p=>({...p,dia:e.target.value}))} placeholder="Ej: Martes o Miercoles" style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Descripcion</label>
+                  <textarea value={guiaNuevoVal.desc||""} onChange={e=>setGuiaNuevoVal(p=>({...p,desc:e.target.value}))} placeholder="Que es, como funciona, objetivo del formato..." style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:56,resize:"vertical",marginBottom:6,boxSizing:"border-box"}}/>
+                  <div style={{display:"flex",gap:6}}>
+                    <button onClick={()=>{if(!guiaNuevoVal.nombre)return;setGuia(g=>({...g,series:[...g.series,{nombre:guiaNuevoVal.nombre,color:guiaNuevoVal.color||"#555",freq:guiaNuevoVal.freq||"",dia:guiaNuevoVal.dia||"",desc:guiaNuevoVal.desc||""}]}));setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Agregar</button>
+                    <button onClick={()=>{setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                  </div>
+                </div>
+              )}
+              {guia.series.map((s,i)=>(
+                <div key={i} style={{background:"#0b0b0b",border:"1px solid #1a1a1a",borderLeft:`3px solid ${s.color}`,borderRadius:8,padding:"10px 14px",marginBottom:8}}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8}}>
+                    <div style={{flex:1}}>
+                      <div style={{display:"flex",gap:8,alignItems:"center",marginBottom:6,flexWrap:"wrap"}}>
+                        <span style={{fontSize:9,fontWeight:900,background:s.color,color:"#fff",padding:"2px 8px",borderRadius:10,letterSpacing:0.5}}>{s.nombre}</span>
+                        <span style={{fontSize:9,color:"#555"}}>{s.freq}</span>
+                        <span style={{fontSize:9,color:"#444"}}>Mejor dia: {s.dia}</span>
+                      </div>
+                      {guiaEditando===`series-${i}`?(
+                        <div>
+                          <textarea value={guiaEditVal.desc||""} onChange={e=>setGuiaEditVal(p=>({...p,desc:e.target.value}))}
+                            style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:50,resize:"vertical"}}/>
+                          <div style={{display:"flex",gap:6,marginTop:6}}>
+                            <button onClick={()=>{setGuia(g=>({...g,series:g.series.map((x,j)=>j===i?{...x,desc:guiaEditVal.desc}:x)}));setGuiaEditando(null);}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Guardar</button>
+                            <button onClick={()=>setGuiaEditando(null)} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                          </div>
+                        </div>
+                      ):(
+                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8}}>
+                          <div style={{fontSize:10,color:"#888",lineHeight:1.5,flex:1}}>{s.desc}</div>
+                          <button onClick={()=>{setGuiaEditando(`series-${i}`);setGuiaEditVal({desc:s.desc});}}
+                            style={{padding:"2px 8px",background:"transparent",color:"#444",border:"1px solid #222",borderRadius:4,fontSize:9,cursor:"pointer",flexShrink:0}}>✏ Editar</button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* EFEMERIDES */}
+          {guiaTab==="efemerides"&&(
+            <div>
+              <div style={{fontSize:10,color:"#C40803",fontWeight:700,marginBottom:8,textTransform:"uppercase",letterSpacing:1}}>Calendario de efemerides y fechas clave</div>
+              <button onClick={()=>{setGuiaAgregando("efemerides");setGuiaNuevoVal({mes:"Enero",fecha:"",nombre:"",tipo:"Social",nota:""});}} style={{padding:"4px 14px",borderRadius:16,fontSize:9,fontWeight:700,cursor:"pointer",background:"transparent",color:"#C40803",border:"1.5px dashed #C40803",marginBottom:10}}>+ Agregar efemeride</button>
+              {guiaAgregando==="efemerides"&&(
+                <div style={{background:"#0d0d0d",border:"1.5px solid #C40803",borderRadius:8,padding:"12px 14px",marginBottom:12}}>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:6}}>
+                    <div>
+                      <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Mes</label>
+                      <select value={guiaNuevoVal.mes||"Enero"} onChange={e=>setGuiaNuevoVal(p=>({...p,mes:e.target.value}))} style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10}}>
+                        {["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio-Agosto","Septiembre","Octubre","Noviembre","Diciembre"].map(m=><option key={m} style={{background:"#111"}}>{m}</option>)}
+                      </select>
+                    </div>
+                    <div>
+                      <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Tipo</label>
+                      <select value={guiaNuevoVal.tipo||"Social"} onChange={e=>setGuiaNuevoVal(p=>({...p,tipo:e.target.value}))} style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10}}>
+                        {["Social","Teatral","Internacional","Temporada"].map(t=><option key={t} style={{background:"#111"}}>{t}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Fecha</label>
+                  <input value={guiaNuevoVal.fecha||""} onChange={e=>setGuiaNuevoVal(p=>({...p,fecha:e.target.value}))} placeholder="Ej: 14 feb / 2do domingo / Todo octubre" style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Nombre de la efemeride</label>
+                  <input value={guiaNuevoVal.nombre||""} onChange={e=>setGuiaNuevoVal(p=>({...p,nombre:e.target.value}))} placeholder="Ej: Dia del Maestro" style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Nota editorial</label>
+                  <textarea value={guiaNuevoVal.nota||""} onChange={e=>setGuiaNuevoVal(p=>({...p,nota:e.target.value}))} placeholder="Como usar esta fecha para el contenido de Teatrando..." style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:48,resize:"vertical",marginBottom:6,boxSizing:"border-box"}}/>
+                  <div style={{display:"flex",gap:6}}>
+                    <button onClick={()=>{if(!guiaNuevoVal.nombre)return;setGuia(g=>({...g,efemerides:[...g.efemerides,{mes:guiaNuevoVal.mes,fecha:guiaNuevoVal.fecha||"",nombre:guiaNuevoVal.nombre,tipo:guiaNuevoVal.tipo||"Social",nota:guiaNuevoVal.nota||""}]}));setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Agregar</button>
+                    <button onClick={()=>{setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                  </div>
+                </div>
+              )}
+              {["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio-Agosto","Septiembre","Octubre","Noviembre","Diciembre"].map(mes=>{
+                const efs=guia.efemerides.filter(e=>e.mes===mes);
+                if(!efs.length) return null;
+                return(
+                  <div key={mes} style={{marginBottom:14}}>
+                    <div style={{fontSize:9,color:"#444",textTransform:"uppercase",letterSpacing:1,fontWeight:700,marginBottom:6,paddingBottom:4,borderBottom:"1px solid #1a1a1a"}}>{mes}</div>
+                    {efs.map((ef,i)=>{
+                      const idx=guia.efemerides.indexOf(ef);
+                      const tipoColor={"Social":"#b45309","Teatral":"#C40803","Internacional":"#0891b2","Temporada":"#059669"}[ef.tipo]||"#555";
+                      return(
+                        <div key={i} style={{display:"flex",gap:10,padding:"7px 0",borderBottom:"1px solid #111",alignItems:"flex-start"}}>
+                          <div style={{minWidth:90,fontSize:10,fontWeight:700,color:"#fff"}}>{ef.fecha}</div>
+                          <div style={{flex:1}}>
+                            <div style={{display:"flex",gap:6,alignItems:"center",marginBottom:3,flexWrap:"wrap"}}>
+                              <span style={{fontSize:10,color:"#ddd"}}>{ef.nombre}</span>
+                              <span style={{fontSize:8,fontWeight:700,color:tipoColor,border:`1px solid ${tipoColor}`,padding:"1px 6px",borderRadius:8}}>{ef.tipo}</span>
+                            </div>
+                            {guiaEditando===`ef-${idx}`?(
+                              <div>
+                                <textarea value={guiaEditVal.nota||""} onChange={e=>setGuiaEditVal(p=>({...p,nota:e.target.value}))}
+                                  style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:40,resize:"vertical"}}/>
+                                <div style={{display:"flex",gap:6,marginTop:4}}>
+                                  <button onClick={()=>{setGuia(g=>({...g,efemerides:g.efemerides.map((x,j)=>j===idx?{...x,nota:guiaEditVal.nota}:x)}));setGuiaEditando(null);}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Guardar</button>
+                                  <button onClick={()=>setGuiaEditando(null)} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                                </div>
+                              </div>
+                            ):(
+                              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8}}>
+                                <div style={{fontSize:10,color:"#666",lineHeight:1.4,flex:1}}>{ef.nota}</div>
+                                <button onClick={()=>{setGuiaEditando(`ef-${idx}`);setGuiaEditVal({nota:ef.nota});}}
+                                  style={{padding:"2px 8px",background:"transparent",color:"#444",border:"1px solid #222",borderRadius:4,fontSize:9,cursor:"pointer",flexShrink:0}}>✏ Editar</button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* REGLAS DE ORO */}
+          {guiaTab==="reglas"&&(
+            <div>
+              <div style={{fontSize:10,color:"#C40803",fontWeight:700,marginBottom:8,textTransform:"uppercase",letterSpacing:1}}>Reglas de oro — aplican siempre</div>
+              <button onClick={()=>{setGuiaAgregando("reglas");setGuiaNuevoVal({texto:"",detalle:""});}} style={{padding:"4px 14px",borderRadius:16,fontSize:9,fontWeight:700,cursor:"pointer",background:"transparent",color:"#C40803",border:"1.5px dashed #C40803",marginBottom:10}}>+ Agregar regla</button>
+              {guiaAgregando==="reglas"&&(
+                <div style={{background:"#0d0d0d",border:"1.5px solid #C40803",borderRadius:8,padding:"12px 14px",marginBottom:12}}>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Regla (enunciado corto)</label>
+                  <input value={guiaNuevoVal.texto||""} onChange={e=>setGuiaNuevoVal(p=>({...p,texto:e.target.value}))} placeholder="Ej: Siempre incluir horario en obras de estreno" style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Detalle o excepciones</label>
+                  <textarea value={guiaNuevoVal.detalle||""} onChange={e=>setGuiaNuevoVal(p=>({...p,detalle:e.target.value}))} placeholder="Contexto, cuando aplica, excepciones..." style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:56,resize:"vertical",marginBottom:6,boxSizing:"border-box"}}/>
+                  <div style={{display:"flex",gap:6}}>
+                    <button onClick={()=>{if(!guiaNuevoVal.texto)return;const nextNum=guia.reglas.length+1;setGuia(g=>({...g,reglas:[...g.reglas,{num:nextNum,texto:guiaNuevoVal.texto,detalle:guiaNuevoVal.detalle||""}]}));setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Agregar</button>
+                    <button onClick={()=>{setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                  </div>
+                </div>
+              )}
+              {guia.reglas.map((r,i)=>(
+                <div key={i} style={{background:"#0b0b0b",border:"1px solid #1a1a1a",borderRadius:8,padding:"10px 14px",marginBottom:8,display:"flex",gap:12,alignItems:"flex-start"}}>
+                  <div style={{fontSize:20,fontWeight:700,color:"#C40803",minWidth:28,lineHeight:1}}>{r.num}</div>
+                  <div style={{flex:1}}>
+                    <div style={{fontSize:11,fontWeight:700,color:"#fff",marginBottom:4}}>{r.texto}</div>
+                    {guiaEditando===`regla-${i}`?(
+                      <div>
+                        <textarea value={guiaEditVal.detalle||""} onChange={e=>setGuiaEditVal(p=>({...p,detalle:e.target.value}))}
+                          style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:50,resize:"vertical"}}/>
+                        <div style={{display:"flex",gap:6,marginTop:6}}>
+                          <button onClick={()=>{setGuia(g=>({...g,reglas:g.reglas.map((x,j)=>j===i?{...x,detalle:guiaEditVal.detalle}:x)}));setGuiaEditando(null);}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Guardar</button>
+                          <button onClick={()=>setGuiaEditando(null)} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                        </div>
+                      </div>
+                    ):(
+                      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8}}>
+                        <div style={{fontSize:10,color:"#666",lineHeight:1.5,flex:1}}>{r.detalle}</div>
+                        <button onClick={()=>{setGuiaEditando(`regla-${i}`);setGuiaEditVal({detalle:r.detalle});}}
+                          style={{padding:"2px 8px",background:"transparent",color:"#444",border:"1px solid #222",borderRadius:4,fontSize:9,cursor:"pointer",flexShrink:0}}>✏ Editar</button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+        </div>
+      )}
 
         <div style={{textAlign:"center",marginTop:28,fontSize:8,color:"#141414"}}>Teatrando CDMX · Sistema de Contenido 2026 · @teatrandocdmx</div>
       </div>

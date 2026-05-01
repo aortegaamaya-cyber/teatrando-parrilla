@@ -875,6 +875,47 @@ export default function App() {
   },[semanaActiva,filtros]);
 
 
+  const editarCampo = useCallback((id,campo,valor)=>{
+    setParrillas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(p=>p.id===id?{...p,[campo]:valor}:p)}));
+  },[mesActivo]);
+
+  const handleEliminarPub = useCallback((id)=>{
+    setParrillas(prev=>({...prev,[mesActivo]:prev[mesActivo].filter(p=>p.id!==id)}));
+    notif("Publicación eliminada");
+  },[mesActivo,notif]);
+
+  const toggleRed = useCallback((id,red)=>{
+    setParrillas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(p=>{
+      if(p.id!==id)return p;
+      const redes=p.redes||[];
+      return {...p,redes:redes.includes(red)?redes.filter(r=>r!==red):[...redes,red]};
+    })}));
+  },[mesActivo]);
+
+  const handleGenerarResena = useCallback(async(r)=>{
+    notif("Generando reseña...");
+  },[notif]);
+
+  const handleGenerarCopy = useCallback(async(p)=>{
+    notif("Generando copy...");
+  },[notif]);
+
+  const handleAgregarSemana = useCallback(()=>{
+    const maxSemana = Math.max(...(parrillas[mesActivo]||[]).map(p=>p.semana),0);
+    notif(`Semana ${maxSemana+1} disponible`);
+  },[mesActivo,parrillas,notif]);
+
+  const handleAgregarDia = useCallback(()=>{
+    notif("Agrega el día desde el formulario");
+  },[notif]);
+
+  const handleAgregarResena = useCallback(()=>{
+    const nr={id:mkId("r"),semana:semanaActiva,obra:"Obra nueva",titulo:""};
+    setResenas(prev=>({...prev,[mesActivo]:[...prev[mesActivo],nr]}));
+    notif("✅ Reseña agregada");
+  },[mesActivo,semanaActiva,notif]);
+
+
   return(
     <div style={{fontFamily:"Segoe UI,system-ui,sans-serif",background:"#060606",minHeight:"100vh",color:"#fff",paddingBottom:60}}>
 

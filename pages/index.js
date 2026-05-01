@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 
 const REDES = ["Instagram Feed","Instagram Stories","Instagram Reels","Facebook","TikTok","X","YouTube Shorts","YouTube"];
 const PILARES = ["P1 – Curaduría","P2 – Planes","P3 – Experiencia","P4 – Servicio","P5 – Prueba social","P6 – Cultura"];
@@ -380,19 +380,19 @@ export default function App() {
   },[modoCliente]);
 
   // MIX — calcula solo sobre publicaciones (excluye reseñas programadas como pubs separadas)
-  const mix=useCallback(()=>{
+  const mix=useMemo(()=>{
     const t=parrilla.length||1;
     const p123=parrilla.filter(p=>["P1 – Curaduría","P2 – Planes","P3 – Experiencia"].includes(p.pilar)).length;
     const p4=parrilla.filter(p=>p.pilar==="P4 – Servicio").length;
     const p56=parrilla.filter(p=>["P5 – Prueba social","P6 – Cultura"].includes(p.pilar)).length;
     return{p123:Math.round(p123/t*100),p4:Math.round(p4/t*100),p56:Math.round(p56/t*100)};
-  },[parrilla])();
+  },[parrilla]);
 
-  const contadorRedes=useCallback(()=>{
+  const contadorRedes=useMemo(()=>{
     const c={};REDES.forEach(r=>c[r]=0);
     parrilla.forEach(p=>(p.redes||[]).forEach(r=>{if(c[r]!==undefined)c[r]++;}));
     return c;
-  },[parrilla])();
+  },[parrilla]);
 
   const alertasSemanas=useCallback(()=>{
     const a=[];

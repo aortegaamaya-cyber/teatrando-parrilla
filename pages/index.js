@@ -704,53 +704,14 @@ export default function App() {
                     <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
                       <span style={{fontSize:9,color:"#fff",background:"#C40803",fontWeight:700,textTransform:"uppercase",letterSpacing:2,padding:"3px 12px",borderRadius:6}}>Semana {s}</span>
                       <div style={{flex:1,height:1,background:"#1a1a1a"}}/>
-                      <span style={{fontSize:9,color:"#C40803",fontWeight:700}}>⭐ {rsRedes.length} a redes</span>
-                      <span style={{fontSize:9,color:"#444"}}>+ {rsSoloWeb.length} solo web</span>
+                      
+                      
                     </div>
 
                     {/* Reseñas a redes */}
-                    {rsRedes.length>0&&(
-                      <div style={{marginBottom:12}}>
-                        <div style={{fontSize:8,color:"#C40803",fontWeight:700,textTransform:"uppercase",letterSpacing:1,marginBottom:8,display:"flex",alignItems:"center",gap:6}}>
-                          <span style={{background:"#C40803",color:"#fff",padding:"1px 8px",borderRadius:4}}>⭐ Se publican en redes sociales</span>
-                        </div>
-                        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))",gap:8}}>
-                          {rsRedes.map(r=>{
-                            const ec=sc(r.estado);
-                            return(
-                              <div key={r.id} style={{background:"#120000",border:"1.5px solid #C40803",borderRadius:10,padding:"12px 14px"}}>
-                                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:6}}>
-                                  <span style={{fontSize:8,color:"#C40803",fontWeight:700,background:"#2a0000",padding:"1px 7px",borderRadius:5}}>⭐ Web + Redes</span>
-                                  <span style={{fontSize:8,color:ec.color,background:ec.bg,padding:"1px 7px",borderRadius:5,border:`1px solid ${ec.color}40`,fontWeight:700}}>{r.estado}</span>
-                                </div>
-                                <div style={{fontSize:13,fontWeight:700,color:"#fff",marginBottom:4}}>{r.obra}</div>
-                                {r.titulo&&<div style={{fontSize:10,color:"#999",fontStyle:"italic",marginBottom:6}}>"{r.titulo}"</div>}
-                                {r.resena&&<div style={{fontSize:10,color:"#777",lineHeight:1.6}}>{r.resena.substring(0,120)}{r.resena.length>120?"…":""}</div>}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
+                    
 
-                    {/* Reseñas solo web */}
-                    {rsSoloWeb.length>0&&(
-                      <div>
-                        <div style={{fontSize:8,color:"#444",fontWeight:700,textTransform:"uppercase",letterSpacing:1,marginBottom:8}}>Solo web (teatrando.com.mx)</div>
-                        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(200px,1fr))",gap:6}}>
-                          {rsSoloWeb.map(r=>{
-                            const ec=sc(r.estado);
-                            return(
-                              <div key={r.id} style={{background:"#0d0d0d",border:"1px solid #1a1a1a",borderRadius:8,padding:"10px 12px"}}>
-                                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:5}}>
-                                  <span style={{fontSize:8,color:"#444",fontWeight:700}}>📄 Solo web</span>
-                                  <span style={{fontSize:8,color:ec.color,background:ec.bg,padding:"1px 6px",borderRadius:5,border:`1px solid ${ec.color}40`,fontWeight:700}}>{r.estado}</span>
-                                </div>
-                                <div style={{fontSize:12,fontWeight:700,color:"#ddd",marginBottom:3}}>{r.obra}</div>
-                                {r.titulo&&<div style={{fontSize:9,color:"#666",fontStyle:"italic"}}>{r.titulo}</div>}
-                              </div>
-                            );
-                          })}
+                    
                         </div>
                       </div>
                     )}

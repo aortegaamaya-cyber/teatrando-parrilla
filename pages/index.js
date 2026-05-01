@@ -331,20 +331,11 @@ export default function App() {
     (async()=>{
       const saved=await loadData();
       if(saved && isMounted.current){
-        // Solo cargar si tiene publicaciones válidas de Abril (fechas 1-30)
-        const pubs=saved.parrillas?.["Abril"]||[];
-        const validas=pubs.filter(p=>{
-          const n=parseInt((p.fecha||"").replace(/[^0-9]/g,""));
-          return n>=1&&n<=30&&p.mes==="Abril";
-        });
-        if(validas.length>0&&validas.length===pubs.length){
-          // Storage limpio y válido
-          if(saved.parrillas) setParrillas(saved.parrillas);
-          if(saved.resenas)   setResenas(saved.resenas);
-          if(saved.briefings) setBriefings(saved.briefings);
-          if(saved.mesesDisp) setMesesDisp(saved.mesesDisp);
-        }
-        // Si storage inválido: los useState ya tienen buildMayo() como valor inicial
+        if(saved.parrillas) setParrillas(saved.parrillas);
+        if(saved.resenas)   setResenas(saved.resenas);
+        if(saved.briefings) setBriefings(saved.briefings);
+        if(saved.mesesDisp) setMesesDisp(saved.mesesDisp);
+        if(saved.visitas)   setVisitas(saved.visitas);
       }
       if(isMounted.current) setDataLoaded(true);
     })();

@@ -708,13 +708,6 @@ export default function App() {
                       
                     </div>
 
-                    {/* Reseñas a redes */}
-                    
-
-                    
-                        </div>
-                      </div>
-                    )}
                   </div>
                 );
               })}

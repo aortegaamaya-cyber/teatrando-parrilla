@@ -208,7 +208,7 @@ async function loadData() {
   } catch(e) { console.warn("load error", e); }
   return null;
 }
- = 4000;
+const POLL_INTERVAL = 4000;
 
 const BRIEFINGS_INIT = {"Mayo":"📌 LÍNEA EDITORIAL MAYO 2026\n\n🎯 OBJETIVO\n• Generar engagement orgánico\n• Posicionar marca como referente teatral\n• Convertir a WhatsApp (ventas) 👉 alineado al modelo de negocio\n\n📅 ENFOQUE POR SEMANA\nS1 (1–3 may): Arranque cultural + cartelera fin de semana.\nS2 (4–10 may): Día de las Madres.\nS3 (11–17 may): Día del Maestro + One Vision of Queen.\nS4 (18–24 may): Venta fuerte + curaduría + memes.\nS5 (25–31 may): Cierre de mes + adelanto junio."}
 

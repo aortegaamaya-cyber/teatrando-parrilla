@@ -338,8 +338,7 @@ export default function App() {
           if(saved.resenas)   setResenas(saved.resenas);
           if(saved.briefings) setBriefings(saved.briefings);
           if(saved.mesesDisp) setMesesDisp(saved.mesesDisp);
-          if(saved.visitas)   setVisitas(saved.visitas);
-        }
+          }
         // Si datos son de otro mes, ignorar y usar buildMayo()
       }
       if(isMounted.current) setDataLoaded(true);
@@ -857,6 +856,25 @@ export default function App() {
   // ══════════════════════════════════════════════════════════════════════════
   // VISTA ADMIN
   // ══════════════════════════════════════════════════════════════════════════
+  const handleEditPub = useCallback((id,campo,valor)=>{
+    setParrillas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(p=>p.id===id?{...p,[campo]:valor}:p)}));
+  },[mesActivo]);
+
+  const handleEditRedes = useCallback((id,nv)=>{
+    setParrillas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(p=>p.id===id?{...p,redes:nv}:p)}));
+  },[mesActivo]);
+
+  const filtrarPubs = useCallback((pubs)=>{
+    return pubs.filter(p=>{
+      if(p.semana!==semanaActiva)return false;
+      if(filtros.pilar!=="Todos"&&p.pilar!==filtros.pilar)return false;
+      if(filtros.formato!=="Todos"&&!p.formato.toLowerCase().includes(filtros.formato.toLowerCase().replace(" estático","").replace(" interactiva","")))return false;
+      if(filtros.red!=="Todas"&&!(p.redes||[]).includes(filtros.red))return false;
+      return true;
+    });
+  },[semanaActiva,filtros]);
+
+
   return(
     <div style={{fontFamily:"Segoe UI,system-ui,sans-serif",background:"#060606",minHeight:"100vh",color:"#fff",paddingBottom:60}}>
 

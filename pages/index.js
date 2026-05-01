@@ -1184,8 +1184,7 @@ export default function App() {
         <div style={{textAlign:"center",marginTop:28,fontSize:8,color:"#141414"}}>Teatrando CDMX · Sistema de Contenido 2026 · @teatrandocdmx</div>
       </div>
     </div>
-  
+
     )
   );
-
 }

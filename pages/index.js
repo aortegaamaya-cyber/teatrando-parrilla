@@ -331,11 +331,16 @@ export default function App() {
     (async()=>{
       const saved=await loadData();
       if(saved && isMounted.current){
-        if(saved.parrillas) setParrillas(saved.parrillas);
-        if(saved.resenas)   setResenas(saved.resenas);
-        if(saved.briefings) setBriefings(saved.briefings);
-        if(saved.mesesDisp) setMesesDisp(saved.mesesDisp);
-        if(saved.visitas)   setVisitas(saved.visitas);
+        // Solo cargar si los datos son de Mayo
+        const mesSaved = saved.mesesDisp?.[0];
+        if(mesSaved === "Mayo" || !mesSaved){
+          if(saved.parrillas) setParrillas(saved.parrillas);
+          if(saved.resenas)   setResenas(saved.resenas);
+          if(saved.briefings) setBriefings(saved.briefings);
+          if(saved.mesesDisp) setMesesDisp(saved.mesesDisp);
+          if(saved.visitas)   setVisitas(saved.visitas);
+        }
+        // Si datos son de otro mes, ignorar y usar buildMayo()
       }
       if(isMounted.current) setDataLoaded(true);
     })();

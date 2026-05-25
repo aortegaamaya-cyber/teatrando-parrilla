@@ -310,7 +310,16 @@ async function loadData() {
   try {
     const res = await fetch('/api/data');
     const json = await res.json();
-    if (json.data) return JSON.parse(json.data);
+    if (json.data) {
+      const parsed = JSON.parse(json.data);
+      // Ensure Junio always present
+      if(parsed && parsed.mesesDisp && !parsed.mesesDisp.includes("Junio")){
+        parsed.mesesDisp = ["Mayo","Junio"];
+        if(parsed.parrillas) parsed.parrillas["Junio"] = buildJunio();
+        if(parsed.resenas) parsed.resenas["Junio"] = buildResenasJunio();
+      }
+      return parsed;
+    }
   } catch(e) { console.warn("load error", e); }
   return null;
 }
@@ -433,14 +442,23 @@ export default function App() {
       const saved=await loadData();
       if(saved && isMounted.current){
         // Solo cargar si los datos son de Mayo
-        const mesSaved = saved.mesesDisp?.[0];
-        if(mesSaved === "Mayo" || !mesSaved){
-          if(saved.parrillas) setParrillas(saved.parrillas);
-          if(saved.resenas)   setResenas(saved.resenas);
+        if(saved.parrillas){
+          // Merge: ensure Junio exists
+          const p = saved.parrillas;
+          if(!p["Junio"] || p["Junio"].length===0) p["Junio"]=buildJunio();
+          setParrillas(p);
+        }
+          if(saved.resenas){
+          const r = saved.resenas;
+          if(!r["Junio"] || r["Junio"].length===0) r["Junio"]=buildResenasJunio();
+          setResenas(r);
+        }
           if(saved.briefings) setBriefings(saved.briefings);
-          if(saved.mesesDisp) setMesesDisp(saved.mesesDisp);
-          }
-        // Si datos son de otro mes, ignorar y usar buildMayo()
+          if(saved.mesesDisp){
+          const m = saved.mesesDisp;
+          if(!m.includes("Junio")) m.push("Junio");
+          setMesesDisp(m);
+        }
       }
       if(isMounted.current) setDataLoaded(true);
     })();

@@ -494,7 +494,11 @@ export default function App() {
           if(saved.parrillas) setParrillas(saved.parrillas);
           if(saved.resenas)   setResenas(saved.resenas);
           if(saved.briefings) setBriefings(saved.briefings);
-          if(saved.mesesDisp) setMesesDisp(saved.mesesDisp);
+          if(saved.mesesDisp){
+            const m=saved.mesesDisp;
+            if(!m.includes("Junio")) m.push("Junio");
+            setMesesDisp(m);
+          }
           setLastRefresh(new Date().toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit",second:"2-digit"}));
         }
       }

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef, useMemo } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 
 const REDES = ["Instagram Feed","Instagram Stories","Instagram Reels","Facebook","TikTok","X","YouTube Shorts","YouTube"];
 const PILARES = ["P1 – Curaduría","P2 – Planes","P3 – Experiencia","P4 – Servicio","P5 – Prueba social","P6 – Cultura"];
@@ -46,113 +46,147 @@ const buildResena = (o={}) => ({
 // P1+P2+P3 = 70% = 20 pubs | P4 = 20% = 6 pubs | P5+P6 = 10% = 3 pubs (sin contar reseñas que son independientes)
 
 
-const buildMayo = () => [];
+const buildMayo = () => [
+// ═══════════════════════════════════════════════════════
+// SEMANA 1: Vie 1 – Dom 3
+// ═══════════════════════════════════════════════════════
+  {id:"may_s1_01",fecha:"Vie 1",dia:"Viernes",mes:"Mayo",semana:1,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P6 – Cultura",formato:"Carrusel",tipo:"",resenaId:"",tema:"¿Sabías que el teatro nació hace más de 2,500 años?",copy:"¿Sabías que el teatro nació hace más de 2,500 años?\n\nTodo empezó en Grecia, en las fiestas en honor a Dioniso.\nEsquilo, Sófocles y Eurípides escribieron las primeras historias que se representaron al aire libre.\n\nDesde entonces, el teatro no ha parado.\nSigue vivo. Sigue presente. Sigue emocionando.\n\nY en CDMX, cada fin de semana hay una historia esperándote en el escenario.\n\nEncuéntrala en teatrando.com.mx\n\n#Teatrando #TeatroCDMX #CulturaTeatro #HistoriaDelTeatro #CarteleraCDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"POST CULTURAL - El primero del mes. Imagen tipo infografía teatral. Ya existe diseño de referencia.",disenho:"para_disenar"},
 
-const buildJunio = () => [
-{id:"jun_s1_01",fecha:"Lun 1",dia:"Lunes",mes:"Junio",semana:1,pub:1,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P7 – Turismo CDMX",formato:"Post estático",tipo:"MUNDIAL",resenaId:"",tema:"¿Vienes al Mundial? Esto también tienes que vivir en CDMX",copy:"⚽ Vienes al Mundial en CDMX...\n🎭 Pero hay algo más que tienes que vivir.\n\nDespués del partido, la noche sigue en los mejores escenarios de México:\n✨ Matilda\n👻 Fantasma de la Ópera\n🔥 Las Leonas\n😱 El Sótano\n🌹 Perfume de Gardenia\n\n🎟️ Con descuentos especiales en Teatrando.\n\nEl Mundial se vive en las calles.\nEl teatro se vive en los escenarios.\n\nteatrando.com.mx\n\n#Teatrando #TeatroCDMX #Mundial2026 #QueHacerEnCDMX #MundialCDMX",estado:"Pendiente",notas:"POST INAUGURAL JUNIO — Mundial. Diseño especial con balón + teatro.",disenho:"para_disenar"},
-{id:"jun_s1_02",fecha:"Lun 1",dia:"Lunes",mes:"Junio",semana:1,pub:2,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"RECOMENDACION",resenaId:"",tema:"Recomendación S1 — Matilda · Ni con Ellas ni sin Ellas · Prénde me",copy:"LA RECOMENDACIÓN TEATRANDO DE ESTA SEMANA 🎭\n\n3 obras que no te puedes perder en junio:\n\n✨ MATILDA EL MUSICAL\nMagia, humor y corazón en el escenario más grande.\n\n💃 NI CON ELLAS NI SIN ELLAS\nEl eterno dilema llevado al escenario con todo el humor.\n\n🎵 PRÉNDE ME\nUn musical íntimo que te agarra sin avisarte.\n\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #TeatroCDMX #ObrasDeCDMX #CarteleraCDMX",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s1_03",fecha:"Mar 2",dia:"Martes",mes:"Junio",semana:1,pub:1,redes:["Instagram Reels", "TikTok", "YouTube Shorts"],pilar:"P7 – Turismo CDMX",formato:"Reel",tipo:"MUNDIAL",resenaId:"",tema:"El error de los turistas en CDMX",copy:"El error más común de los turistas en CDMX: 🚫\n\nVer museos, comer tacos, tomar fotos en el Ángel...\n\nY NO ir al teatro. 🎭\n\nCDMX tiene una de las carteleras teatrales más grandes de Latinoamérica.\nMusicales de Broadway. Obras de autor. Teatro independiente.\n\nY con descuentos que no consigues en otro lado.\n\n¿Ya tienes tu plan de teatro para esta semana?\nteatrando.com.mx\n\n#Teatrando #TeatroCDMX #TurismoMexico #QueHacerEnCDMX #CDMX",estado:"Pendiente",notas:"Imagen 2 de la serie turismo.",disenho:"para_disenar"},
-{id:"jun_s1_04",fecha:"Mar 2",dia:"Martes",mes:"Junio",semana:1,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P6 – Cultura",formato:"Post estático",tipo:"",resenaId:"",tema:"Post cultural — El teatro en México tiene más de 400 años",copy:"El teatro en México tiene más de 400 años de historia. 🎭\n\nDesde las representaciones evangelizadoras del siglo XVI hasta los grandes musicales del Centro Cultural Teatro 1 hoy.\n\nPasamos de evangelizar con teatro a entretenernos, provocarnos y transformarnos con él.\n\nY en CDMX, ese legado sigue vivo cada fin de semana.\n\nteatrando.com.mx\n\n#Teatrando #TeatroCDMX #CulturaTeatro #HistoriaDelTeatro #CDMX",estado:"Pendiente",notas:"POST CULTURAL semana 1.",disenho:"para_disenar"},
-{id:"jun_s1_05",fecha:"Mié 3",dia:"Miércoles",mes:"Junio",semana:1,pub:1,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"",resenaId:"",tema:"3 musicales que tienes que ver en CDMX: Matilda · Fantasma · Mentiras",copy:"3 MUSICALES QUE TIENES QUE VER EN CDMX 🎵\n\n✨ MATILDA EL MUSICAL\nBasado en el libro de Roald Dahl. Magia real en el escenario.\n\n👻 FANTASMA DE LA ÓPERA\nEl clásico más amado de Broadway, ahora en CDMX.\n\n💔 MENTIRAS EL MUSICAL\nCanciones que ya conoces. Historia que no esperabas.\n\nDesliza y elige el tuyo.\n🎟️ teatrando.com.mx\n\n#Teatrando #Musicales #TeatroCDMX #ObrasDeCDMX #MusicalCDMX",estado:"Pendiente",notas:"Imagen 3 de la serie turismo. Carrusel con una slide por musical.",disenho:"para_disenar"},
-{id:"jun_s1_06",fecha:"Mié 3",dia:"Miércoles",mes:"Junio",semana:1,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P2 – Planes",formato:"Post estático",tipo:"",resenaId:"",tema:"Arranca junio — cartelera de la semana",copy:"Junio arranca con todo. 🎭\n\nEsta semana en CDMX:\n🎵 Matilda · Fantasma · Notre Dame\n🔥 El Sótano · La Obscenidad de la Carne\n😂 Sor-presas Amén · Marihuanólogos\n👨‍👩‍👧 Cri Cri · El Mago de Oz · Caperucita\n\nToda la cartelera en teatrando.com.mx\n\n#Teatrando #TeatroCDMX #CarteleraCDMX #ObrasDeCDMX #PlanCDMX",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s1_07",fecha:"Jue 4",dia:"Jueves",mes:"Junio",semana:1,pub:1,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"CARTELERA FIN",resenaId:"",tema:"Cartelera 1er fin de semana de junio",copy:"¿Ya tienes tu plan este fin? 🎭\n\n🎭 IMPERIO · Dom 7 · Castillo Chapultepec\n😂 EL PELÓN EN SUS TIEMPOS DEL CÓLERA · Vie 8:30pm · Nuevo Teatro Versalles\n🎤 RISA & TONIC · Vie-Sáb 8:30 y 10:30pm · Foro Shakespeare\n🔥 INFIERNO · Vie-Sáb · Teatro Enrique Lizalde\n👻 Y LLEGARON LAS BRUJAS · Jue-Dom · Centro Roldán\n🏠 LO QUE CALLAMOS LAS SUEGRAS · Sáb 6pm · Foro Coapa\n🎵 DESCUBRIENDO A CRI CRI · Sáb-Dom 1pm · Teatro Hidalgo\n\nDesliza y elige.\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #PlanFinDeSemana #ObrasDeCDMX",estado:"Pendiente",notas:"Cartelera fin semana 1 — publicar jueves para anticipar el fin.",disenho:""},
-{id:"jun_s1_08",fecha:"Jue 4",dia:"Jueves",mes:"Junio",semana:1,pub:2,redes:["Instagram Reels", "TikTok", "YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Reseña — Sor-presas Amén",copy:"RESEÑA TEATRANDO: SOR-PRESAS AMÉN 🎭\n\nSemanas en cartelera y el teatro sigue lleno.\n\n¿Por qué? Porque Sor-presas Amén logra lo más difícil del humor:\nhacerte reír de algo que reconoces.\n\nSituaciones reales. Personajes que existen. Comedia con corazón.\n\nY mucho, mucho teatro.\n\n📍 Teatro Hidalgo\n🗓️ Vie 8:30pm · Sáb 6 y 8:30pm · Dom 6pm\n🎟️ teatrando.com.mx\n\n#Teatrando #SorpresasAmen #TeatroCDMX #ReseñaTeatro #ObrasDeCDMX",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s1_09",fecha:"Vie 5",dia:"Viernes",mes:"Junio",semana:1,pub:1,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"No sabía que había descuentos así",copy:"No sabía que había descuentos así en el teatro. 🎟️\n\nPorque en Teatrando no vendemos boletos.\nVendemos acceso a experiencias que normalmente cuestan más.\n\nMatilda. Fantasma. Las Leonas. El Sótano.\nCon descuentos que no encuentras en otro lado.\n\n¿Ya los conoces?\nteatrando.com.mx\n\n#Teatrando #TeatroCDMX #DescuentosTeatro #ObrasDeCDMX #QueHacerEnCDMX",estado:"Pendiente",notas:"Imagen 5 de la serie turismo.",disenho:"para_disenar"},
-{id:"jun_s1_10",fecha:"Vie 5",dia:"Viernes",mes:"Junio",semana:1,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P8 – Teatro independiente",formato:"Post estático",tipo:"",resenaId:"",tema:"El teatro en México no es como crees",copy:"El teatro en México no es como crees. 🎭\n\nNo es aburrido.\nNo es solo para adultos mayores.\nNo es caro.\nNo es inaccesible.\n\nEs Tripas Corazón que te hace llorar de risa.\nEs El Sótano que te cambia la perspectiva.\nEs Matilda que te regresa la infancia.\nEs Mientes tan Bien que dice lo que tú no puedes decir.\n\nEl teatro en CDMX es para todos.\nteatrando.com.mx\n\n#Teatrando #TeatroCDMX #ObrasDeCDMX #TeatroParaTodos",estado:"Pendiente",notas:"Imagen 4 de la serie turismo.",disenho:"para_disenar"},
-{id:"jun_s1_11",fecha:"Sáb 6",dia:"Sábado",mes:"Junio",semana:1,pub:1,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"",resenaId:"",tema:"Obras en CDMX que sí valen cada peso",copy:"Obras en CDMX que sí valen cada peso. 💯🎭\n\n👻 Fantasma de la Ópera — producción épica\n✨ Matilda — magia en el escenario\n🔥 Las Leonas — fuerza pura\n😱 El Sótano — experiencia única\n🌹 Perfume de Gardenia — glamour y emoción\n🖤 La Obscenidad de la Carne — teatro que confronta\n\nY con descuentos en Teatrando.\n\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #ObrasDeCDMX #QueVerEnCDMX",estado:"Pendiente",notas:"Imagen 6 de la serie turismo.",disenho:"para_disenar"},
-{id:"jun_s1_12",fecha:"Sáb 6",dia:"Sábado",mes:"Junio",semana:1,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P7 – Turismo CDMX",formato:"Post estático",tipo:"",resenaId:"",tema:"El lado cultural que pocos turistas conocen",copy:"Hay un lado de CDMX que pocos turistas conocen. 🌆🎭\n\nNo está en los museos.\nNo está en los mercados.\nEstá en los escenarios.\n\nCada fin de semana, más de 40 obras abren el telón en esta ciudad.\nMusicales de nivel internacional.\nTeatro independiente que te rompe esquemas.\nComedia que te hace reír de cosas reales.\n\nVive la CDMX completa.\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #TurismoMexico #CDMX #QueHacerEnCDMX",estado:"Pendiente",notas:"Imagen 7 de la serie turismo.",disenho:"para_disenar"},
-{id:"jun_s1_13",fecha:"Dom 7",dia:"Domingo",mes:"Junio",semana:1,pub:1,redes:["Instagram Feed", "Facebook", "Instagram Stories", "Facebook Stories"],pilar:"P5 – Prueba social",formato:"Post estático",tipo:"",resenaId:"",tema:"Interacción — ¿Cuál es tu musical favorito?",copy:"Pregunta importante para este domingo: 🎵🎭\n\n¿Cuál es el musical que más te ha impactado?\n\na) 🎵 Un clásico de Broadway que llega a CDMX\nb) 🇲🇽 Un musical mexicano de producción nacional\nc) 🎭 Una obra pequeña que nadie esperaba y te dejó sin palabras\nd) Todavía no he ido a un musical — y ya quiero ir\n\nCuéntanos en los comentarios 👇\n\n#Teatrando #TeatroCDMX #Musicales #ObrasDeCDMX",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s1_14",fecha:"Dom 7",dia:"Domingo",mes:"Junio",semana:1,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P7 – Turismo CDMX",formato:"Post estático",tipo:"",resenaId:"",tema:"CDMX tiene uno de los mejores teatros de Latinoamérica",copy:"CDMX tiene uno de los mejores teatros de Latinoamérica. ⭐⭐⭐⭐⭐🎭\n\nNo es opinión — es lo que dicen los números:\n📍 +200 recintos teatrales activos\n🎭 +40 obras en cartelera cada fin de semana\n🌎 Producciones internacionales que eligen CDMX\n\nY si vienes al Mundial…\neste es el plan perfecto para la noche.\n\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #MejoresTeatro #Latinoamerica #CDMX",estado:"Pendiente",notas:"Imagen 9 de la serie turismo.",disenho:"para_disenar"},
-{id:"jun_s2_01",fecha:"Lun 8",dia:"Lunes",mes:"Junio",semana:2,pub:1,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"RECOMENDACION",resenaId:"",tema:"Recomendación S2 — El que se enamora pierde · Marihuanólogos · Tripas Corazón · Conversando con el Diablo",copy:"LA RECOMENDACIÓN TEATRANDO DE ESTA SEMANA 🎭\n\n🔴 EL QUE SE ENAMORA PIERDE\nAmar sin red: cuando el corazón no calcula.\n📍 Nuevo Teatro Versalles · Jue 8:30pm\n\n💨 MARIHUANÓLOGOS\nComedia sin filtros que dice lo que piensas.\n📍 Teatro Xola · Vie 8:30pm\n\n😂 TRIPAS CORAZÓN\nDos amigas, un caos y mucha carcajada.\n📍 Foro Coyoacanense · Vie-Sáb 8pm · Dom 7pm\n\n😈 CONVERSANDO CON EL DIABLO\nEl mal tiene muchas formas — esta es la más teatral.\n📍 Teatro Enrique Lizalde · Lun-Mar 8:30pm\n\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #ObrasDeCDMX #CarteleraCDMX",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s2_02",fecha:"Lun 8",dia:"Lunes",mes:"Junio",semana:2,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P6 – Cultura",formato:"Carrusel",tipo:"",resenaId:"",tema:"Grandes Productores Parte 2: Rubén Lara · Jorge Ortiz de Pinedo · Gerardo Quiroz · Juan Torres",copy:"GRANDES PRODUCTORES QUE HICIERON HISTORIA EN EL TEATRO MEXICANO 🎭\n\n🌟 RUBÉN LARA\nProductor de los musicales más ambiciosos de México. Su visión transformó lo que se puede hacer en un escenario nacional.\n\n🌟 JORGE ORTIZ DE PINEDO\nActor, director y productor que democratizó el teatro de comedia en México.\n\n🌟 GERARDO QUIROZ\nImpulsor del teatro independiente que forma públicos y transforma comunidades.\n\n🌟 JUAN TORRES\nFundador de algunos de los proyectos teatrales más importantes de la escena contemporánea.\n\nSu pasión vive en cada función. ✨\n\n#Teatrando #TeatroCDMX #GrandesProductores #CulturaTeatro",estado:"Pendiente",notas:"POST CULTURAL — Grandes Productores Parte 2.",disenho:"para_disenar"},
-{id:"jun_s2_03",fecha:"Mar 9",dia:"Martes",mes:"Junio",semana:2,pub:1,redes:["Instagram Reels", "TikTok", "YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Reseña — Busco al Hombre de Mi Vida",copy:"RESEÑA TEATRANDO: BUSCO AL HOMBRE DE MI VIDA 🎭\n\n¿Qué pasa cuando decides que ya es hora?\n¿Cuándo el amor deja de ser algo que esperas y se convierte en algo que buscas?\n\nEsta comedia no tiene miedo de reírse de lo que más nos importa.\nHonesta. Divertida. Incómodamente real.\n\n📍 Teatro San Jerónimo\n🗓️ Sáb 6 y 8:30pm · Dom 6pm\n🎟️ teatrando.com.mx\n\n#Teatrando #BuscoAlHombreDeMyVida #TeatroCDMX #ReseñaTeatro #ObrasDeCDMX",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s2_04",fecha:"Mar 9",dia:"Martes",mes:"Junio",semana:2,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P7 – Turismo CDMX",formato:"Post estático",tipo:"MUNDIAL",resenaId:"",tema:"Antes del partido — una noche de teatro",copy:"¿Vienes a la CDMX para el Mundial? ⚽🎭\n\nAntes del partido — o después — la ciudad tiene algo más para ti.\n\nMusicales de nivel internacional.\nObras que no encontrarás en ningún otro lugar.\nDescuentos exclusivos en Teatrando.\n\nEl partido dura 90 minutos.\nEl teatro te dura para siempre.\n\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #Mundial2026 #CDMX #TurismoMexico",estado:"Pendiente",notas:"Pre-partido México 11 jun.",disenho:""},
-{id:"jun_s2_05",fecha:"Mié 10",dia:"Miércoles",mes:"Junio",semana:2,pub:1,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P7 – Turismo CDMX",formato:"Post estático",tipo:"MUNDIAL",resenaId:"",tema:"Mañana es México vs Sudáfrica — y después el teatro te espera",copy:"Mañana es el partido inaugural. ⚽🇲🇽\nMéxico vs Sudáfrica en CDMX.\n\nY después del partido — o antes — la ciudad tiene el mejor plan nocturno:\n\n🎭 EL TEATRO.\n\nMusicals gigantes. Obras de autor. Comedia. Drama. Suspenso.\nTodo en una sola ciudad, en una sola noche.\n\nTe ayudamos a encontrar tu obra perfecta.\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #MexicoVsSudafrica #Mundial2026 #QueHacerEnCDMX",estado:"Pendiente",notas:"Publicar mié 10 previo al partido del 11 jun.",disenho:""},
-{id:"jun_s2_06",fecha:"Mié 10",dia:"Miércoles",mes:"Junio",semana:2,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Meme — el que va al teatro vs el que no",copy:"El que nunca ha ido al teatro: 😐\n'No sé si es para mí...'\n\nEl que fue UNA VEZ: 😭🤯👏\n'¿Cuándo es la próxima función?'\n\nTodo el que ha vivido esto sabe exactamente de qué hablamos.\n\n¿A quién se lo mandas? 👇\n\n#Teatrando #TeatroCDMX #MemeTeatro #ObrasDeCDMX",estado:"Pendiente",notas:"MEME semana 2.",disenho:"para_disenar"},
-{id:"jun_s2_07",fecha:"Jue 11",dia:"Jueves",mes:"Junio",semana:2,pub:1,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P7 – Turismo CDMX",formato:"Post estático",tipo:"MUNDIAL",resenaId:"",tema:"Hoy es el partido inaugural — el teatro también te espera",copy:"HOY ES EL DÍA. ⚽🇲🇽\nMéxico vs Sudáfrica · Partido Inaugural del Mundial.\n\nY esta noche, cuando el partido termine —\nel escenario también está listo para ti.\n\n🎭 CDMX tiene algo que ninguna otra sede del Mundial tiene:\nuna cartelera teatral de primer nivel.\n\n¿Ya tienes tu plan de teatro para esta semana?\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #Mundial2026 #MexicoVsSudafrica #CDMX",estado:"Pendiente",notas:"Publicar el mismo 11 jun — día del partido inaugural.",disenho:""},
-{id:"jun_s2_08",fecha:"Jue 11",dia:"Jueves",mes:"Junio",semana:2,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"CARTELERA FIN",resenaId:"",tema:"Cartelera 2do fin de semana — El Sótano · Alive · Comedrinks · Penelogías · K-Pop · Mago de Oz",copy:"¿Ya tienes tu plan del fin? 🎭\n\n😱 EL SÓTANO · Vie 7 y 9:15pm · Teatro Fernando Soler\n🎵 ALIVE · Foro Stelaris\n😂 ME DA PENA MI EX · Vie 8pm · Foro Lenin\n🍹 COMEDRINKS · Mié 8pm / Sáb 8:30pm · Terraza Cozumel\n💃 PENELOGÍAS · Sáb 8:30pm · Foro Sylvia Pasquel\n🎤 TRIBUTO K-POP · Sáb-Dom 2:30pm · Foro Coapa\n🧙 EL MAGO DE OZ · Dom 4pm · Teatro Enrique Lizalde\n🐱 EL GATO CON BOTAS · Dom · Teatro Enrique Elizalde\n\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #PlanFinDeSemana #ObrasDeCDMX",estado:"Pendiente",notas:"Cartelera fin semana 2 — publicar jueves.",disenho:""},
-{id:"jun_s2_09",fecha:"Vie 12",dia:"Viernes",mes:"Junio",semana:2,pub:1,redes:["Instagram Reels", "TikTok", "YouTube Shorts"],pilar:"P7 – Turismo CDMX",formato:"Reel",tipo:"",resenaId:"",tema:"Si visitas CDMX, guarda este video",copy:"Si visitas CDMX — guarda este video. 📌🎭\n\nLo que nadie te dice antes de llegar:\nCDMX tiene una de las carteleras teatrales más grandes de América Latina.\n\nMusicales de Broadway.\nObras de dramaturgia contemporánea.\nComedia. Suspenso. Drama. Teatro inmersivo.\n\nY con descuentos que no encuentras en taquilla.\n\nTeatrando es tu guía de teatro en CDMX.\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #VisitaCDMX #TurismoMexico #CDMX",estado:"Pendiente",notas:"Imagen 10 de la serie turismo.",disenho:"para_disenar"},
-{id:"jun_s2_10",fecha:"Vie 12",dia:"Viernes",mes:"Junio",semana:2,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"",resenaId:"",tema:"10 musicales en cartelera junio 2026",copy:"10 MUSICALES EN CARTELERA ESTE JUNIO 🎵🎭\n\n✨ MATILDA — próximo fin de temporada\n💔 MENTIRAS EL MUSICAL\n👑 MENTIDRAGS\n🎭 SOR-PRESAS AMÉN\n🔔 NOTRE DAME DE PARÍS\n❤️ ¿CÓMO TE VA MI AMOR?\n🌹 PERFUME DE GARDENIA\n🎨 FRIDA KAHLO EL MUSICAL\n🔥 PRÉNDE ME\n🗡️ MALINCHE EL MUSICAL\n\nDesliza y elige el tuyo.\n🎟️ teatrando.com.mx\n\n#Teatrando #Musicales #TeatroCDMX #ObrasDeCDMX #MusicalCDMX",estado:"Pendiente",notas:"Carrusel con una slide por musical. Imagen 8 de la serie turismo como portada.",disenho:"para_disenar"},
-{id:"jun_s2_11",fecha:"Sáb 13",dia:"Sábado",mes:"Junio",semana:2,pub:1,redes:["Instagram Reels", "TikTok", "YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Reseña — Matilda el Musical",copy:"RESEÑA TEATRANDO: MATILDA EL MUSICAL ✨\n\nHay obras que te cambian.\nMatilda es una de ellas.\n\nBasada en el libro de Roald Dahl, esta producción lleva al escenario algo que pocos logran:\nmagia de verdad, humor inteligente y una historia que te llega al corazón sin avisarte.\n\nPróximo fin de temporada — no la dejes ir.\n\n📍 Centro Cultural Teatro 1\n🗓️ Vie 8pm · Sáb 5 y 8:30pm · Dom 5pm\n🎟️ teatrando.com.mx\n\n#Teatrando #Matilda #TeatroCDMX #ReseñaTeatro #MusicalCDMX",estado:"Pendiente",notas:"URGENCIA — próximo fin de temporada.",disenho:""},
-{id:"jun_s2_12",fecha:"Sáb 13",dia:"Sábado",mes:"Junio",semana:2,pub:2,redes:["Instagram Feed", "Facebook"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"FRASE",resenaId:"",tema:"Frase de la semana",copy:"El teatro es el único lugar donde puedes vivir diez vidas en una sola noche. 🎭✨\n— Peter Brook\n\nGuárdala y compártela con alguien que todavía no ha descubierto el teatro.\n\n#Teatrando #FraseDeTeatro #TeatroCDMX #ObrasDeCDMX",estado:"Pendiente",notas:"",disenho:"para_disenar"},
-{id:"jun_s2_13",fecha:"Dom 14",dia:"Domingo",mes:"Junio",semana:2,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P2 – Planes",formato:"Post estático",tipo:"",resenaId:"",tema:"Plan de domingo — elige tu obra hoy",copy:"¿Ya tienes tu plan de domingo? 🎭\n\nHOY EN CDMX:\n😱 El Sótano · Dom 5 y 7:30pm · Teatro Fernando Soler\n🎨 Frida Kahlo el Musical · Dom 6pm · Teatro Centenario Coyoacán\n🧙 El Mago de Oz · Dom 4pm · Teatro Enrique Lizalde\n😂 Hasta que la Mafia nos Separe · Dom 6pm · Teatro Xola\n🎵 Malinche · Dom 1 y 5pm · Frontón México\n\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #PlanDomingo #ObrasDeCDMX",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s2_14",fecha:"Dom 14",dia:"Domingo",mes:"Junio",semana:2,pub:2,redes:["Instagram Feed", "Facebook", "Instagram Stories"],pilar:"P5 – Prueba social",formato:"Post estático",tipo:"",resenaId:"",tema:"Interacción — ¿Con quién irías al teatro?",copy:"Una pregunta para este domingo: 🎭\n\n¿Con quién irías al teatro esta semana?\n\na) 💑 Con mi pareja — plan romántico perfecto\nb) 👯 Con mis amigos — la mejor noche del mes\nc) 🎭 Solo — porque el teatro también es para uno\nd) 👨‍👩‍👧 En familia — recuerdos que duran para siempre\n\nResponde en los comentarios 👇\n\n#Teatrando #TeatroCDMX #ObrasDeCDMX #PlanesCDMX",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s3_01",fecha:"Lun 15",dia:"Lunes",mes:"Junio",semana:3,pub:1,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"RECOMENDACION",resenaId:"",tema:"Recomendación S3 — Perfume de Gardenia · Teleny · La Dama de Negro · Soltera pero no para cualquiera · Senso Temazcal",copy:"LA RECOMENDACIÓN TEATRANDO DE ESTA SEMANA 🎭\n\n🌹 PERFUME DE GARDENIA\nGlamour, nostalgia y una voz que no se olvida.\n📍 Teatro San Rafael · Vie 9:15 · Sáb 6 y 9:15 · Dom 4:30pm\n\n🎭 TELENY\nTeatro que se atreve a ir donde pocos llegan.\n📍 Teatro Varsovia · Vie 8pm · Dom 6pm\n\n🖤 LA DAMA DE NEGRO\nEl suspenso que te sigue hasta casa.\n📍 Teatro 11 de Julio · Vie-Dom\n\n💃 SOLTERA PERO NO PARA CUALQUIERA\nComedia que celebra estar sola — y estarlo bien.\n📍 Foro Lenin\n\n🌿 SENSO TEMAZCAL\nUna experiencia que va más allá del teatro.\n📍 Sensorama · Sáb-Dom 10am\n\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #ObrasDeCDMX #CarteleraCDMX",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s3_02",fecha:"Lun 15",dia:"Lunes",mes:"Junio",semana:3,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Plan Día del Padre — llévalo al teatro esta semana",copy:"Esta semana es su semana. 👨🎭\n\nEl mejor regalo para papá no se envuelve — se vive.\n\nLlévalo al teatro:\n😂 Marihuanólogos · Vie 8:30pm · Teatro Xola\n🔥 El Sótano · Vie-Dom · Teatro Fernando Soler\n😂 Stand Up Distrito Condesa · Vie-Dom · Foro Shakespeare\n🌹 Perfume de Gardenia · Sáb-Dom · Teatro San Rafael\n🎤 Risa & Tonic · Vie-Sáb · Foro Shakespeare\n\n🎟️ teatrando.com.mx\n\n#Teatrando #DiadelPadre #TeatroCDMX #PlanParaPapa #ObrasDeCDMX",estado:"Pendiente",notas:"Anticipa el Día del Padre (21 jun).",disenho:""},
-{id:"jun_s3_03",fecha:"Mar 16",dia:"Martes",mes:"Junio",semana:3,pub:1,redes:["Instagram Reels", "TikTok", "YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Reseña — Perfume de Gardenia",copy:"RESEÑA TEATRANDO: PERFUME DE GARDENIA 🌹\n\nHay obras que no entretienen — te transportan.\n\nPerfume de Gardenia lleva al escenario el glamour de una época que se niega a irse.\nCanciones que conoces. Una historia que no esperabas.\nY una actuación que te deja sin palabras.\n\nElegante, emotivo y completamente irresistible.\n\n📍 Teatro San Rafael\n🗓️ Vie 9:15pm · Sáb 6 y 9:15pm · Dom 4:30pm\n🎟️ teatrando.com.mx\n\n#Teatrando #PerfumeDeGardenia #TeatroCDMX #ReseñaTeatro #ObrasDeCDMX",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s3_04",fecha:"Mar 16",dia:"Martes",mes:"Junio",semana:3,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P6 – Cultura",formato:"Post estático",tipo:"",resenaId:"",tema:"Padres icónicos del teatro mexicano",copy:"En el Día del Padre, homenajemos a los papás del teatro mexicano. 👨🎭\n\n🌟 Ignacio López Tarso — el actor de los actores\n🌟 Héctor Suárez — que hizo reír y pensar a generaciones\n🌟 Ernesto Alonso — el señor de los escenarios\n🌟 Roberto D'Amico — maestro y formador de grandes\n\nSu legado vive en cada función que se sube al escenario hoy. ✨\n\n#Teatrando #DiadelPadre #TeatroCDMX #CulturaTeatro #PadresDelTeatro",estado:"Pendiente",notas:"POST CULTURAL Día del Padre.",disenho:"para_disenar"},
-{id:"jun_s3_05",fecha:"Mié 17",dia:"Miércoles",mes:"Junio",semana:3,pub:1,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Meme — los papás y el teatro",copy:"Cuando le propones a papá ir al teatro: 🎭\n\nPapá antes: 😐 'No sé si es lo mío...'\n\nPapá durante la obra: 😂😭👏\n\nPapá al salir: '¿Cuándo volvemos?'\n\nTodo hijo que ha llevado a su papá al teatro sabe exactamente de qué hablamos.\n\n¿Le mandas esto a tu papá? 👇\n\n#Teatrando #DiadelPadre #TeatroCDMX #MemeTeatro #PlanParaPapa",estado:"Pendiente",notas:"MEME semana 3 — Día del Padre.",disenho:"para_disenar"},
-{id:"jun_s3_06",fecha:"Mié 17",dia:"Miércoles",mes:"Junio",semana:3,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"",resenaId:"",tema:"El Fantasma de la Ópera — la producción del año",copy:"No es exageración. Es la producción del año. 👻🎵\n\nEL FANTASMA DE LA ÓPERA en CDMX.\n\nEl musical más famoso de la historia llega al Teatro Insurgentes con todo:\nescenografía de gran formato, vestuario de época y la música que ya sabes de memoria.\n\nUna noche que no se olvida.\n\n📍 Teatro Insurgentes\n🗓️ Mié, Jue y Vie 8pm · Dom 1pm y 5:30pm\n🎟️ teatrando.com.mx\n\n#Teatrando #FantasmaDelaOpera #TeatroCDMX #ObrasDeCDMX #MusicalCDMX",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s3_07",fecha:"Jue 18",dia:"Jueves",mes:"Junio",semana:3,pub:1,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"CARTELERA FIN",resenaId:"",tema:"Cartelera 3er fin — Día del Padre",copy:"El mejor plan para el Día del Padre este fin 👨🎭\n\n🔥 LA OBSCENIDAD DE LA CARNE · Vie-Dom · Teatro Renacimiento\n🎤 SOR-PRESAS AMÉN · Vie-Dom · Teatro Hidalgo\n💃 NI CON ELLAS NI SIN ELLAS · Vie-Sáb · Nuevo Broadway\n😂 EL PELÓN EN SUS TIEMPOS DEL CÓLERA · Vie · Nuevo Teatro Versalles\n🌹 PERFUME DE GARDENIA · Sáb-Dom · Teatro San Rafael\n💨 MARIHUANÓLOGOS · Vie · Teatro Xola\n😱 EL SÓTANO · Vie-Dom · Teatro Fernando Soler\n🖤 LA DAMA DE NEGRO · Vie-Dom · Teatro 11 de Julio\n🎤 RISA & TONIC · Vie-Sáb · Foro Shakespeare\n👑 SEÑORA PRESIDENTA · Dom · Centro Cultural Teatro 2\n😂 COMEDY FACTORY · Sáb · Terraza Cozumel\n💃 PENELOGÍAS · Sáb · Foro Sylvia Pasquel\n😂 HASTA QUE LA MAFIA NOS SEPARE · Dom · Teatro Xola\n🎤 STAND UP DISTRITO CONDESA · Vie-Dom · Foro Shakespeare\n\n🎟️ teatrando.com.mx\n\n#Teatrando #DiadelPadre #TeatroCDMX #PlanParaPapa #PlanFinDeSemana",estado:"Pendiente",notas:"Cartelera fin semana 3 — Día del Padre. Publicar jueves.",disenho:""},
-{id:"jun_s3_08",fecha:"Jue 18",dia:"Jueves",mes:"Junio",semana:3,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P7 – Turismo CDMX",formato:"Post estático",tipo:"MUNDIAL",resenaId:"",tema:"Hoy Uzbekistán vs Colombia — CDMX tiene teatro de clase mundial",copy:"Hoy juega Uzbekistán vs Colombia en CDMX. ⚽🌎\n\nY esta ciudad no para — porque además del partido,\nesta noche hay más de 20 obras abiertas en los escenarios de CDMX.\n\n🎭 El teatro en CDMX es de clase mundial.\nY esta semana también es el Día del Padre.\n\nDos razones para vivir la ciudad completa.\n\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #Mundial2026 #UzbekistanVsColombia #CDMX",estado:"Pendiente",notas:"Partido 18 jun.",disenho:""},
-{id:"jun_s3_09",fecha:"Vie 19",dia:"Viernes",mes:"Junio",semana:3,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Urgencia — últimos boletos fin del Padre",copy:"Este domingo es su día. 👨🎭\n\nY los boletos se están agotando.\n\nSi quieres llevar a papá al teatro este fin:\n🔥 El Sótano · últimos lugares\n🌹 Perfume de Gardenia · muy solicitado\n😱 La Obscenidad de la Carne · lleno en algunas funciones\n\nNo lo dejes para mañana.\nEscríbenos por WhatsApp y te ayudamos a asegurar su lugar.\n\n🎟️ teatrando.com.mx\n\n#Teatrando #DiadelPadre #TeatroCDMX #UrgenciaBoletos #ObrasDeCDMX",estado:"Pendiente",notas:"Urgencia previa al Día del Padre.",disenho:""},
-{id:"jun_s3_10",fecha:"Vie 19",dia:"Viernes",mes:"Junio",semana:3,pub:2,redes:["Instagram Reels", "TikTok", "YouTube Shorts"],pilar:"P8 – Teatro independiente",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Reseña — El Hubiera No Existe",copy:"RESEÑA TEATRANDO: EL HUBIERA NO EXISTE 🎭\n\nTodas las decisiones que no tomaste.\nTodas las palabras que no dijiste.\nTodos los caminos que se quedaron sin recorrer.\n\nEsta obra te confronta con eso — y lo hace con un humor que duele de lo honesto que es.\n\nTeatro independiente que te llega donde más duele.\n\n📍 Foro Sylvia Pasquel\n🗓️ Mié 8:30pm\n🎟️ teatrando.com.mx\n\n#Teatrando #ElHuberaNoExiste #TeatroCDMX #ReseñaTeatro #TeatroIndependiente",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s3_11",fecha:"Sáb 20",dia:"Sábado",mes:"Junio",semana:3,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P6 – Cultura",formato:"Post estático",tipo:"",resenaId:"",tema:"Actores que también son padres",copy:"En el Día del Padre celebramos a los actores que también son papás. 👨‍👧‍👦🎭\n\nEntre el ensayo y la función, entre el elenco y la familia.\n\nSer actor y ser padre es un doble escenario que pocos entienden — y que ellos viven con todo.\n\nHoy les dedicamos el aplauso. ✨\n\n#Teatrando #DiadelPadre #TeatroCDMX #ActoresPadres #CulturaTeatro",estado:"Pendiente",notas:"",disenho:"para_disenar"},
-{id:"jun_s3_12",fecha:"Sáb 20",dia:"Sábado",mes:"Junio",semana:3,pub:2,redes:["Instagram Reels", "TikTok", "YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Reseña — La Dama de Negro",copy:"RESEÑA TEATRANDO: LA DAMA DE NEGRO 🖤\n\nHay suspenso — y luego está La Dama de Negro.\n\nUna obra que construye tensión desde la primera escena.\nQue no te da respiro.\nQue te sigue hasta el estacionamiento.\n\nTeatro de suspenso en su forma más pura.\n\nNo la veas solo. 👀\n\n📍 Teatro 11 de Julio\n🗓️ Vie 8:30pm · Sáb 6 y 8:30pm · Dom 6pm\n🎟️ teatrando.com.mx\n\n#Teatrando #LaDamaDeNegro #TeatroCDMX #ReseñaTeatro #TeatroSuspenso",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s3_13",fecha:"Dom 21",dia:"Domingo",mes:"Junio",semana:3,pub:1,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P2 – Planes",formato:"Post estático",tipo:"",resenaId:"",tema:"Feliz Día del Padre — hoy el teatro es para él",copy:"Feliz Día del Padre. 👨🎭\n\nHoy la mejor forma de celebrarlo es en vivo.\nEn un escenario. Compartiendo una historia.\n\nPorque los mejores recuerdos no se regalan — se viven.\n\n¿Ya tienen su plan de hoy?\n🎟️ teatrando.com.mx\n\n#Teatrando #DiadelPadre #TeatroCDMX #FelizDiaDelPadre #ObrasDeCDMX",estado:"Pendiente",notas:"DÍA DEL PADRE — 21 junio.",disenho:"para_disenar"},
-{id:"jun_s3_14",fecha:"Dom 21",dia:"Domingo",mes:"Junio",semana:3,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P7 – Turismo CDMX",formato:"Post estático",tipo:"MUNDIAL",resenaId:"",tema:"¿Viniste al Mundial? Hoy vive el teatro con tu familia",copy:"¿Viniste a CDMX para el Mundial? ⚽🎭\n\nHoy domingo — Día del Padre en México —\nla ciudad tiene el plan perfecto para terminar el día:\n\n🎭 El teatro.\n\nLleva a tu familia a vivir algo que no encontrarán en ningún otro lugar.\n\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #Mundial2026 #DiadelPadre #TurismoMexico",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s4_01",fecha:"Lun 22",dia:"Lunes",mes:"Junio",semana:4,pub:1,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"RECOMENDACION",resenaId:"",tema:"Recomendación S4 — La Obscenidad de la Carne · La Última Paciente · Leyendas",copy:"LA RECOMENDACIÓN TEATRANDO DE ESTA SEMANA 🎭\n\n🔥 LA OBSCENIDAD DE LA CARNE\nTeatro que incomoda porque dice la verdad.\n📍 Teatro Renacimiento · Vie-Dom\n\n🔍 LA ÚLTIMA PACIENTE\nUna sala de terapia donde nadie dice la verdad.\n📍 Foro Shakespeare · Sáb 8:30pm\n\n🌟 LEYENDAS\nCuando la música y el teatro se encuentran bajo las estrellas.\n📍 Foro Stelaris\n\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #ObrasDeCDMX #CarteleraCDMX",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s4_02",fecha:"Lun 22",dia:"Lunes",mes:"Junio",semana:4,pub:2,redes:["Instagram Feed", "Facebook"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"FRASE",resenaId:"",tema:"Frase de la semana",copy:"El teatro existe porque la vida no es suficiente. 🎭✨\n— Fernando Arrabal\n\nGuárdala y compártela.\n\n#Teatrando #FraseDeTeatro #TeatroCDMX #ObrasDeCDMX",estado:"Pendiente",notas:"",disenho:"para_disenar"},
-{id:"jun_s4_03",fecha:"Mar 23",dia:"Martes",mes:"Junio",semana:4,pub:1,redes:["Instagram Reels", "TikTok", "YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Reseña — Mientes tan Bien (LGBTQ+)",copy:"RESEÑA TEATRANDO: MIENTES TAN BIEN 🏳️‍🌈🎭\n\nHay obras que dicen lo que todos piensan pero nadie se atreve a decir.\n\nMientes tan Bien — Versión Ellos es una de ellas.\nHumor inteligente, situaciones reconocibles y una honestidad que incomoda de lo real que es.\n\nTeatro LGBTQ+ que no necesita explicarse — solo vivirse.\n\n📍 Foro ICAL\n🗓️ Sáb 8:30pm\n🎟️ teatrando.com.mx\n\n#Teatrando #MientesTanBien #TeatroCDMX #ReseñaTeatro #TeatroLGBTQ",estado:"Pendiente",notas:"Semana del Orgullo.",disenho:""},
-{id:"jun_s4_04",fecha:"Mar 23",dia:"Martes",mes:"Junio",semana:4,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P6 – Cultura",formato:"Post estático",tipo:"",resenaId:"",tema:"Teatro y diversidad — historias que el escenario necesita contar",copy:"El teatro siempre ha sido un espacio de diversidad. 🏳️‍🌈🎭\n\nAntes de que hubiera leyes.\nAntes de que hubiera marchas.\nAntes de que hubiera conversación pública.\n\nEl escenario ya estaba contando esas historias.\n\nEsta semana de Orgullo, el teatro de CDMX celebra con obras que importan:\nMientes tan Bien · Busco al Hombre de Mi Vida · Mentidrags · Teleny · Señora Presidenta\n\nEl escenario también es diverso. Siempre lo ha sido.\n\n#Teatrando #Orgullo2026 #TeatroCDMX #TeatroLGBTQ #Diversidad",estado:"Pendiente",notas:"POST semana del Orgullo.",disenho:"para_disenar"},
-{id:"jun_s4_05",fecha:"Mié 24",dia:"Miércoles",mes:"Junio",semana:4,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P7 – Turismo CDMX",formato:"Post estático",tipo:"MUNDIAL",resenaId:"",tema:"Hoy Chequia vs México — después del partido el telón te espera",copy:"HOY JUEGA MÉXICO. 🇲🇽⚽\nChequia vs México en CDMX.\n\nY cuando termine el partido — la noche no tiene que acabar.\n\nEn CDMX, después del partido, el telón sigue levantado.\n\n🎭 Teatro de clase mundial.\nDescuentos exclusivos en Teatrando.\n\nVive la ciudad completa.\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #ChequisVsMexico #Mundial2026 #CDMX",estado:"Pendiente",notas:"Partido 24 jun — Chequia vs México.",disenho:""},
-{id:"jun_s4_06",fecha:"Mié 24",dia:"Miércoles",mes:"Junio",semana:4,pub:2,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Meme — el teatro nos une a todos",copy:"En el teatro no importa: 🎭\n\n❌ Si ganó México\n❌ Si perdió México\n❌ Si fuiste al partido\n❌ Si lo viste en casa\n\n✅ Lo que importa es que el telón sube.\nY cuando sube — todos somos iguales.\n\nEl teatro nos une. Siempre lo ha hecho.\n\n#Teatrando #TeatroCDMX #MemeTeatro #ObrasDeCDMX #Orgullo2026",estado:"Pendiente",notas:"MEME semana 4.",disenho:"para_disenar"},
-{id:"jun_s4_07",fecha:"Jue 25",dia:"Jueves",mes:"Junio",semana:4,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"",resenaId:"",tema:"5 razones para ver Mientes tan Bien",copy:"5 RAZONES PARA VER MIENTES TAN BIEN 🏳️‍🌈🎭\n\n1. Porque el humor inteligente es el mejor tipo de humor — y esta obra lo domina\n\n2. Una propuesta fresca que no se disculpa por nada\n\n3. Actuaciones que te sorprenden desde la primera escena\n\n4. Sábados 8:30pm en Foro ICAL — el momento perfecto para el plan\n\n5. Porque hay obras que te cambian la perspectiva riéndote — esta es una de ellas\n\n🎟️ teatrando.com.mx\n\n#Teatrando #MientesTanBien #TeatroCDMX #ObrasDeCDMX #TeatroLGBTQ",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s4_08",fecha:"Jue 25",dia:"Jueves",mes:"Junio",semana:4,pub:2,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"CARTELERA FIN",resenaId:"",tema:"Cartelera 4to fin — Semana del Orgullo LGBTQ+",copy:"Fin de semana del Orgullo en CDMX 🏳️‍🌈🎭\n\n👻 Y LLEGARON LAS BRUJAS · Jue-Dom · Centro Roldán\n👑 MENTIDRAGS · Jue-Sáb · Teatro Aldama\n💔 MENTIRAS · Vie-Dom · Teatro Aldama\n🎭 SOR-PRESAS AMÉN · Vie-Dom · Teatro Hidalgo\n🏳️‍🌈 MIENTES TAN BIEN · Sáb · Foro ICAL\n👑 SEÑORA PRESIDENTA · Dom · Centro Cultural Teatro 2\n😂 BUSCO AL HOMBRE DE MI VIDA · Sáb-Dom · Teatro San Jerónimo\n🎨 FRIDA KAHLO MUSICAL · Sáb-Dom · Teatro Centenario Coyoacán\n🎭 CRISIS PARA PRINCIPIANTES · Vie · Teatro Rafael Solana\n🎵 ALIVE · Foro Stelaris\n🔥 LA OBSCENIDAD DE LA CARNE · Vie-Dom · Teatro Renacimiento\n🌹 PERFUME DE GARDENIA · Vie-Dom · Teatro San Rafael\n\n🎟️ teatrando.com.mx\n\n#Teatrando #Orgullo2026 #TeatroCDMX #ObrasDeCDMX #PlanFinDeSemana",estado:"Pendiente",notas:"Cartelera fin semana 4 — Orgullo. Publicar jueves.",disenho:""},
-{id:"jun_s4_09",fecha:"Vie 26",dia:"Viernes",mes:"Junio",semana:4,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Urgencia — último fin antes de cierre de junio",copy:"Este es el último fin de semana de junio. 🎭\n\nY algunas obras cierran temporada muy pronto.\n\n⏰ Matilda — próximo fin de temporada\n⏰ Teleny — hasta el 14 de junio (ya cerró, verifica)\n⏰ Imperio — función especial\n\nNo dejes para después lo que puedes reservar hoy.\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #UrgenciaBoletos #ObrasDeCDMX #CierreTemporada",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s4_10",fecha:"Vie 26",dia:"Viernes",mes:"Junio",semana:4,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P7 – Turismo CDMX",formato:"Post estático",tipo:"MUNDIAL",resenaId:"",tema:"CDMX en junio: Mundial + Orgullo + Teatro",copy:"Junio en CDMX es histórico. 🌎🏳️‍🌈🎭\n\n⚽ MUNDIAL — los mejores partidos del planeta aquí\n🏳️‍🌈 MARCHA DEL ORGULLO — una de las más grandes de América Latina\n🎭 TEATRO — más de 40 obras en cartelera\n\nNinguna otra ciudad en el mundo tiene esto junto.\nCDMX en junio 2026 es irrepetible.\n\n¿Ya tienes tu plan?\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #Mundial2026 #Orgullo2026 #CDMX",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s4_11",fecha:"Sáb 27",dia:"Sábado",mes:"Junio",semana:4,pub:1,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P6 – Cultura",formato:"Post estático",tipo:"",resenaId:"",tema:"Marcha del Orgullo — el escenario también es diverso",copy:"Hoy es la 48ª Marcha del Orgullo en CDMX. 🏳️‍🌈\n\nY el teatro siempre ha marchado junto.\n\nAntes de que fuera tendencia.\nAntes de que fuera conversación mainstream.\nEl escenario ya era el lugar donde las historias diversas encontraban su voz.\n\nHoy lo celebramos.\nEn las calles y en los escenarios.\n\n#Teatrando #Orgullo2026 #MarchaDelOrgullo #TeatroCDMX #TeatroLGBTQ",estado:"Pendiente",notas:"DÍA DE LA MARCHA DEL ORGULLO — 27 junio.",disenho:"para_disenar"},
-{id:"jun_s4_12",fecha:"Sáb 27",dia:"Sábado",mes:"Junio",semana:4,pub:2,redes:["Instagram Feed", "Facebook", "X"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"",resenaId:"",tema:"Obras LGBTQ+ friendly en cartelera de junio",copy:"El teatro de CDMX celebra el Orgullo con obras que importan. 🏳️‍🌈🎭\n\n🏳️‍🌈 MIENTES TAN BIEN — versión ellos · Foro ICAL\n👑 MENTIDRAGS — drag y música · Teatro Aldama\n😂 BUSCO AL HOMBRE DE MI VIDA · Teatro San Jerónimo\n🎭 TELENY · Teatro Varsovia\n👑 SEÑORA PRESIDENTA · Centro Cultural Teatro 2\n\nEl escenario siempre ha sido un espacio seguro.\nEste mes más que nunca.\n\n🎟️ teatrando.com.mx\n\n#Teatrando #Orgullo2026 #TeatroCDMX #TeatroLGBTQ #ObrasDeCDMX",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s4_13",fecha:"Dom 28",dia:"Domingo",mes:"Junio",semana:4,pub:1,redes:["Instagram Feed", "Facebook", "X"],pilar:"P5 – Prueba social",formato:"Post estático",tipo:"",resenaId:"",tema:"Lo que dijo el público este junio",copy:"El público de junio ha hablado. 🎭\n\nLAS MÁS COMENTADAS DEL MES:\n\n⭐ 'Matilda me hizo llorar. No lo esperaba.'\n⭐ 'El Sótano me cambió la perspectiva. Completamente.'\n⭐ 'Perfume de Gardenia es lo más elegante que he visto en un escenario.'\n⭐ 'Mientes tan Bien fue lo más honesto y divertido del mes.'\n⭐ 'El Fantasma de la Ópera superó todas mis expectativas.'\n\n¿Fuiste a alguna? Cuéntanos 👇\n\n#Teatrando #TeatroCDMX #LoDiceElPublico #ObrasDeCDMX",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_s4_14",fecha:"Dom 28",dia:"Domingo",mes:"Junio",semana:4,pub:2,redes:["Instagram Feed", "Facebook", "Instagram Stories"],pilar:"P2 – Planes",formato:"Post estático",tipo:"",resenaId:"",tema:"Plan último domingo de junio",copy:"Último domingo de junio. 🎭\n\nSi aún no has visto tu obra del mes — hoy es el día.\n\n🌹 Perfume de Gardenia · Dom 4:30pm · Teatro San Rafael\n😱 El Sótano · Dom 5 y 7:30pm · Teatro Fernando Soler\n🎨 Frida Kahlo Musical · Dom 6pm · Teatro Centenario Coyoacán\n😂 Hasta que la Mafia · Dom 6pm · Teatro Xola\n\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #PlanDomingo #ObrasDeCDMX",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_c_01",fecha:"Lun 29",dia:"Lunes",mes:"Junio",semana:5,pub:1,redes:["Instagram Feed", "Facebook"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"FRASE",resenaId:"",tema:"Frase de cierre de junio",copy:"El arte supremo del teatro consiste en hacer que lo imposible parezca inevitable. 🎭✨\n\nJunio cerró el telón con el corazón lleno.\nGracias por elegirnos. Julio ya viene. 🙌\n\n#Teatrando #TeatroCDMX #CierreJunio #FraseDeTeatro #ObrasDeCDMX",estado:"Pendiente",notas:"",disenho:"para_disenar"},
-{id:"jun_c_02",fecha:"Lun 29",dia:"Lunes",mes:"Junio",semana:5,pub:2,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Adelanto julio — esto viene el próximo mes",copy:"JULIO EN TEATRANDO 🎭\n\nJunio cerró. Julio llega con más:\n\n🎭 El Sótano continúa · Teatro Fernando Soler\n🎭 Matilda — últimas funciones · Centro Cultural Teatro 1\n🎭 Fantasma de la Ópera continúa · Teatro Insurgentes\n🎭 Las Leonas continúa · Teatro México\n🎭 La Dama de Negro continúa · Teatro 11 de Julio\n🎭 Y más estrenos por confirmar…\n\nSíguenos para la cartelera completa de julio.\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #AdelantoJulio #CarteleraCDMX #ObrasDeCDMX",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_c_03",fecha:"Mar 30",dia:"Martes",mes:"Junio",semana:5,pub:1,redes:["Instagram Feed", "Facebook", "X", "Instagram Stories", "Facebook Stories"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"",resenaId:"",tema:"Cierre de junio — gracias por un mes de teatro",copy:"Junio cerró el telón. 🎭\n\nFue el mes del Mundial y el teatro.\nDel Orgullo y el escenario.\nDel Día del Padre y la butaca.\n\nFue el mes que demostró que CDMX no es solo una sede de fútbol —\nes una capital cultural de primer nivel.\n\nGracias por elegirnos.\nJulio ya viene — y viene con más. ✨\n\nteatrando.com.mx\n\n#Teatrando #TeatroCDMX #CierreJunio #ObrasDeCDMX #CarteleraCDMX",estado:"Pendiente",notas:"",disenho:""},
-{id:"jun_c_04",fecha:"Mar 30",dia:"Martes",mes:"Junio",semana:5,pub:2,redes:["Instagram Feed", "Facebook", "Instagram Stories", "Facebook Stories"],pilar:"P5 – Prueba social",formato:"Post estático",tipo:"",resenaId:"",tema:"Interacción final — ¿cuál fue tu obra de junio?",copy:"Junio se va y nos lleva los mejores recuerdos. 🎭\n\n¿Cuál fue la obra que más te marcó este mes?\n\na) Un musical que no puedo sacarme de la cabeza\nb) Una obra de teatro independiente que me sorprendió\nc) Fui al teatro por primera vez — y ya quiero volver\nd) Aún no fui — pero julio ya está en el calendario\n\nCuéntanos en los comentarios 👇\n\n#Teatrando #TeatroCDMX #Junio2026 #ObrasDeCDMX #TeatroEnCDMX",estado:"Pendiente",notas:"",disenho:""}
+  {id:"may_s1_02",fecha:"Vie 1",dia:"Viernes",mes:"Mayo",semana:1,pub:2,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Cartelera de este fin de semana — arranca mayo con todo",copy:"Arranca mayo y el teatro te espera 🎭\n\nESTE FIN DE SEMANA:\nPARA PAREJA: Tripas Corazón · La Dama de Negro\nPARA AMIGOS: Sor-presas Amén · Qué Desastre de Función\nPARA FAMILIA: Cri Cri · Los Clowns · Caperucita\n\nDesliza y elige. Reserva en teatrando.com.mx\n\n#Teatrando #TeatroCDMX #PlanFinDeSemana #CarteleraCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s1_03",fecha:"Sáb 2",dia:"Sábado",mes:"Mayo",semana:1,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Reels","TikTok"],pilar:"P3 – Experiencia",formato:"Reel",tipo:"",resenaId:"",tema:"Tripas Corazón — la comedia que abre mayo con carcajadas",copy:"Chelis y Lupe lo volvieron a hacer. 😂\n\nDos amigas. Un trabajo imposible. Situaciones que ya no puedes más.\nPero en lugar de rendirse… eligieron reírse de todo.\n\nTripas Corazón es la comedia que CDMX necesita este mayo.\nSin filtros. Sin pretextos. Con todo el corazón.\n\n📍 Foro Cultural Coyoacanense\n🗓️ Viernes y Sábado 8pm · Domingo 7pm\n🎟️ Reserva ya en teatrando.com.mx\n\nCon Libertad Palomo y Alejandra Toussaint.\n\n#Teatrando #TripasCorazon #ObrasDeCDMX #TeatroCDMX #PlanAmigos",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s1_04",fecha:"Sáb 2",dia:"Sábado",mes:"Mayo",semana:1,pub:2,redes:["Instagram Feed","Facebook","Instagram Stories","Facebook Stories"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Plan familiar este fin — Los Clowns y Cri Cri",copy:"Plan familiar este fin 🎭\n\n🤡 LOS CLOWNS — Circo Atayde\nSáb 2 mayo · 11am y 1:30pm · Centro Cultural Teatro 2\nDom 3 mayo · 11am\n\n🎵 DESCUBRIENDO A CRI CRI\nSáb y Dom · 1pm · Teatro Hidalgo\n\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #TeatroFamiliar #ObrasDeCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s1_05",fecha:"Dom 3",dia:"Domingo",mes:"Mayo",semana:1,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Meme — Antes vs durante el teatro",copy:"Yo antes de ir al teatro:\n\"A ver si no me aburro…\" 😐\n\nYo en la obra:\n😭🤯👏\n*Parado aplaudiendo como si conociera al elenco*\n\nTodo el que ha ido al teatro entiende exactamente esto.\n\n¿A quién se lo mandas? 👇\n\nEncuentra tu próxima obra en teatrando.com.mx\n\n#Teatrando #TeatroCDMX #MemeTeatro #ObrasDeCDMX #QueHacerEnCDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"MEME — Adaptación del meme 5. Lolita tiene el diseño de referencia.",disenho:"para_disenar"},
+
+  {id:"may_s1_06",fecha:"Dom 3",dia:"Domingo",mes:"Mayo",semana:1,pub:2,redes:["Instagram Feed","Facebook","Instagram Stories","Facebook Stories"],pilar:"P5 – Prueba social",formato:"Post estático",tipo:"",resenaId:"",tema:"Interacción — ¿Qué tipo de obra eres?",copy:"¿Qué tipo de obra eres? 🎭\n\na) 😂 Comedia — porque la vida ya tiene suficiente drama\nb) 💔 Drama — porque necesitas sentir algo de verdad\nc) 🎵 Musical — porque todo mejora con buena música\nd) 🔪 Suspenso — porque te gusta no saber qué viene\n\nResponde en los comentarios y etiqueta a alguien que vaya contigo al teatro 👇\n\n#Teatrando #TeatroCDMX #ObrasDeCDMX #PlanesCDMX #QueHacerEnCDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+// ═══════════════════════════════════════════════════════
+// SEMANA 2: Lun 4 – Dom 10 (Día de las Madres Sáb 10)
+// ═══════════════════════════════════════════════════════
+  {id:"may_s2_01",fecha:"Lun 4",dia:"Lunes",mes:"Mayo",semana:2,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"RECOMENDACION",resenaId:"",tema:"Recomendación de la semana — El amor es una mierda",copy:"LA RECOMENDACIÓN TEATRANDO DE ESTA SEMANA:\nEL AMOR ES UNA MIERDA\n\nLa obra que dice en voz alta lo que todos hemos pensado alguna vez.\n\nHumor inteligente, situaciones reconocibles y una honestidad brutal que te hace reír y pensar al mismo tiempo.\n\nPerfecta para ir con pareja, con ex-amigos o solo.\n\n📍 La Teatrería\n🗓️ Martes 8pm\n🎟️ Boletos en Teatrando.com.mx\n\n#Teatrando #TeatroCDMX #ElAmorEsUnaMierda #ObrasDeCDMX #CarteleraCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s2_02",fecha:"Lun 4",dia:"Lunes",mes:"Mayo",semana:2,pub:2,redes:["Instagram Feed","Facebook"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"FRASE",resenaId:"",tema:"Frase de la semana — Einstein",copy:"El arte supremo del maestro consiste en despertar el goce de la expresión creativa y del conocimiento. ✨\n— Albert Einstein\n\nGuárdala y compártela con alguien que necesita esta frase hoy.\n\n#Teatrando #FraseDeTeatro #TeatroCDMX #Einstein #ObrasDeCDMX",cta:"Guardar y compartir",estado:"Pendiente",notas:"",disenho:"para_disenar"},
+
+  {id:"may_s2_03",fecha:"Mar 5",dia:"Martes",mes:"Mayo",semana:2,pub:1,redes:["Instagram Reels","TikTok","YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"El amor es una mierda — Reseña Teatrando",copy:"RESEÑA TEATRANDO: EL AMOR ES UNA MIERDA\n\n¿El amor duele? ¿El amor confunde? ¿El amor ya no sabe como antes?\n\nEsta obra no da respuestas — da algo mejor:\nuna hora de comedia honesta que te hace sentir que no eres el único.\n\nHumor sin filtros sobre lo más humano que existe.\n\n📍 La Teatrería\n🗓️ Martes 8pm\n🎟️ Lee la reseña completa en Teatrando.com.mx\n\n#Teatrando #ElAmorEsUnaMierda #TeatroCDMX #ReseñaTeatro #ObrasDeCDMX",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s2_04",fecha:"Mar 5",dia:"Martes",mes:"Mayo",semana:2,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P3 – Experiencia",formato:"Carrusel",tipo:"3 RAZONES",resenaId:"",tema:"3 razones para ver Crisis para principiantes",copy:"3 RAZONES PARA VER CRISIS PARA PRINCIPIANTES\n\n1. Porque ser adulto es improvisar — y esta obra lo entiende perfectamente\n\n2. Drama que te hace sentir acompañado en lo que no sabes cómo nombrar\n\n3. Viernes 8:30pm en Teatro Rafael Solana — el espacio perfecto para dejarse llevar\n\nDesliza y reserva.\n🎟️ Teatrando.com.mx\n\n#Teatrando #CrisisParaPrincipiantes #TeatroCDMX #ObrasDeCDMX #PlanCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s2_05",fecha:"Mié 6",dia:"Miércoles",mes:"Mayo",semana:2,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P6 – Cultura",formato:"Post estático",tipo:"",resenaId:"",tema:"Post cultural — La primera obra musical en CDMX",copy:"¿Sabías que la primera obra musical en la Ciudad de México\nse presentó el 4 de noviembre de 1866?\n\nSe llamó \"La Hija del Batallón\"\ny se estrenó en el Teatro Nacional — hoy el Palacio de Bellas Artes.\n\nMéxico siempre ha tenido el telón levantado. 🎭\n\nAnd la historia sigue. Este mes hay más de 40 obras en cartelera esperándote.\nEncuéntralas en teatrando.com.mx\n\n#Teatrando #TeatroCDMX #CulturaTeatro #HistoriaDelTeatro #CDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"POST CULTURAL — primera obra musical CDMX. Diseño de referencia disponible.",disenho:"para_disenar"},
+
+  {id:"may_s2_06",fecha:"Mié 6",dia:"Miércoles",mes:"Mayo",semana:2,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Meme — Cine vs Teatro",copy:"EL CINE CADA AÑO:\n✓ 3D · ✓ 4K · ✓ Dolby · ✓ VR\n\nEL TEATRO DESDE SIEMPRE:\n\"Hola, estoy vivo frente a ti\" ❤️\n\nNo es competencia. Pero si lo fuera...\n\n¿A quién le mandas esto? 👇\n\n#Teatrando #TeatroCDMX #MemeTeatro #CineVsTeatro #ObrasDeCDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"MEME — Adaptación del meme 3. Diseño de referencia disponible.",disenho:"para_disenar"},
+
+  {id:"may_s2_07",fecha:"Jue 7",dia:"Jueves",mes:"Mayo",semana:2,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"ESTRENO",resenaId:"",tema:"ESTRENO — El que se enamora pierde arranca este jueves",copy:"ESTRENO ESTA SEMANA\nEL QUE SE ENAMORA PIERDE\n\nArranca este jueves 7 de mayo en el escenario.\n\n¿Es posible querer sin perder? ¿Amar sin rendirse?\nEsta obra no da respuestas fáciles — da una noche de teatro que no olvidarás.\n\n📍 Nuevo Teatro Versalles\n🗓️ Jueves 8:30pm\n🎟️ Reserva ya en teatrando.com.mx\n\n#Teatrando #ElQueSeEnamoraPierde #EstrenoTeatro #TeatroCDMX #ObrasDeCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"ESTRENO — arranca 7 de mayo",disenho:""},
+
+  {id:"may_s2_08",fecha:"Jue 7",dia:"Jueves",mes:"Mayo",semana:2,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"",resenaId:"",tema:"La última paciente — suspenso que no te suelta",copy:"Una sala de terapia. Un paciente difícil. Una verdad que alguien quiere callar. 🔍\n\nLA ÚLTIMA PACIENTE tiene todo lo que el suspenso promete:\ntensión, giros y una actuación que te mantiene al borde de la butaca.\n\nPerfecta para los que quieren algo diferente este fin.\n\n📍 Foro Shakespeare\n🗓️ Sábados 8:30pm\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #LaUltimaPaciente #TeatroCDMX #ObrasDeCDMX #TeatroSuspenso",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s2_09",fecha:"Vie 8",dia:"Viernes",mes:"Mayo",semana:2,pub:1,redes:["Instagram Feed","Facebook","X"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Cartelera de fin de semana — plan para mamá",copy:"Lleva a mamá al teatro este fin 💐🎭\n\nPLAN PARA EL 10 DE MAYO:\n🎭 Madre Mía · Teatro Varsovia · Jue-Sáb\n🎵 Frida Kahlo el Musical · Sáb-Dom · Coyoacán\n🎵 Malinche el Musical · Frontón México\n😂 Tripas Corazón · Foro Coyoacanense\n\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #DiaDeLasMadres #TeatroCDMX #PlanParaMama",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"Anticipa el 10 de mayo",disenho:""},
+
+  {id:"may_s2_10",fecha:"Vie 8",dia:"Viernes",mes:"Mayo",semana:2,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P4 – Servicio",formato:"Post estático",tipo:"",resenaId:"",tema:"Guía por zona — dónde encontrar tu obra en CDMX",copy:"¿En qué zona de CDMX vives? 🗺️\n\nCOYOACÁN: Frida Kahlo Musical · Tripas Corazón\nCENTRO: Malinche · Cri Cri · Sor-presas Amén\nINSURGENTES: Crisis para principiantes · Notre Dame\nSUR: Princesas Monster · Merlina · El reino\n\nEscríbenos tu zona por WhatsApp y te ayudamos.\n\n#Teatrando #TeatroCDMX #GuiaPorZona #ObrasDeCDMX",cta:"WhatsApp por zona",estado:"Pendiente",notas:"",disenho:"para_disenar"},
+
+  {id:"may_s2_11",fecha:"Sáb 9",dia:"Sábado",mes:"Mayo",semana:2,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P6 – Cultura",formato:"Carrusel",tipo:"",resenaId:"",tema:"10 de mayo — Mamás que también son actrices y son leyenda",copy:"Mañana es su día. Hoy las celebramos. 💐\n\nMAMÁS LEYENDA EN EL ESCENARIO:\n🌟 Laura Zapata · 🌟 Lourdes Munguía\n🌟 Ana Martín · 🌟 Ofelia Medina\n\nEl mejor regalo: llevarla al teatro.\nTeatrando.com.mx\n\n#Teatrando #DiaDeLasMadres #TeatroCDMX #10DeMayo",cta:"teatrando.com.mx",estado:"Pendiente",notas:"POST ESPECIAL 10 de mayo. Diseño de referencia disponible — mamás actrices.",disenho:"para_disenar"},
+
+  {id:"may_s2_12",fecha:"Sáb 9",dia:"Sábado",mes:"Mayo",semana:2,pub:2,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Maduras solteras y desesperadas — única función este sábado",copy:"SOLO HOY\nMADURAS, SOLTERAS Y DESESPERADAS\nSábado 9 de mayo · 8:30pm\nTeatro Rodolfo Usigli\n\nLa comedia que conecta, incomoda y hace reír de principio a fin.\nSituaciones que reconocerás. Personajes que no olvidarás.\n\nSi tienes tu boleto — disfruta cada segundo.\nSi no — corre a Teatrando.com.mx 🎟️\n\n#Teatrando #MadurasSolterasYDesesperadas #TeatroCDMX #ObrasDeCDMX #ComediaCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"ÚNICA FUNCIÓN: sábado 9 de mayo",disenho:""},
+
+  {id:"may_s2_13",fecha:"Dom 10",dia:"Domingo",mes:"Mayo",semana:2,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Feliz Día de las Madres — llévala al teatro hoy",copy:"Mañana es su día. Hoy las celebramos. 💐\n\nMAMÁS QUE SON LEYENDA EN EL ESCENARIO:\n🌟 Laura Zapata · 🌟 Lourdes Munguía\n🌟 Ana Martín · 🌟 Ofelia Medina\n\nMamás en la vida. Grandes en el escenario. ❤️\nEl mejor regalo: llevarla al teatro.\nTeatrando.com.mx\n\n#Teatrando #DiaDeLasMadres #TeatroCDMX #10DeMayo",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"POST ESPECIAL DÍA DE LAS MADRES",disenho:"para_disenar"},
+
+  {id:"may_s2_14",fecha:"Dom 10",dia:"Domingo",mes:"Mayo",semana:2,pub:2,redes:["Instagram Feed","Facebook","Instagram Stories","Facebook Stories"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Último domingo de Los Clowns — plan familiar hoy",copy:"Feliz Día de las Madres 💐🎭\n\nHOY EN CDMX:\n🎵 Frida Kahlo el Musical · Dom 6pm · Coyoacán\n🎭 Malinche el Musical · Dom 1 y 5pm · Frontón México\n😂 Tripas Corazón · Dom 7pm · Foro Coyoacanense\n\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #DiaDeLasMadres #TeatroCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"Última función de Los Clowns",disenho:""},
+
+// ═══════════════════════════════════════════════════════
+// SEMANA 3: Lun 11 – Dom 17 (Día del Maestro Vie 15, One Vision Jue 14, La Cantadera Vie 15)
+// ═══════════════════════════════════════════════════════
+  {id:"may_s3_01",fecha:"Lun 11",dia:"Lunes",mes:"Mayo",semana:3,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"RECOMENDACION",resenaId:"",tema:"Recomendación de la semana — El hubiera no existe",copy:"LA RECOMENDACIÓN TEATRANDO DE ESTA SEMANA:\nEL HUBIERA NO EXISTE\n\nTodas las decisiones que no tomaste. Todas las palabras que no dijiste.\nTodos los caminos que se quedaron sin recorrer.\n\nEsta obra te confronta con eso — y lo hace con un humor que duele de lo honesto que es.\n\n📍 Foro Sylvia Pasquel\n🗓️ Miércoles 8:30pm\n🎟️ Boletos en Teatrando.com.mx\n\n#Teatrando #ElHuberaNoExiste #TeatroCDMX #ObrasDeCDMX #CarteleraCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s3_02",fecha:"Lun 11",dia:"Lunes",mes:"Mayo",semana:3,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"5 RAZONES",resenaId:"",tema:"5 razones para ver Siempre los hombres las prefieren cabronas",copy:"5 RAZONES PARA VER SIEMPRE LOS HOMBRES LAS PREFIEREN CABRONAS\n\n1. El título ya dice todo — y la obra lo cumple con creces\n\n2. Comedia que se ríe de los estereotipos con inteligencia y sin filtros\n\n3. Actuación que te hace reír de principio a fin sin un solo segundo de pausa\n\n4. Sábados 5:30pm en Espacio Teatral Danzite — horario perfecto para el plan\n\n5. Porque hay obras que te cambian la perspectiva riéndote — esta es una de ellas\n\n🎟️ Reserva en Teatrando.com.mx\n\n#Teatrando #SiempreLasPrefierenCabronas #TeatroCDMX #ObrasDeCDMX #ComediaCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s3_03",fecha:"Mar 12",dia:"Martes",mes:"Mayo",semana:3,pub:1,redes:["Instagram Reels","TikTok","YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Las heridas del viento — Reseña Teatrando",copy:"RESEÑA TEATRANDO: LAS HERIDAS DEL VIENTO\n\nHay obras que no entretienen — transforman.\n\nLas heridas del viento es una de ellas.\nUna historia que habla de lo que no se dice, de lo que duele sin nombre,\nde esas cicatrices que solo el tiempo — y el teatro — pueden iluminar.\n\nTeatro que se queda contigo mucho después de que cae el telón.\n\n📍 Teatro Milán\n🗓️ Martes 8:45pm\n🎟️ Lee la reseña completa en Teatrando.com.mx\n\n#Teatrando #LasHeridasDelViento #TeatroCDMX #ReseñaTeatro #ObrasDeCDMX",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s3_04",fecha:"Mar 12",dia:"Martes",mes:"Mayo",semana:3,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Nos amábamos tanto — cuando el amor tiene otra dimensión",copy:"¿Y si el amor que más duele es el que sigue ahí? 💔\n\nNOS AMÁBAMOS TANTO\n\nUna historia de amor que no termina donde crees que termina.\nÍntima. Honesta. Imposible de olvidar.\n\n📍 Casa Fuerte de Emilio el Indio Fernández\n🗓️ Viernes · Sábados · Domingos · Por línea — múltiples horarios\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #NosAmábamosTanto #TeatroCDMX #ObrasDeCDMX #TeatroDeDrama",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s3_05",fecha:"Mié 13",dia:"Miércoles",mes:"Mayo",semana:3,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Meme — Chisme premium desde bambalinas",copy:"Director: Traten de no distraerse detrás del telón 🎭\n\nYo viendo la obra desde bambalinas: 👀🐕\n\nCHISME PREMIUM desde el escenario. 😂\n\n¿Le ha pasado a alguien más? Cuéntanos en los comentarios 👇\n\n#Teatrando #TeatroCDMX #MemeTeatro #ObrasDeCDMX #BastidoresDeCDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"MEME — Diseño de referencia disponible.",disenho:"para_disenar"},
+
+  {id:"may_s3_06",fecha:"Mié 13",dia:"Miércoles",mes:"Mayo",semana:3,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P4 – Servicio",formato:"Carrusel",tipo:"",resenaId:"",tema:"Cómo reservar en Teatrando — 3 pasos y listo",copy:"Reservar en Teatrando es facilísimo. 🎟️\n\n1️⃣ Entra a teatrando.com.mx\nO escríbenos directamente por WhatsApp\n\n2️⃣ Elige tu obra y función\nTe ayudamos a encontrar la mejor opción según tu zona, presupuesto y con quién vas\n\n3️⃣ Paga de forma segura y recibe tus boletos\nEn oficina o directo en el teatro — sin filas, sin complicaciones\n\n¿Dudas? WhatsApp en minutos 📲\n\n#Teatrando #TeatroCDMX #ReservaTusBoletos #ObrasDeCDMX #CarteleraCDMX",cta:"WhatsApp para dudas",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s3_07",fecha:"Jue 14",dia:"Jueves",mes:"Mayo",semana:3,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"ESTRENO",resenaId:"",tema:"ESTA NOCHE — One Vision of Queen en Pepsi Center WTC",copy:"HOY ES EL DÍA 🎸\nONE VISION OF QUEEN\n\nJueves 14 de mayo · 8pm\nPepsi Center WTC\n\nQueen en vivo — o lo más cercano que puedes estar a esa experiencia.\nMúsica que trasciende generaciones.\nUna noche que no se olvida.\n\nSi tienes tu boleto: disfruta cada segundo.\nSi no — hay otras experiencias únicas esperándote en teatrando.com.mx 🎟️\n\n#Teatrando #OneVisionOfQueen #PepsiCenterWTC #TeatroCDMX #MusicaEnVivo",cta:"teatrando.com.mx",estado:"Pendiente",notas:"EVENTO ESPECIAL — 14 de mayo",disenho:""},
+
+  {id:"may_s3_08",fecha:"Jue 14",dia:"Jueves",mes:"Mayo",semana:3,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"El sanador — cuando el escenario sana de verdad",copy:"Hay obras que no entretienen — sanan. 🌿\n\nEL SANADOR\n\nUna historia sobre lo que no se ve, sobre lo que cargamos sin saberlo,\nsobre el poder de soltar y seguir.\n\nTeatro que llega a lugares donde pocas cosas llegan.\n\n📍 La Teatrería\n🗓️ Sábados 6 y 8:30pm\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #ElSanador #TeatroCDMX #ObrasDeCDMX #TeatroDeDrama",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s3_09",fecha:"Vie 15",dia:"Viernes",mes:"Mayo",semana:3,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P6 – Cultura",formato:"Carrusel",tipo:"",resenaId:"",tema:"Día del Maestro — Maestros del teatro que formaron generaciones",copy:"Hoy, Día del Maestro, los celebramos. 🎭\n\nMAESTROS DEL TEATRO QUE FORMARON GENERACIONES:\n🎭 Luis de Tavira — disciplina y amor por el escenario\n🎭 Sargenti — el maestro de los maestros\n🎭 Héctor Mendoza — teatro es verdad y presencia\n\nSu legado vive en cada función. ✨\n\n#Teatrando #DiadelMaestro #TeatroCDMX #15DeMayo",cta:"teatrando.com.mx",estado:"Pendiente",notas:"POST ESPECIAL DÍA DEL MAESTRO. Diseño de referencia disponible.",disenho:"para_disenar"},
+
+  {id:"may_s3_10",fecha:"Vie 15",dia:"Viernes",mes:"Mayo",semana:3,pub:2,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"ESTRENO",resenaId:"",tema:"ESTA NOCHE — La Cantadera en Foro Stelaris",copy:"ESTA NOCHE 🎶\nLA CANTADERA\n\nViernes 15 de mayo\n🕙 Puertas: 9:30pm · Show: 10:30pm\n📍 Foro Stelaris\n\nUna experiencia musical que te va a mover por dentro.\nArte en vivo en uno de los foros más únicos de CDMX.\n\nSi vas esta noche — cuéntanos todo después 🙌\n🎟️ teatrando.com.mx\n\n#Teatrando #LaCantadera #ForoStelaris #TeatroCDMX #MusicaEnVivo",cta:"teatrando.com.mx",estado:"Pendiente",notas:"EVENTO ESPECIAL — 15 de mayo (Foro Stelaris)",disenho:""},
+
+  {id:"may_s3_11",fecha:"Sáb 16",dia:"Sábado",mes:"Mayo",semana:3,pub:1,redes:["Instagram Reels","TikTok","YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"El enfermo imaginario — Reseña Teatrando (últimas funciones)",copy:"ESTA NOCHE 🎸\nONE VISION OF QUEEN\n\nJueves 14 de mayo · 8pm · Pepsi Center WTC\n\nQueen en vivo. Una noche que no se olvida.\n\n🎟️ teatrando.com.mx\n\n#Teatrando #OneVisionOfQueen #TeatroCDMX",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"ÚLTIMAS FUNCIONES — termina 16 de mayo",disenho:""},
+
+  {id:"may_s3_12",fecha:"Sáb 16",dia:"Sábado",mes:"Mayo",semana:3,pub:2,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"ESTRENO",resenaId:"",tema:"ESTRENO — Penelogías arranca este sábado",copy:"ESTRENO ESTA SEMANA\nPENELOGÍAS\n\nArranca este sábado 16 de mayo en el escenario.\n\nUna propuesta fresca que llega para quedarse.\nTeatro que cuestiona, divierte y sorprende.\n\n📍 Foro Sylvia Pasquel\n🗓️ Sábados 8:30pm · A partir del 16 de mayo\n🎟️ Reserva ya en teatrando.com.mx\n\n#Teatrando #Penelogias #EstrenoTeatro #TeatroCDMX #ObrasDeCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"ESTRENO — arranca 16 de mayo",disenho:""},
+
+  {id:"may_s3_13",fecha:"Dom 17",dia:"Domingo",mes:"Mayo",semana:3,pub:1,redes:["Instagram Feed","Facebook","X"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Cartelera de domingo — elige tu plan de hoy",copy:"¿Ya tienes tu plan de domingo? 🎭\n\nPARA ADULTOS:\n😂 Tripas Corazón · 7pm · Foro Coyoacanense\n🎵 Frida Kahlo el Musical · 6pm · Coyoacán\n🔍 Un muerto en el baúl · 6:30pm · Danzite\n\nPARA FAMILIA:\n👸 Princesas Monster · 1:30pm\n🌳 El reino · 1:30pm · T. Enrique Elizalde\n🎵 Cri Cri · 1pm · Teatro Hidalgo\n\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #PlanDomingo",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s3_14",fecha:"Dom 17",dia:"Domingo",mes:"Mayo",semana:3,pub:2,redes:["Instagram Feed","Facebook","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Carrusel",tipo:"",resenaId:"",tema:"Teatro inmersivo — Nuestro mundo maravilloso y Alberto y el sueño",copy:"Teatro inmersivo en CDMX ✨\n\n🌍 NUESTRO MUNDO MARAVILLOSO\nNo son espectadores — son parte de la historia.\n\n🌙 ALBERTO Y EL SUEÑO\n45 minutos que te dejan pensando mucho más.\n\n📍 Casa Fuerte · Vie-Sáb-Dom por línea\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroInmersivo #TeatroCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+// ═══════════════════════════════════════════════════════
+// SEMANA 4: Lun 18 – Dom 24
+// ═══════════════════════════════════════════════════════
+  {id:"may_s4_01",fecha:"Lun 18",dia:"Lunes",mes:"Mayo",semana:4,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"RECOMENDACION",resenaId:"",tema:"Recomendación de la semana — El que se enamora pierde",copy:"LA RECOMENDACIÓN TEATRANDO DE ESTA SEMANA:\nEL QUE SE ENAMORA PIERDE\n\nYa lleva semanas en el escenario y el público no para de recomendarla.\n\nUna obra sobre lo que pasa cuando das todo por alguien\n— y lo que queda cuando ya no queda nada.\n\nComedia y drama en el balance exacto.\n\n📍 Nuevo Teatro Versalles\n🗓️ Jueves 8:30pm\n🎟️ Boletos en Teatrando.com.mx\n\n#Teatrando #ElQueSeEnamoraPierde #TeatroCDMX #ObrasDeCDMX #CarteleraCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s4_02",fecha:"Lun 18",dia:"Lunes",mes:"Mayo",semana:4,pub:2,redes:["Instagram Feed","Facebook"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"FRASE",resenaId:"",tema:"Frase de la semana — Peter Brook",copy:"El teatro es el único lugar donde puedes vivir diez vidas en una sola noche. 🎭✨\n— Peter Brook\n\nGuárdala y compártela con alguien que todavía no ha descubierto el teatro.\n\n#Teatrando #FraseDeTeatro #TeatroCDMX #ObrasDeCDMX",cta:"Guardar y compartir",estado:"Pendiente",notas:"",disenho:"para_disenar"},
+
+  {id:"may_s4_03",fecha:"Mar 19",dia:"Martes",mes:"Mayo",semana:4,pub:1,redes:["Instagram Reels","TikTok","YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Oh Karen — Reseña Teatrando",copy:"RESEÑA TEATRANDO: OH KAREN, LA HISTORIA DE UNA GATA\n\n¿Qué pasaría si tu gata pudiera contarte todo lo que ha visto?\n\nOh Karen lleva la comedia a un territorio inesperado:\nuna gata con opiniones muy claras sobre los humanos que la rodean.\n\nOriginal. Divertida. Imposible de adivinar hacia dónde va.\n\n📍 Teatro Xola\n🗓️ Miércoles 8:30pm y Domingo 1pm\n🎟️ Lee la reseña completa en Teatrando.com.mx\n\n#Teatrando #OhKaren #TeatroCDMX #ReseñaTeatro #ObrasDeCDMX",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s4_04",fecha:"Mar 19",dia:"Martes",mes:"Mayo",semana:4,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P6 – Cultura",formato:"Carrusel",tipo:"",resenaId:"",tema:"Post cultural — Grandes productores que hicieron historia",copy:"Hoy, Día del Maestro, los celebramos. 🎭\n\nMAESTROS DEL TEATRO:\n🎭 Luis de Tavira — disciplina y amor por el escenario\n🎭 Sargenti — el maestro de los maestros\n🎭 Héctor Mendoza — teatro es verdad y presencia\n\nSu legado vive en cada función. ✨\n\n#Teatrando #DiadelMaestro #TeatroCDMX #15DeMayo",cta:"teatrando.com.mx",estado:"Pendiente",notas:"POST CULTURAL — Grandes productores. Diseño de referencia disponible.",disenho:"para_disenar"},
+
+  {id:"may_s4_05",fecha:"Mié 20",dia:"Miércoles",mes:"Mayo",semana:4,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Meme — Cuando mañana es función y tu cerebro a las 3am",copy:"Cuando mañana es función… 🎭\n\nY tu cerebro decide hacer esto a las 3am: 🐱\n\n\"REPASAR TODA LA OBRA\"\n\"¿Y si olvido el texto?\"\n\"¿Qué cara pongo en la escena 4?\"\n\"Debí haberme dormido hace 3 horas\"\n\nTodo el que ha estado en un escenario entiende esto perfectamente.\n\n¿Se lo mandas a alguien del elenco? 😂\n\n#Teatrando #TeatroCDMX #MemeTeatro #Actores #ObrasDeCDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"MEME — Adaptación del meme 2 (gato 3am). Diseño de referencia disponible.",disenho:"para_disenar"},
+
+  {id:"may_s4_06",fecha:"Mié 20",dia:"Miércoles",mes:"Mayo",semana:4,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P2 – Planes",formato:"Post estático",tipo:"",resenaId:"",tema:"Hasta que la mafia nos separe — domingo de comedia",copy:"¿A quién no le ha tocado una familia que parece de película? 😂\n\nHASTA QUE LA MAFIA NOS SEPARE\n\nComedia absurda, situaciones imposibles y un elenco que da todo en escena.\nEl plan perfecto para reírse con quien más quieras.\n\n📍 Teatro Xola\n🗓️ Domingos 6pm\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #HastaQueLaMafiaNosSepare #TeatroCDMX #ObrasDeCDMX #ComediaCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s4_07",fecha:"Jue 21",dia:"Jueves",mes:"Mayo",semana:4,pub:1,redes:["Instagram Reels","TikTok","YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Dani y el profundo mar azul — Reseña Teatrando (últimas funciones)",copy:"RESEÑA TEATRANDO: DANI Y EL PROFUNDO MAR AZUL\n\nHay obras que llegan cuando las necesitas.\nDani y el profundo mar azul es una de esas.\n\nUna historia sobre lo que nos hunde y lo que nos salva.\nSobre encontrar algo a lo que aferrarse cuando todo parece perdido.\n\nÚltimas funciones. No la dejes ir.\n\n📍 La Teatrería\n🗓️ Miércoles 8:30pm · HASTA EL 15 DE MAYO (ya terminó en teatro pero puede haber funciones especiales)\n🎟️ Consulta disponibilidad en Teatrando.com.mx\n\n#Teatrando #DaniYElProfundoMarAzul #TeatroCDMX #ReseñaTeatro #ObrasDeCDMX",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"Termina 15 de mayo — verificar si hay funciones especiales",disenho:""},
+
+  {id:"may_s4_08",fecha:"Jue 21",dia:"Jueves",mes:"Mayo",semana:4,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Un muerto en el baúl — suspenso en Danzite",copy:"GRANDES PRODUCTORES QUE HICIERON HISTORIA 🎭\n\n🎭 Morris Gilbert — creyó en el talento mexicano\n🎭 Alejandro Gou — teatro con visión y riesgo\n🎭 Juan Torres Delgado — fundó los proyectos más importantes\n\nSu pasión, nuestro escenario. ✨\n\n#Teatrando #TeatroCDMX #CulturaTeatro",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s4_09",fecha:"Vie 22",dia:"Viernes",mes:"Mayo",semana:4,pub:1,redes:["Instagram Feed","Facebook","X"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Cartelera del fin — semana 4 de mayo",copy:"¿Ya tienes tu plan? 🎭\n\nPARA PAREJA:\n🎵 Malinche · Frontón México · Sáb-Dom\n🎵 Notre Dame · Teatro Rafael Solana · Sáb\n💔 Nos amábamos tanto · Casa Fuerte\n\nPARA AMIGOS:\n😂 Siempre las prefieren cabronas · Sáb 5:30pm\n🔍 Un muerto en el baúl · Sáb 8:45pm\n😂 Tripas Corazón · Vie-Sáb 8pm\n\nPARA FAMILIA:\n👸 Princesas Monster · Dom 1:30pm\n🌳 El reino · Dom 1:30pm\n\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #PlanFinDeSemana",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s4_10",fecha:"Vie 22",dia:"Viernes",mes:"Mayo",semana:4,pub:2,redes:["Instagram Stories","Facebook Stories"],pilar:"P4 – Servicio",formato:"Story interactiva",tipo:"ALERTA PROMO",resenaId:"",tema:"Alerta — obras con pocas fechas en mayo",copy:"ALERTA BOLETOS 🚨\n\nEstas obras tienen pocas fechas restantes en mayo:\n\n⏰ El enfermo imaginario → ya terminó\n⏰ Dani y el profundo mar azul → consulta disponibilidad\n⏰ Maduras solteras y desesperadas → función única ya pasó\n\nNo dejes para después lo que puedes reservar hoy.\nEscríbenos por WhatsApp y te ayudamos.\n\n#Teatrando #TeatroCDMX #ObrasDeCDMX",cta:"WhatsApp para dudas",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s4_11",fecha:"Sáb 23",dia:"Sábado",mes:"Mayo",semana:4,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Carrusel",tipo:"5 RAZONES",resenaId:"",tema:"5 razones para ver Malinche el Musical",copy:"5 RAZONES PARA VER MALINCHE EL MUSICAL\n\n1. La historia de México recontada desde adentro — sin los clichés de siempre\n\n2. Producción de nivel internacional en el escenario más imponente de la ciudad: Frontón México\n\n3. Música, danza y teatro integrados en una experiencia que no se divide en partes\n\n4. Miércoles 8pm · Jue-Vie 8pm · Sáb-Dom 1pm y 5pm — múltiples horarios para armar tu plan\n\n5. Una obra que divide opiniones, genera conversación y hace exactamente lo que el teatro tiene que hacer\n\n🎟️ Reserva en Teatrando.com.mx\n\n#Teatrando #MalinchElMusical #TeatroCDMX #ObrasDeCDMX #FrontonMexico",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s4_12",fecha:"Sáb 23",dia:"Sábado",mes:"Mayo",semana:4,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Lo que callamos las suegras — comedia en Foro Coapa",copy:"Lo que las suegras nunca dicen en voz alta… 👀\n\nLO QUE CALLAMOS LAS SUEGRAS\n\nComedia que te hará reír de lo que normalmente no puedes decir.\nPersonajes reconocibles, situaciones reales y actuaciones que no dan tregua.\n\nPerfecta para ir en familia — o no.\n\n📍 Foro Coapa\n🗓️ Sábados 6pm · Domingos 7pm\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #LoQueCallamosLasSuegras #TeatroCDMX #ObrasDeCDMX #ComediaCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s4_13",fecha:"Dom 24",dia:"Domingo",mes:"Mayo",semana:4,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Meme — Las máscaras del teatro",copy:"Las máscaras del teatro:\n\n😊 Esta obra me hizo reír\n💔 No estaba listo para esto\n\nA veces no sabes cuál vas a necesitar hasta que se levanta el telón.\n\n¿Cuál te tocó la última vez? 👇\n\nEncuentra tu próxima obra en teatrando.com.mx\n\n#Teatrando #TeatroCDMX #MemeTeatro #ObrasDeCDMX #MascarasDelTeatro",cta:"teatrando.com.mx",estado:"Pendiente",notas:"MEME — Adaptación del meme 4 (máscaras). Diseño de referencia disponible.",disenho:"para_disenar"},
+
+  {id:"may_s4_14",fecha:"Dom 24",dia:"Domingo",mes:"Mayo",semana:4,pub:2,redes:["Instagram Feed","Facebook","Instagram Stories","Facebook Stories"],pilar:"P5 – Prueba social",formato:"Post estático",tipo:"",resenaId:"",tema:"Interacción — ¿Con quién irías al teatro?",copy:"Una pregunta importante para este domingo: 🎭\n\n¿Con quién irías al teatro esta semana?\n\na) 💑 Con mi pareja — plan romántico garantizado\nb) 👯 Con mis amigos — la mejor noche del mes\nc) 🎭 Solo — porque el teatro también es para uno\nd) 👨‍👩‍👧 En familia — recuerdos que duran para siempre\n\nResponde en los comentarios y organiza el plan 👇\nTeatrando.com.mx tiene la obra perfecta para cada opción.\n\n#Teatrando #TeatroCDMX #ObrasDeCDMX #PlanesCDMX #QueHacerEnCDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+// ═══════════════════════════════════════════════════════
+// SEMANA 5: Lun 25 – Dom 31
+// ═══════════════════════════════════════════════════════
+  {id:"may_s5_01",fecha:"Lun 25",dia:"Lunes",mes:"Mayo",semana:5,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P1 – Curaduría",formato:"Carrusel",tipo:"RECOMENDACION",resenaId:"",tema:"Recomendación de cierre — Nos amábamos tanto",copy:"LA RECOMENDACIÓN TEATRANDO DE CIERRE DE MAYO:\nNOS AMÁBAMOS TANTO\n\nSi aún no la has visto — esta última semana es tu oportunidad.\n\nUna de las obras más comentadas del mes.\nÍntima, honesta y con una actuación que no se olvida.\n\n📍 Casa Fuerte de Emilio el Indio Fernández\n🗓️ Viernes · Sábados · Domingos por línea\n🎟️ Boletos en Teatrando.com.mx\n\n#Teatrando #NosAmábamosTanto #TeatroCDMX #ObrasDeCDMX #CarteleraCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_02",fecha:"Lun 25",dia:"Lunes",mes:"Mayo",semana:5,pub:2,redes:["Instagram Reels","TikTok","YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Penelogías — Reseña Teatrando",copy:"RESEÑA TEATRANDO: PENELOGÍAS 🎭\n\nPenélope esperó. Tejió. Calló.\nPero ¿qué pensaba mientras esperaba?\n\nPenelogías reimagina un clásico desde una mirada completamente nueva.\n\n📍 Foro Sylvia Pasquel · Sáb 8:30pm\n🎟️ Teatrando.com.mx\n\n#Teatrando #Penelogias #TeatroCDMX",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_03",fecha:"Mar 26",dia:"Martes",mes:"Mayo",semana:5,pub:1,redes:["Instagram Reels","TikTok","YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Santas y perversas — Reseña Teatrando",copy:"RESEÑA TEATRANDO: SANTAS Y PERVERSAS\n\nHay mujeres que parecen santas. Hay mujeres que parecen perversas.\nY luego están las que son ambas cosas — y lo saben perfectamente.\n\nSantas y perversas es una comedia que celebra la complejidad femenina sin disculparse por ello.\n\nDivertida, provocadora y completamente honesta.\n\n📍 Teatro Enrique Lizalde\n🗓️ Domingos 6:30pm\n🎟️ Lee la reseña completa en Teatrando.com.mx\n\n#Teatrando #SantasYPerversas #TeatroCDMX #ReseñaTeatro #ObrasDeCDMX",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_04",fecha:"Mar 26",dia:"Martes",mes:"Mayo",semana:5,pub:2,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Notre Dame de París — la épica musical del mes",copy:"Hay obras que no se ven — se viven. 🎵\n\nNOTRE DAME DE PARÍS\n\nAmor, tragedia y una música que se te queda para siempre.\nUna producción que demuestra que el teatro musical puede quitar el aliento.\n\n📍 Teatro Rafael Solana\n🗓️ Sábados 6 y 8:30pm\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #NotreDameDeParis #TeatroCDMX #MusicalCDMX #ObrasDeCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_05",fecha:"Mié 27",dia:"Miércoles",mes:"Mayo",semana:5,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Meme — Haz el teatro, no la guerra",copy:"HAZ EL TEATRO ❤️\nNO LA GUERRA\n\nEl escenario tiene espacio para todos. 🎭\n\nEste fin de semana, elige una butaca y déjate llevar.\nToda la cartelera en teatrando.com.mx\n\n#Teatrando #TeatroCDMX #ObrasDeCDMX #QueHacerEnCDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"",disenho:"para_disenar"},
+
+  {id:"may_s5_06",fecha:"Mié 27",dia:"Miércoles",mes:"Mayo",semana:5,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Frida Kahlo el Musical — icono en el escenario",copy:"Pies, ¿para qué los quiero si tengo alas para volar? ✨\n— Frida Kahlo\n\n🎵 FRIDA KAHLO EL MUSICAL\n\nNo es solo la historia de Frida — es su universo en el escenario.\nSu dolor convertido en música. Su arte en movimiento. 🎨\n\n📍 Teatro Centenario Coyoacán\n🗓️ Sábados 5 y 7:30pm · Domingos 6pm\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #FridaKahloElMusical #TeatroCDMX #ObrasDeCDMX #MusicalCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_07",fecha:"Jue 28",dia:"Jueves",mes:"Mayo",semana:5,pub:1,redes:["Instagram Reels","TikTok","YouTube Shorts"],pilar:"P1 – Curaduría",formato:"Reel",tipo:"RESENA",resenaId:"",tema:"Madre mía — Reseña Teatrando",copy:"RESEÑA TEATRANDO: MADRE MÍA\n\nHay una relación que no se puede explicar — solo se puede sentir.\n\nMadre Mía lleva al escenario algo que todos hemos vivido:\nla complejidad de querer a alguien que es perfectamente imperfecto.\n\nComedia y ternura en el balance exacto.\nUna obra para ir con mamá — o para entenderla un poco mejor.\n\n📍 Teatro Varsovia\n🗓️ Jueves 8pm · Viernes 7 y 9pm · Sábados 6 y 8pm\n🎟️ Lee la reseña completa en Teatrando.com.mx\n\n#Teatrando #MadreMia #TeatroCDMX #ReseñaTeatro #ObrasDeCDMX",cta:"Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_08",fecha:"Jue 28",dia:"Jueves",mes:"Mayo",semana:5,pub:2,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"",resenaId:"",tema:"Sor-presas Amén — comedia que llena el teatro semana a semana",copy:"Semanas en cartelera y el teatro sigue lleno. 🎭\n\nSOR-PRESAS AMÉN\n\nLa comedia que logra lo más difícil: hacer reír a todos,\nsin importar de dónde vengas ni qué tan fácil o difícil te caigan las bromas.\n\nHumor con corazón. Y mucho, mucho teatro.\n\n📍 Teatro Hidalgo\n🗓️ Viernes 8:30pm · Sábados 6 y 8:30pm · Domingos 6pm\n🎟️ Reserva en teatrando.com.mx\n\n#Teatrando #SorpresasAmen #TeatroCDMX #ObrasDeCDMX #ComediaCDMX",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_09",fecha:"Vie 29",dia:"Viernes",mes:"Mayo",semana:5,pub:1,redes:["Instagram Feed","Facebook","X"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Cartelera de cierre — último fin de semana de mayo",copy:"Último fin de semana de mayo. ¿Qué vas a ver? 🎭\n\nPARA PAREJA:\n🎵 Malinche · Frontón México · Sáb-Dom\n🎵 Notre Dame · Teatro Rafael Solana · Sáb\n🎵 Frida Kahlo · Coyoacán · Sáb-Dom\n\nPARA AMIGOS:\n😂 Sor-presas Amén · Teatro Hidalgo\n😂 Tripas Corazón · Foro Coyoacanense\n\nPARA FAMILIA:\n👸 Princesas Monster · Dom 1:30pm\n🎵 Cri Cri · Sáb-Dom 1pm\n\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #CierreMayo",cta:"Compra en Teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_10",fecha:"Vie 29",dia:"Viernes",mes:"Mayo",semana:5,pub:2,redes:["Instagram Feed","Facebook","X"],pilar:"P5 – Prueba social",formato:"Post estático",tipo:"",resenaId:"",tema:"Lo que dice el público — las más recomendadas de mayo",copy:"El público ha hablado este mayo. 🎭\n\nLAS MÁS RECOMENDADAS DEL MES:\n\n⭐ \"Nos amábamos tanto me dejó sin palabras. Teatro de verdad.\"\n⭐ \"Fui a Siempre los hombres las prefieren cabronas y no paré de reír.\"\n⭐ \"Malinche es la producción del año. Punto.\"\n⭐ \"La Cantadera fue una experiencia que no esperaba — completamente diferente.\"\n⭐ \"El que se enamora pierde me llegó exactamente donde tenía que llegar.\"\n\n¿Fuiste a alguna? Cuéntanos en los comentarios 👇\nY si no — el fin de semana todavía está disponible.\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #LoDiceElPublico #ObrasDeCDMX #RecomendacionesTeatro",cta:"teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_11",fecha:"Sáb 30",dia:"Sábado",mes:"Mayo",semana:5,pub:1,redes:["Instagram Feed","Facebook"],pilar:"P3 – Experiencia",formato:"Post estático",tipo:"FRASE",resenaId:"",tema:"Frase de cierre de mayo",copy:"El teatro existe porque la vida no es suficiente. 🎭✨\n— Fernando Arrabal\n\nMayo cerró el telón con el corazón lleno.\nGracias por elegirnos. Junio ya viene. 🙌\n\n#Teatrando #TeatroCDMX #FraseDeTeatro #CierreDeMayo #ObrasDeCDMX",cta:"Seguir en redes",estado:"Pendiente",notas:"",disenho:"para_disenar"},
+
+  {id:"may_s5_12",fecha:"Sáb 30",dia:"Sábado",mes:"Mayo",semana:5,pub:2,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P2 – Planes",formato:"Carrusel",tipo:"",resenaId:"",tema:"Adelanto junio — esto viene el próximo mes",copy:"JUNIO EN TEATRANDO 🎭\n\nMayo cerró. Junio ya se asoma con obras que vienen con todo:\n\n🎭 La Dama de Negro continúa · Teatro 11 de Julio\n🎭 Malinche el Musical continúa · Frontón México\n🎭 Notre Dame de París continúa · Teatro Rafael Solana\n🎭 Las heridas del viento continúa · Teatro Milán\n🎭 Solamente una vez continúa · Casa Fuerte\n🎭 Y más estrenos por confirmar…\n\nSíguenos para la cartelera completa de junio.\n🎟️ teatrando.com.mx\n\n#Teatrando #TeatroCDMX #AdelantoJunio #CarteleraCDMX #ObrasDeCDMX",cta:"Seguir en redes",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_13",fecha:"Dom 31",dia:"Domingo",mes:"Mayo",semana:5,pub:1,redes:["Instagram Feed","Facebook","X","Instagram Stories","Facebook Stories"],pilar:"P1 – Curaduría",formato:"Post estático",tipo:"",resenaId:"",tema:"Cierre de mayo — gracias por un mes de teatro",copy:"Mayo cerró el telón. 🎭\n\nFue un mes de comedias que dolieron de tanto reír,\nde dramas que tocaron donde nadie esperaba,\nde musicales que quitaron el aliento\ny de familias, parejas y amigos que eligieron el teatro como su plan.\n\nGracias por elegirnos.\nGracias por confiarle sus noches y domingos a Teatrando.\n\nJunio ya viene — y viene con más. ✨\n\nteatrando.com.mx\n\n#Teatrando #TeatroCDMX #CierreMayo #ObrasDeCDMX #CarteleraCDMX",cta:"Seguir en redes",estado:"Pendiente",notas:"",disenho:""},
+
+  {id:"may_s5_14",fecha:"Dom 31",dia:"Domingo",mes:"Mayo",semana:5,pub:2,redes:["Instagram Feed","Facebook","Instagram Stories","Facebook Stories"],pilar:"P5 – Prueba social",formato:"Post estático",tipo:"",resenaId:"",tema:"Interacción final — ¿Cuál fue tu obra de mayo?",copy:"Mayo se va y nos lleva los mejores recuerdos. 🎭\n\n¿Cuál fue la obra que más te marcó este mes?\n\na) Una comedia que todavía me hace reír\nb) Un drama que no esperaba y me sorprendió\nc) Un musical que no puedo sacarme de la cabeza\nd) Aún no fui — pero junio ya está en el calendario\n\nCuéntanos en los comentarios 👇\nY si tienes foto de tu visita al teatro este mes — etiquétanos.\n\n#Teatrando #TeatroCDMX #Mayo2026 #ObrasDeCDMX #TeatroEnCDMX",cta:"teatrando.com.mx",estado:"Pendiente",notas:"",disenho:""}
 ];
 
-const buildResenasJunio = () => [
-{id:"rj_01",semana:1,obra:"Matilda el Musical",titulo:"El musical que lo tiene todo: magia, humor y corazón"},
-{id:"rj_02",semana:1,obra:"Fantasma de la Ópera",titulo:"La ópera más famosa del mundo vive en CDMX"},
-{id:"rj_03",semana:1,obra:"Las Leonas",titulo:"Fuerza femenina que quita el aliento"},
-{id:"rj_04",semana:1,obra:"El Sótano",titulo:"Una experiencia que no es para todos — y por eso vale todo"},
-{id:"rj_05",semana:1,obra:"Perfume de Gardenia",titulo:"Glamour, nostalgia y una voz que no se olvida"},
-{id:"rj_06",semana:1,obra:"La Dama de Negro",titulo:"El suspenso que te sigue hasta casa"},
-{id:"rj_07",semana:2,obra:"Mentiras el Musical",titulo:"Canciones que ya conoces, historia que no esperabas"},
-{id:"rj_08",semana:2,obra:"Mentidrags",titulo:"Mentiras en versión drag: más honesta que nunca"},
-{id:"rj_09",semana:2,obra:"Mientes tan Bien",titulo:"Teatro LGBTQ+ que dice lo que todos callan"},
-{id:"rj_10",semana:2,obra:"Busco al Hombre de Mi Vida",titulo:"Comedia que duele de lo real que es"},
-{id:"rj_11",semana:2,obra:"Las Heridas del Viento",titulo:"Lo que el silencio no puede seguir cargando"},
-{id:"rj_12",semana:2,obra:"Sor-presas Amén",titulo:"Humor con corazón que llena el teatro semana a semana"},
-{id:"rj_13",semana:3,obra:"Ni con Ellas ni sin Ellas",titulo:"El eterno dilema llevado al escenario"},
-{id:"rj_14",semana:3,obra:"El Que Se Enamora Pierde",titulo:"Amar sin red: cuando el corazón no calcula"},
-{id:"rj_15",semana:3,obra:"Marihuanólogos",titulo:"Comedia sin filtros que dice lo que piensas"},
-{id:"rj_16",semana:3,obra:"Conversando con el Diablo",titulo:"El mal tiene muchas formas — esta es la más teatral"},
-{id:"rj_17",semana:3,obra:"La Obscenidad de la Carne",titulo:"Teatro que incomoda porque dice la verdad"},
-{id:"rj_18",semana:3,obra:"La Última Paciente",titulo:"Una sala de terapia donde nadie dice la verdad"},
-{id:"rj_19",semana:4,obra:"Risa & Tonic",titulo:"Stand up que mezcla humor inteligente con buen timing"},
-{id:"rj_20",semana:4,obra:"El Hubiera No Existe",titulo:"Las decisiones que no tomaste cobran vida aquí"},
-{id:"rj_21",semana:4,obra:"Prénde me",titulo:"Un musical íntimo que te agarra sin avisarte"},
-{id:"rj_22",semana:4,obra:"Malinche el Musical",titulo:"La historia de México recontada desde adentro"},
-{id:"rj_23",semana:4,obra:"Notre Dame de París",titulo:"Amor y tragedia con música que no se olvida"},
-{id:"rj_24",semana:4,obra:"¿Cómo Te Va Mi Amor?",titulo:"Desamor con humor: la combinación perfecta"},
-{id:"rj_25",semana:5,obra:"Frida Kahlo el Musical",titulo:"Su dolor, su arte y su fuerza en el escenario"},
-{id:"rj_26",semana:5,obra:"Teleny",titulo:"Teatro que se atreve a ir donde pocos llegan"},
-{id:"rj_27",semana:5,obra:"Hasta Que la Mafia Nos Separe",titulo:"Familia, caos y amor a prueba de todo"},
-{id:"rj_28",semana:5,obra:"Señora Presidenta",titulo:"El poder también se lleva tacones"},
-{id:"rj_29",semana:5,obra:"Stand Up Distrito Condesa",titulo:"La comedia más honesta de CDMX"},
-{id:"rj_30",semana:5,obra:"Leyendas",titulo:"Cuando la música y el teatro se encuentran bajo las estrellas"},
-{id:"rj_31",semana:1,obra:"Qué ver en CDMX si vienes al Mundial",titulo:"5 musicales que no puedes perderte: Matilda, Fantasma, Malinche, Notre Dame, Perfume de Gardenia"},
-{id:"rj_32",semana:2,obra:"Teatro LGBTQ+ en CDMX: las obras que hay que ver en junio",titulo:"Mientes tan Bien, Busco al Hombre, Mentidrags, Teleny, Señora Presidenta"},
-{id:"rj_33",semana:3,obra:"Teatro para el Día del Padre: 5 obras para llevar a papá",titulo:"El Sótano, La Dama de Negro, Marihuanólogos, Risa & Tonic, El Pelón en Sus Tiempos del Cólera"},
-{id:"rj_34",semana:3,obra:"El teatro independiente de CDMX que tienes que conocer",titulo:"Foro Shakespeare, La Teatrería, Teatro Xola, Teatro Milán, Enrique Lizalde"},
-{id:"rj_35",semana:1,obra:"Por qué el teatro es el mejor plan nocturno en CDMX",titulo:"El escenario que la ciudad merece — y que pocos aprovechan"},
-{id:"rj_36",semana:2,obra:"Turismo y teatro: cómo vivir CDMX más allá de los museos",titulo:"Guía para el visitante que quiere más que fotos en el Ángel"},
-{id:"rj_37",semana:2,obra:"Los 10 musicales en cartelera este junio",titulo:"Lista completa con horarios y teatros para que no te quedes sin plan"},
-{id:"rj_38",semana:4,obra:"El teatro mexicano que está cambiando las reglas",titulo:"Producción nacional de nivel internacional — y pasa aquí en CDMX"},
-{id:"rj_39",semana:1,obra:"Cómo elegir tu primera obra de teatro en CDMX",titulo:"Guía práctica para el que nunca ha ido y no sabe por dónde empezar"},
-{id:"rj_40",semana:4,obra:"Por qué el Orgullo y el teatro siempre han ido de la mano",titulo:"Una historia de diversidad que el escenario contó antes que nadie"}
-];
 
 const POLL_INTERVAL = 4000;
 
@@ -170,21 +204,14 @@ async function loadData() {
   try {
     const res = await fetch('/api/data');
     const json = await res.json();
-    if (json.data) {
-      const parsed = JSON.parse(json.data);
-      // Ensure Junio always present
-      if(parsed && parsed.mesesDisp && !parsed.mesesDisp.includes("Junio")){
-        parsed.mesesDisp = ["Mayo","Junio"];
-        if(parsed.parrillas) parsed.parrillas["Junio"] = buildJunio();
-        if(parsed.resenas) parsed.resenas["Junio"] = buildResenasJunio();
-      }
-      return parsed;
-    }
+    if (json.data) return JSON.parse(json.data);
   } catch(e) { console.warn("load error", e); }
   return null;
 }
 
-const BRIEFINGS_INIT = {"Junio":"📌 LÍNEA EDITORIAL JUNIO 2026\n\nS1 (1-7): Mundial+Turismo\nS2 (8-14): Partido México 11jun\nS3 (15-21): Día del Padre\nS4 (22-28): Orgullo LGBTQ+\nCierre (29-30): Adelanto julio"};
+const BRIEFINGS_INIT = {"Mayo":"📌 LÍNEA EDITORIAL MAYO 2026\n\n🎯 OBJETIVO\n• Generar engagement orgánico\n• Posicionar marca como referente teatral\n• Convertir a WhatsApp (ventas) 👉 alineado al modelo de negocio\n\n📅 ENFOQUE POR SEMANA\nS1 (1–3 may): Arranque cultural + cartelera fin de semana.\nS2 (4–10 may): Día de las Madres.\nS3 (11–17 may): Día del Maestro + One Vision of Queen.\nS4 (18–24 may): Venta fuerte + curaduría + memes.\nS5 (25–31 may): Cierre de mes + adelanto junio."}
+
+let _historial = [];
 const regCambio = (id,campo,ant,nuevo) => {
   _historial = [{ts:new Date().toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit",second:"2-digit"}),id,campo,anterior:typeof ant==="object"?JSON.stringify(ant):String(ant),nuevo:typeof nuevo==="object"?JSON.stringify(nuevo):String(nuevo)},..._historial].slice(0,300);
   return [..._historial];
@@ -215,11 +242,11 @@ async function generarResenaIA(r,obrasCtx=[]){
 
 export default function App() {
   const isMounted = useRef(true);
-  const [parrillas, setParrillas] = useState({"Junio": buildJunio()});
-  const [resenas, setResenas] = useState({"Junio":buildResenasJunio()});
+  const [parrillas, setParrillas] = useState({"Mayo": buildMayo()});
+  const [resenas, setResenas] = useState({"Mayo": []});
   const [briefings, setBriefings] = useState(BRIEFINGS_INIT);
-  const [mesesDisp, setMesesDisp] = useState(["Junio"]);
-  const [mesActivo, setMesActivo] = useState("Junio");
+  const [mesesDisp, setMesesDisp] = useState(["Mayo"]);
+  const [mesActivo, setMesActivo] = useState("Mayo");
   const [mesExp, setMesExp] = useState(null);
   const [semanaActiva, setSemanaActiva] = useState(1);
   const [cardAbierta, setCardAbierta] = useState(null);
@@ -240,6 +267,11 @@ export default function App() {
   const [modalAgregarDia, setModalAgregarDia] = useState(false);
   const [nuevoDiaForm, setNuevoDiaForm] = useState({fecha:"",dia:"Lunes",semana:1,numPubs:2,tipo:""});
   const [editandoBriefing, setEditandoBriefing] = useState(false);
+  const [guiaTab, setGuiaTab] = useState("flujo");
+  const [guiaEditando, setGuiaEditando] = useState(null);
+  const [guiaEditVal, setGuiaEditVal] = useState({});
+  const [guiaNuevoVal, setGuiaNuevoVal] = useState({});
+  const [guiaAgregando, setGuiaAgregando] = useState(null);
   const [guia, setGuia] = useState({
     flujo:[
       {paso:"Semana 1",descripcion:"Apertura del mes",responsable:"Admin",cuando:"Lun-Mié",porque:"Establecer tono editorial",contenidos:[]},
@@ -300,23 +332,14 @@ export default function App() {
       const saved=await loadData();
       if(saved && isMounted.current){
         // Solo cargar si los datos son de Mayo
-        if(saved.parrillas){
-          // Merge: ensure Junio exists
-          const p = saved.parrillas;
-          if(!p["Junio"] || p["Junio"].length===0) p["Junio"]=buildJunio();
-          setParrillas(p);
-        }
-          if(saved.resenas){
-          const r = saved.resenas;
-          if(!r["Junio"] || r["Junio"].length===0) r["Junio"]=buildResenasJunio();
-          setResenas(r);
-        }
+        const mesSaved = saved.mesesDisp?.[0];
+        if(mesSaved === "Mayo" || !mesSaved){
+          if(saved.parrillas) setParrillas(saved.parrillas);
+          if(saved.resenas)   setResenas(saved.resenas);
           if(saved.briefings) setBriefings(saved.briefings);
-          if(saved.mesesDisp){
-          const m = saved.mesesDisp;
-          if(!m.includes("Junio")) m.push("Junio");
-          setMesesDisp(m);
-        }
+          if(saved.mesesDisp) setMesesDisp(saved.mesesDisp);
+          }
+        // Si datos son de otro mes, ignorar y usar buildMayo()
       }
       if(isMounted.current) setDataLoaded(true);
     })();
@@ -352,11 +375,7 @@ export default function App() {
           if(saved.parrillas) setParrillas(saved.parrillas);
           if(saved.resenas)   setResenas(saved.resenas);
           if(saved.briefings) setBriefings(saved.briefings);
-          if(saved.mesesDisp){
-            const m=saved.mesesDisp;
-            if(!m.includes("Junio")) m.push("Junio");
-            setMesesDisp(m);
-          }
+          if(saved.mesesDisp) setMesesDisp(saved.mesesDisp);
           setLastRefresh(new Date().toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit",second:"2-digit"}));
         }
       }
@@ -366,19 +385,19 @@ export default function App() {
   },[modoCliente]);
 
   // MIX — calcula solo sobre publicaciones (excluye reseñas programadas como pubs separadas)
-  const mix=useMemo(()=>{
+  const mix=useCallback(()=>{
     const t=parrilla.length||1;
     const p123=parrilla.filter(p=>["P1 – Curaduría","P2 – Planes","P3 – Experiencia"].includes(p.pilar)).length;
     const p4=parrilla.filter(p=>p.pilar==="P4 – Servicio").length;
     const p56=parrilla.filter(p=>["P5 – Prueba social","P6 – Cultura"].includes(p.pilar)).length;
     return{p123:Math.round(p123/t*100),p4:Math.round(p4/t*100),p56:Math.round(p56/t*100)};
-  },[parrilla]);
+  },[parrilla])();
 
-  const contadorRedes=useMemo(()=>{
+  const contadorRedes=useCallback(()=>{
     const c={};REDES.forEach(r=>c[r]=0);
     parrilla.forEach(p=>(p.redes||[]).forEach(r=>{if(c[r]!==undefined)c[r]++;}));
     return c;
-  },[parrilla]);
+  },[parrilla])();
 
   const alertasSemanas=useCallback(()=>{
     const a=[];
@@ -491,21 +510,22 @@ export default function App() {
 
   // ══════════════════════════════════════════════════════════════════════════
   // CARGA INICIAL
-  
+  if(!dataLoaded){
+    return(
+      <div style={{fontFamily:"Segoe UI,system-ui,sans-serif",background:"#0a0a0a",minHeight:"100vh",color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:16}}>
+        <div style={{fontSize:36,fontWeight:900,color:"#C40803",letterSpacing:-1,textShadow:"0 0 24px rgba(196,8,3,0.9)"}}>🎭 Teatrando</div>
+        <div style={{fontSize:12,color:"#666",letterSpacing:2,textTransform:"uppercase"}}>Cargando parrilla...</div>
+        <div style={{width:120,height:3,background:"#1a1a1a",borderRadius:3,overflow:"hidden"}}>
+          <div style={{width:"60%",height:"100%",background:"#C40803",borderRadius:3,animation:"slideIn 1.2s ease-in-out infinite"}}/>
+        </div>
+      </div>
+    );
+  }
+
   // VISTA CLIENTE — pantalla de login
   // ══════════════════════════════════════════════════════════════════════════
-  // Variables para vista cliente
-  const parrillaCliente=parrillas[mesActivo]||[];
-  const semanasCliente=[...new Set(parrillaCliente.map(p=>p.semana))].sort((a,b)=>a-b);
-  const byDateCliente={};
-  parrillaCliente.filter(p=>p.semana===semanaActiva).forEach(p=>{if(!byDateCliente[p.fecha])byDateCliente[p.fecha]=[];byDateCliente[p.fecha].push(p);});
-  const todasLasFechas=[...new Set(parrillaCliente.map(p=>p.fecha))];
-  const resenasCliente=resenas[mesActivo]||[];
-
-
-  return(
-    showAdminLogin ? (
-
+  if(showAdminLogin){
+    return(
       <div style={{fontFamily:"Segoe UI,system-ui,sans-serif",background:"#0a0a0a",minHeight:"100vh",color:"#fff",display:"flex",alignItems:"center",justifyContent:"center"}}>
         <div style={{background:"#111",border:"1px solid #C40803",borderRadius:16,padding:36,width:340,maxWidth:"90vw",textAlign:"center"}}>
           <div style={{fontSize:32,marginBottom:6}}>🎭</div>
@@ -527,9 +547,22 @@ export default function App() {
           </div>
         </div>
       </div>
-    
-    ) : modoCliente ? (
+    );
+  }
 
+  // ══════════════════════════════════════════════════════════════════════════
+  // VISTA CLIENTE — contenido
+  // ══════════════════════════════════════════════════════════════════════════
+  if(modoCliente){
+    // datos del mes activo para cliente
+    const parrillaCliente=parrillas[mesActivo]||[];
+    const semanasCliente=[...new Set(parrillaCliente.map(p=>p.semana))].sort((a,b)=>a-b);
+    const byDateCliente={};
+    parrillaCliente.filter(p=>p.semana===semanaActiva).forEach(p=>{if(!byDateCliente[p.fecha])byDateCliente[p.fecha]=[];byDateCliente[p.fecha].push(p);});
+    const todasLasFechas=[...new Set(parrillaCliente.map(p=>p.fecha))];
+    const resenasCliente=resenas[mesActivo]||[];
+
+    return(
       <div style={{fontFamily:"Segoe UI,system-ui,sans-serif",background:"#0a0a0a",minHeight:"100vh",color:"#fff"}}>
         {/* HEADER CLIENTE */}
         <div style={{background:"linear-gradient(135deg,#C40803 0%,#8B0000 60%,#0a0a0a 100%)",padding:"16px 20px",borderBottom:"2px solid #C40803"}}>
@@ -671,13 +704,10 @@ export default function App() {
                     <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
                       <span style={{fontSize:9,color:"#fff",background:"#C40803",fontWeight:700,textTransform:"uppercase",letterSpacing:2,padding:"3px 12px",borderRadius:6}}>Semana {s}</span>
                       <div style={{flex:1,height:1,background:"#1a1a1a"}}/>
+                      
+                      
                     </div>
-                    {rs.map(r=>(
-                      <div key={r.id} style={{background:"#0d0d0d",border:"1px solid #1a1a1a",borderRadius:10,padding:"12px 14px",marginBottom:8}}>
-                        <div style={{fontSize:13,fontWeight:700,color:"#fff",marginBottom:4}}>{r.obra||"Sin título"}</div>
-                        {r.titulo&&<div style={{fontSize:10,color:"#C40803",fontStyle:"italic"}}>{r.titulo}</div>}
-                      </div>
-                    ))}
+
                   </div>
                 );
               })}
@@ -774,9 +804,33 @@ export default function App() {
           <div style={{textAlign:"center",marginTop:40,fontSize:9,color:"#1a1a1a",paddingBottom:20}}>Teatrando CDMX · @teatrandocdmx · teatrando.com.mx</div>
         </div>
       </div>
-    
-    ) : (
+    );
+  }
 
+  // ══════════════════════════════════════════════════════════════════════════
+  // VISTA ADMIN
+  // ══════════════════════════════════════════════════════════════════════════
+  const handleEditPub = useCallback((id,campo,valor)=>{
+    setParrillas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(p=>p.id===id?{...p,[campo]:valor}:p)}));
+  },[mesActivo]);
+
+  const handleEditRedes = useCallback((id,nv)=>{
+    setParrillas(prev=>({...prev,[mesActivo]:prev[mesActivo].map(p=>p.id===id?{...p,redes:nv}:p)}));
+  },[mesActivo]);
+
+  const filtrarPubs = useCallback((pubs)=>{
+    return pubs.filter(p=>{
+      if(p.semana!==semanaActiva)return false;
+      if(filtros.pilar!=="Todos"&&p.pilar!==filtros.pilar)return false;
+      if(filtros.formato!=="Todos"&&!p.formato.toLowerCase().includes(filtros.formato.toLowerCase().replace(" estático","").replace(" interactiva","")))return false;
+      if(filtros.red!=="Todas"&&!(p.redes||[]).includes(filtros.red))return false;
+      return true;
+    });
+  },[semanaActiva,filtros]);
+
+
+
+  return(
     <div style={{fontFamily:"Segoe UI,system-ui,sans-serif",background:"#060606",minHeight:"100vh",color:"#fff",paddingBottom:60}}>
 
       {/* Notificación flotante */}
@@ -863,7 +917,7 @@ export default function App() {
             </div>
           )}
           <div style={{display:"flex",gap:5,marginTop:12,flexWrap:"wrap"}}>
-            {[{v:"parrilla",l:"📋 Parrilla"},{v:"resenas",l:"📝 Reseñas"}].map(t=>(
+            {[{v:"parrilla",l:"📋 Parrilla"},{v:"resenas",l:"📝 Reseñas"},{v:"bitacora",l:"📒 Bitácora"},{v:"historial",l:`🕐 Historial${historial.length>0?` (${historial.length})`:""}`},{v:"guia",l:"📖 Guia Editorial"}].map(t=>(
               <BTN key={t.v} active={vista===t.v} onClick={()=>setVista(t.v)} small>{t.l}</BTN>
             ))}
           </div>
@@ -1162,18 +1216,520 @@ export default function App() {
 
         {/* ══ POR RED ══ */}
         {/* ══ BITÁCORA ADMIN ══ */}
-        
+        {vista==="bitacora"&&(
+          <div style={{marginTop:12}}>
+            {/* Tabs meses */}
+            <div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:20}}>
+              {mesesDisp.map(m=>(
+                <button key={m} onClick={()=>{setMesActivo(m);setSemanaActiva(1);}}
+                  style={{padding:"4px 14px",borderRadius:16,fontWeight:700,fontSize:10,cursor:"pointer",
+                    background:mesActivo===m?"#C40803":"#0d0d0d",color:mesActivo===m?"#fff":"#555",
+                    border:mesActivo===m?"2px solid #C40803":"1.5px solid #1a1a1a"}}>
+                  {m}
+                </button>
+              ))}
+            </div>
 
-        
+            {(()=>{
+              const pubsMes=parrillas[mesActivo]||[];
+              const semanasMes=[...new Set(pubsMes.map(p=>p.semana))].sort((a,b)=>a-b);
+              const totalPub=pubsMes.filter(p=>p.estado==="Publicado").length;
+              const totalProd=pubsMes.filter(p=>p.estado==="En producción").length;
+              const totalPend=pubsMes.filter(p=>p.estado==="Pendiente").length;
+
+              return(
+                <div>
+                  {/* Contadores del mes */}
+                  <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:20}}>
+                    {[
+                      {l:"Total",v:pubsMes.length,c:"#fff"},
+                      {l:"Publicadas",v:totalPub,c:"#22c55e"},
+                      {l:"En producción",v:totalProd,c:"#3b82f6"},
+                      {l:"Pendientes",v:totalPend,c:"#555"},
+                    ].map(item=>(
+                      <div key={item.l} style={{background:"#0b0b0b",border:"1px solid #1a1a1a",borderRadius:8,
+                        padding:"8px 14px",textAlign:"center",minWidth:70}}>
+                        <div style={{fontSize:22,fontWeight:900,color:item.c}}>{item.v}</div>
+                        <div style={{fontSize:7,color:"#333",textTransform:"uppercase",letterSpacing:1,marginTop:2}}>{item.l}</div>
+                      </div>
+                    ))}
+                    {/* Barra de progreso */}
+                    <div style={{flex:1,minWidth:160,display:"flex",flexDirection:"column",justifyContent:"center",gap:4}}>
+                      <div style={{fontSize:8,color:"#444",marginBottom:3}}>Progreso del mes</div>
+                      <div style={{height:6,background:"#1a1a1a",borderRadius:3,overflow:"hidden"}}>
+                        <div style={{height:"100%",background:"#22c55e",borderRadius:3,
+                          width:pubsMes.length>0?`${Math.round(totalPub/pubsMes.length*100)}%`:"0%",
+                          transition:"width 0.4s"}}/>
+                      </div>
+                      <div style={{fontSize:8,color:"#22c55e"}}>
+                        {pubsMes.length>0?Math.round(totalPub/pubsMes.length*100):0}% publicado
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Semanas con desglose */}
+                  {semanasMes.map(s=>{
+                    const pubsSemana=pubsMes.filter(p=>p.semana===s);
+                    const pub=pubsSemana.filter(p=>p.estado==="Publicado");
+                    const prod=pubsSemana.filter(p=>p.estado==="En producción");
+                    const pend=pubsSemana.filter(p=>p.estado==="Pendiente");
+                    return(
+                      <div key={s} style={{marginBottom:24,background:"#0b0b0b",border:"1px solid #141414",borderRadius:10,padding:"12px 14px"}}>
+                        {/* Header semana con números */}
+                        <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12,flexWrap:"wrap"}}>
+                          <div style={{background:"#C40803",color:"#fff",fontWeight:900,fontSize:9,
+                            padding:"3px 12px",borderRadius:5,letterSpacing:1,textTransform:"uppercase"}}>
+                            Semana {s}
+                          </div>
+                          <span style={{fontSize:8,color:"#fff",fontWeight:700}}>{pubsSemana.length} pubs</span>
+                          <div style={{flex:1,height:1,background:"#1a1a1a"}}/>
+                          {pub.length>0&&<span style={{fontSize:8,color:"#22c55e",fontWeight:700}}>✅ {pub.length}</span>}
+                          {prod.length>0&&<span style={{fontSize:8,color:"#3b82f6",fontWeight:700}}>🔵 {prod.length}</span>}
+                          {pend.length>0&&<span style={{fontSize:8,color:"#444"}}>⬜ {pend.length}</span>}
+                        </div>
+
+                        {/* Publicadas */}
+                        {pub.length>0&&(
+                          <div style={{marginBottom:10}}>
+                            <div style={{fontSize:7,color:"#22c55e",fontWeight:700,textTransform:"uppercase",letterSpacing:1,marginBottom:5}}>✅ Publicado</div>
+                            <div style={{display:"flex",flexDirection:"column",gap:4}}>
+                              {pub.map((p,i)=>(
+                                <div key={p.id} style={{display:"flex",gap:8,alignItems:"baseline",paddingLeft:8,borderLeft:"2px solid #22c55e30"}}>
+                                  <span style={{fontSize:8,color:"#22c55e",fontWeight:700,minWidth:14}}>{i+1}.</span>
+                                  <span style={{fontSize:9,color:"#666",minWidth:44,flexShrink:0}}>{p.fecha}</span>
+                                  <span style={{fontSize:11,color:"#ccc",fontWeight:500}}>{p.tema}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* En producción */}
+                        {prod.length>0&&(
+                          <div style={{marginBottom:10}}>
+                            <div style={{fontSize:7,color:"#3b82f6",fontWeight:700,textTransform:"uppercase",letterSpacing:1,marginBottom:5}}>🔵 En producción</div>
+                            <div style={{display:"flex",flexDirection:"column",gap:4}}>
+                              {prod.map((p,i)=>(
+                                <div key={p.id} style={{display:"flex",gap:8,alignItems:"baseline",paddingLeft:8,borderLeft:"2px solid #3b82f630"}}>
+                                  <span style={{fontSize:8,color:"#3b82f6",fontWeight:700,minWidth:14}}>{i+1}.</span>
+                                  <span style={{fontSize:9,color:"#666",minWidth:44,flexShrink:0}}>{p.fecha}</span>
+                                  <span style={{fontSize:11,color:"#888",fontWeight:500}}>{p.tema}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Pendientes */}
+                        {pend.length>0&&(
+                          <div>
+                            <div style={{fontSize:7,color:"#333",fontWeight:700,textTransform:"uppercase",letterSpacing:1,marginBottom:5}}>⬜ Pendiente ({pend.length})</div>
+                            <div style={{display:"flex",flexDirection:"column",gap:4}}>
+                              {pend.map((p,i)=>(
+                                <div key={p.id} style={{display:"flex",gap:8,alignItems:"baseline",paddingLeft:8,borderLeft:"2px solid #1a1a1a"}}>
+                                  <span style={{fontSize:8,color:"#2a2a2a",fontWeight:700,minWidth:14}}>{i+1}.</span>
+                                  <span style={{fontSize:9,color:"#2a2a2a",minWidth:44,flexShrink:0}}>{p.fecha}</span>
+                                  <span style={{fontSize:11,color:"#333",fontWeight:500}}>{p.tema}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })()}
+          </div>
+        )}
+
+        {vista==="historial"&&(
+          <div style={{marginTop:12}}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+              <div>
+                <div style={{fontSize:12,fontWeight:700}}>Historial de cambios</div>
+                <div style={{fontSize:9,color:"#444",marginTop:1}}>{historial.length} cambios esta sesión</div>
+              </div>
+              {historial.length>0&&<BTN onClick={()=>setHistorial([])} danger small>Limpiar</BTN>}
+            </div>
+            {historial.length===0&&<div style={{textAlign:"center",padding:32,color:"#222",fontSize:12,border:"1px dashed #141414",borderRadius:10}}>🕐 Aún no hay cambios registrados.</div>}
+            {historial.map((h,i)=>{
+              const esRec=restaurando===h.ts+"_"+h.id;
+              return(
+                <div key={i} style={{background:esRec?"#002a00":"#0b0b0b",border:`1px solid ${esRec?"#22c55e":"#141414"}`,borderRadius:7,padding:"7px 11px",marginBottom:4,display:"flex",alignItems:"center",gap:8,flexWrap:"wrap",transition:"all 0.3s"}}>
+                  <span style={{fontSize:8,color:"#333",fontFamily:"monospace",minWidth:55}}>{h.ts}</span>
+                  <span style={{fontSize:8,color:"#555",background:"#141414",padding:"1px 5px",borderRadius:4,fontFamily:"monospace"}}>{h.id.split("_")[0]}</span>
+                  <span style={{fontSize:9,color:"#C40803",fontWeight:700,minWidth:55}}>{h.campo}</span>
+                  <div style={{flex:1,display:"flex",gap:5,alignItems:"center",flexWrap:"wrap",minWidth:180}}>
+                    <span style={{fontSize:8,color:"#444",background:"#100000",padding:"1px 6px",borderRadius:4,maxWidth:160,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}} title={h.anterior}>← {h.anterior.substring(0,35)}{h.anterior.length>35?"…":""}</span>
+                    <span style={{fontSize:8,color:"#22c55e",background:"#001800",padding:"1px 6px",borderRadius:4,maxWidth:160,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}} title={h.nuevo}>{h.nuevo.substring(0,35)}{h.nuevo.length>35?"…":""}</span>
+                  </div>
+                  <button onClick={()=>restaurarCambio(h)} style={{background:"#0a0a1e",color:"#5577ff",border:"1px solid #1a1a4a",borderRadius:7,padding:"2px 9px",cursor:"pointer",fontSize:8,fontWeight:700,flexShrink:0}}>↩ Restaurar</button>
+                </div>
+              );
+            })}
+          </div>
+        )}
 
 
       {/* ── GUIA EDITORIAL ── */}
-      
+      {vista==="guia"&&(
+        <div style={{marginTop:12}}>
+          {/* Sub-tabs de la guia */}
+          <div style={{display:"flex",gap:4,marginBottom:14,flexWrap:"wrap"}}>
+            {[{v:"flujo",l:"Flujo mensual"},{v:"timing",l:"Timing"},{v:"arco",l:"Arco semanal"},{v:"series",l:"Series fijas"},{v:"efemerides",l:"Efemerides"},{v:"reglas",l:"Reglas de oro"}].map(t=>(
+              <button key={t.v} onClick={()=>setGuiaTab(t.v)}
+                style={{padding:"4px 12px",borderRadius:16,fontSize:10,fontWeight:700,cursor:"pointer",
+                  background:guiaTab===t.v?"#C40803":"transparent",
+                  color:guiaTab===t.v?"#fff":"#555",
+                  border:guiaTab===t.v?"1.5px solid #C40803":"1.5px solid #222"}}>
+                {t.l}
+              </button>
+            ))}
+          </div>
+
+          {/* TIMING */}
+          {guiaTab==="flujo"&&(
+            <div>
+              <div style={{fontSize:10,color:"#C40803",fontWeight:700,marginBottom:8,textTransform:"uppercase",letterSpacing:1}}>Flujo de construccion de parrilla mensual</div>
+              <div style={{background:"#0d0d0d",border:"1px solid #C4080330",borderRadius:8,padding:"10px 14px",marginBottom:14,fontSize:10,color:"#888",lineHeight:1.6}}>
+                Este es el orden definitivo de trabajo cada mes. Seguirlo garantiza que la parrilla llegue completa, sin retrabajos y con las reseñas ya vinculadas desde el inicio.
+              </div>
+              <button onClick={()=>{setGuiaAgregando("flujo");setGuiaNuevoVal({titulo:"",desc:"",responsable:"Aarón"});}} style={{padding:"4px 14px",borderRadius:16,fontSize:9,fontWeight:700,cursor:"pointer",background:"transparent",color:"#C40803",border:"1.5px dashed #C40803",marginBottom:10}}>+ Agregar paso</button>
+              {guiaAgregando==="flujo"&&(
+                <div style={{background:"#0d0d0d",border:"1.5px solid #C40803",borderRadius:8,padding:"12px 14px",marginBottom:12}}>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Titulo del paso</label>
+                  <input value={guiaNuevoVal.titulo||""} onChange={e=>setGuiaNuevoVal(p=>({...p,titulo:e.target.value}))} placeholder="Ej: Revision de arte final" style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Descripcion</label>
+                  <textarea value={guiaNuevoVal.desc||""} onChange={e=>setGuiaNuevoVal(p=>({...p,desc:e.target.value}))} placeholder="Que sucede en este paso..." style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:48,resize:"vertical",marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Responsable</label>
+                  <select value={guiaNuevoVal.responsable||"Aaron"} onChange={e=>setGuiaNuevoVal(p=>({...p,responsable:e.target.value}))} style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6}}>
+                    {["Aaron","Claude","Aaron + Claude","Aaron + Diseñadora","Diseñadora","Ana"].map(r=><option key={r} style={{background:"#111"}}>{r}</option>)}
+                  </select>
+                  <div style={{display:"flex",gap:6}}>
+                    <button onClick={()=>{if(!guiaNuevoVal.titulo)return;const nextPaso=guia.flujo.length+1;setGuia(g=>({...g,flujo:[...g.flujo,{paso:nextPaso,titulo:guiaNuevoVal.titulo,desc:guiaNuevoVal.desc||"",responsable:guiaNuevoVal.responsable||"Aaron"}]}));setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Agregar</button>
+                    <button onClick={()=>{setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                  </div>
+                </div>
+              )}
+              {guia.flujo.map((f,i)=>{
+                const respColor=f.responsable==="Claude"?"#0891b2":f.responsable==="Aaron"?"#C40803":f.responsable==="Diseñadora"?"#7c3aed":"#059669";
+                return(
+                  <div key={i} style={{background:"#0b0b0b",border:"1px solid #1a1a1a",borderRadius:8,padding:"12px 14px",marginBottom:8,display:"flex",gap:12,alignItems:"flex-start"}}>
+                    <div style={{minWidth:28,height:28,borderRadius:"50%",background:"#C40803",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+                      <span style={{fontSize:11,fontWeight:900,color:"#fff"}}>{f.paso}</span>
+                    </div>
+                    <div style={{flex:1}}>
+                      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8,marginBottom:4}}>
+                        <div style={{fontSize:11,fontWeight:700,color:"#fff"}}>{f.titulo}</div>
+                        <div style={{display:"flex",gap:6,alignItems:"center",flexShrink:0}}>
+                          <span style={{fontSize:8,fontWeight:700,color:respColor,border:`1px solid ${respColor}`,padding:"1px 7px",borderRadius:8}}>{f.responsable}</span>
+                          {guiaEditando!==`flujo-${i}`&&<button onClick={()=>{setGuiaEditando(`flujo-${i}`);setGuiaEditVal({desc:f.desc,responsable:f.responsable});}} style={{padding:"2px 8px",background:"transparent",color:"#444",border:"1px solid #222",borderRadius:4,fontSize:9,cursor:"pointer"}}>Editar</button>}
+                        </div>
+                      </div>
+                      {guiaEditando===`flujo-${i}`?(
+                        <div>
+                          <textarea value={guiaEditVal.desc||""} onChange={e=>setGuiaEditVal(p=>({...p,desc:e.target.value}))} style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:48,resize:"vertical",marginBottom:6,boxSizing:"border-box"}}/>
+                          <select value={guiaEditVal.responsable||"Aaron"} onChange={e=>setGuiaEditVal(p=>({...p,responsable:e.target.value}))} style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6}}>
+                            {["Aaron","Claude","Aaron + Claude","Aaron + Diseñadora","Diseñadora","Ana"].map(r=><option key={r} style={{background:"#111"}}>{r}</option>)}
+                          </select>
+                          <div style={{display:"flex",gap:6}}>
+                            <button onClick={()=>{setGuia(g=>({...g,flujo:g.flujo.map((x,j)=>j===i?{...x,desc:guiaEditVal.desc,responsable:guiaEditVal.responsable}:x)}));setGuiaEditando(null);}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Guardar</button>
+                            <button onClick={()=>setGuiaEditando(null)} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                          </div>
+                        </div>
+                      ):(
+                        <div style={{fontSize:10,color:"#666",lineHeight:1.5}}>{f.desc}</div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {guiaTab==="timing"&&(
+            <div>
+              <div style={{fontSize:10,color:"#C40803",fontWeight:700,marginBottom:8,textTransform:"uppercase",letterSpacing:1}}>Cuando publicar segun el tipo de funcion</div>
+              <div style={{background:"#0d0d0d",border:"1px solid #C4080330",borderRadius:8,padding:"10px 14px",marginBottom:10,fontSize:10,color:"#888",lineHeight:1.6}}>
+                Regla central: publicar siempre ANTES de que la decision se tome. Nunca el mismo dia de la funcion.
+              </div>
+              <button onClick={()=>{setGuiaAgregando("timing");setGuiaNuevoVal({titulo:"",cuando:"",porque:"",});}} style={{padding:"4px 14px",borderRadius:16,fontSize:9,fontWeight:700,cursor:"pointer",background:"transparent",color:"#C40803",border:"1.5px dashed #C40803",marginBottom:10}}>+ Agregar regla de timing</button>
+              {guiaAgregando==="timing"&&(
+                <div style={{background:"#0d0d0d",border:"1.5px solid #C40803",borderRadius:8,padding:"12px 14px",marginBottom:12}}>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Tipo de funcion</label>
+                  <input value={guiaNuevoVal.titulo||""} onChange={e=>setGuiaNuevoVal(p=>({...p,titulo:e.target.value}))} placeholder="Ej: Obras de martes..." style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Cuando publicar</label>
+                  <input value={guiaNuevoVal.cuando||""} onChange={e=>setGuiaNuevoVal(p=>({...p,cuando:e.target.value}))} placeholder="Ej: Publicar el lunes anterior..." style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Por que</label>
+                  <textarea value={guiaNuevoVal.porque||""} onChange={e=>setGuiaNuevoVal(p=>({...p,porque:e.target.value}))} placeholder="Razon o logica de este timing..." style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:48,resize:"vertical",marginBottom:6,boxSizing:"border-box"}}/>
+                  <div style={{display:"flex",gap:6}}>
+                    <button onClick={()=>{if(!guiaNuevoVal.titulo)return;setGuia(g=>({...g,timing:[...g.timing,{titulo:guiaNuevoVal.titulo,cuando:guiaNuevoVal.cuando||"",porque:guiaNuevoVal.porque||""}]}));setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Agregar</button>
+                    <button onClick={()=>{setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                  </div>
+                </div>
+              )}
+              {guia.timing.map((t,i)=>(
+                <div key={i} style={{background:"#0b0b0b",border:"1px solid #1a1a1a",borderLeft:"3px solid #C40803",borderRadius:8,padding:"10px 14px",marginBottom:8}}>
+                  {guiaEditando===`timing-${i}`?(
+                    <div>
+                      <div style={{fontSize:9,color:"#555",marginBottom:4}}>Cuando:</div>
+                      <input value={guiaEditVal.cuando||""} onChange={e=>setGuiaEditVal(p=>({...p,cuando:e.target.value}))}
+                        style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6}}/>
+                      <div style={{fontSize:9,color:"#555",marginBottom:4}}>Por que:</div>
+                      <textarea value={guiaEditVal.porque||""} onChange={e=>setGuiaEditVal(p=>({...p,porque:e.target.value}))}
+                        style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:50,resize:"vertical"}}/>
+                      <div style={{display:"flex",gap:6,marginTop:6}}>
+                        <button onClick={()=>{setGuia(g=>({...g,timing:g.timing.map((x,j)=>j===i?{...x,...guiaEditVal}:x)}));setGuiaEditando(null);}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Guardar</button>
+                        <button onClick={()=>setGuiaEditando(null)} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                      </div>
+                    </div>
+                  ):(
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8}}>
+                      <div style={{flex:1}}>
+                        <div style={{fontSize:11,fontWeight:700,color:"#fff",marginBottom:4}}>{t.titulo}</div>
+                        <div style={{fontSize:10,color:"#C40803",fontWeight:700,marginBottom:3}}>{t.cuando}</div>
+                        <div style={{fontSize:10,color:"#666",lineHeight:1.5}}>{t.porque}</div>
+                      </div>
+                      <button onClick={()=>{setGuiaEditando(`timing-${i}`);setGuiaEditVal({cuando:t.cuando,porque:t.porque});}}
+                        style={{padding:"2px 8px",background:"transparent",color:"#444",border:"1px solid #222",borderRadius:4,fontSize:9,cursor:"pointer",flexShrink:0}}>✏ Editar</button>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* ARCO SEMANAL */}
+          {guiaTab==="arco"&&(
+            <div>
+              <div style={{fontSize:10,color:"#C40803",fontWeight:700,marginBottom:8,textTransform:"uppercase",letterSpacing:1}}>Rol de cada dia de la semana</div>
+              <button onClick={()=>{setGuiaAgregando("arco");setGuiaNuevoVal({dia:"",rol:"",contenido:""});}} style={{padding:"4px 14px",borderRadius:16,fontSize:9,fontWeight:700,cursor:"pointer",background:"transparent",color:"#C40803",border:"1.5px dashed #C40803",marginBottom:10}}>+ Agregar dia</button>
+              {guiaAgregando==="arco"&&(
+                <div style={{background:"#0d0d0d",border:"1.5px solid #C40803",borderRadius:8,padding:"12px 14px",marginBottom:12}}>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Dia de la semana</label>
+                  <input value={guiaNuevoVal.dia||""} onChange={e=>setGuiaNuevoVal(p=>({...p,dia:e.target.value}))} placeholder="Ej: Viernes" style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Rol del dia</label>
+                  <input value={guiaNuevoVal.rol||""} onChange={e=>setGuiaNuevoVal(p=>({...p,rol:e.target.value}))} placeholder="Ej: Decidir" style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Contenido sugerido</label>
+                  <textarea value={guiaNuevoVal.contenido||""} onChange={e=>setGuiaNuevoVal(p=>({...p,contenido:e.target.value}))} placeholder="Que publicar este dia y por que..." style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:48,resize:"vertical",marginBottom:6,boxSizing:"border-box"}}/>
+                  <div style={{display:"flex",gap:6}}>
+                    <button onClick={()=>{if(!guiaNuevoVal.dia)return;setGuia(g=>({...g,arco:[...g.arco,{dia:guiaNuevoVal.dia,rol:guiaNuevoVal.rol||"",contenido:guiaNuevoVal.contenido||""}]}));setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Agregar</button>
+                    <button onClick={()=>{setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                  </div>
+                </div>
+              )}
+              {guia.arco.map((d,i)=>(
+                <div key={i} style={{background:"#0b0b0b",border:"1px solid #1a1a1a",borderRadius:8,padding:"10px 14px",marginBottom:8,display:"flex",gap:12,alignItems:"flex-start"}}>
+                  <div style={{minWidth:70,fontSize:12,fontWeight:700,color:"#C40803"}}>{d.dia}</div>
+                  <div style={{flex:1}}>
+                    <div style={{fontSize:9,color:"#555",textTransform:"uppercase",letterSpacing:0.5,marginBottom:3}}>{d.rol}</div>
+                    {guiaEditando===`arco-${i}`?(
+                      <div>
+                        <textarea value={guiaEditVal.contenido||""} onChange={e=>setGuiaEditVal(p=>({...p,contenido:e.target.value}))}
+                          style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:50,resize:"vertical"}}/>
+                        <div style={{display:"flex",gap:6,marginTop:6}}>
+                          <button onClick={()=>{setGuia(g=>({...g,arco:g.arco.map((x,j)=>j===i?{...x,contenido:guiaEditVal.contenido}:x)}));setGuiaEditando(null);}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Guardar</button>
+                          <button onClick={()=>setGuiaEditando(null)} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                        </div>
+                      </div>
+                    ):(
+                      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8}}>
+                        <div style={{fontSize:10,color:"#aaa",lineHeight:1.5,flex:1}}>{d.contenido}</div>
+                        <button onClick={()=>{setGuiaEditando(`arco-${i}`);setGuiaEditVal({contenido:d.contenido});}}
+                          style={{padding:"2px 8px",background:"transparent",color:"#444",border:"1px solid #222",borderRadius:4,fontSize:9,cursor:"pointer",flexShrink:0}}>✏ Editar</button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* SERIES FIJAS */}
+          {guiaTab==="series"&&(
+            <div>
+              <div style={{fontSize:10,color:"#C40803",fontWeight:700,marginBottom:8,textTransform:"uppercase",letterSpacing:1}}>Series de contenido recurrente</div>
+              <button onClick={()=>{setGuiaAgregando("series");setGuiaNuevoVal({nombre:"",color:"#555",freq:"",dia:"",desc:""});}} style={{padding:"4px 14px",borderRadius:16,fontSize:9,fontWeight:700,cursor:"pointer",background:"transparent",color:"#C40803",border:"1.5px dashed #C40803",marginBottom:10}}>+ Agregar serie</button>
+              {guiaAgregando==="series"&&(
+                <div style={{background:"#0d0d0d",border:"1.5px solid #C40803",borderRadius:8,padding:"12px 14px",marginBottom:12}}>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Nombre de la serie (en mayusculas)</label>
+                  <input value={guiaNuevoVal.nombre||""} onChange={e=>setGuiaNuevoVal(p=>({...p,nombre:e.target.value.toUpperCase()}))} placeholder="Ej: BEHIND THE SCENES" style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Color del badge (hex)</label>
+                  <div style={{display:"flex",gap:6,alignItems:"center",marginBottom:6}}>
+                    <input value={guiaNuevoVal.color||"#555"} onChange={e=>setGuiaNuevoVal(p=>({...p,color:e.target.value}))} placeholder="#C40803" style={{flex:1,background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,boxSizing:"border-box"}}/>
+                    <div style={{width:28,height:28,borderRadius:6,background:guiaNuevoVal.color||"#555",border:"1px solid #333",flexShrink:0}}/>
+                  </div>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Frecuencia</label>
+                  <input value={guiaNuevoVal.freq||""} onChange={e=>setGuiaNuevoVal(p=>({...p,freq:e.target.value}))} placeholder="Ej: 1 por semana / 2 por mes" style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Mejor dia para publicar</label>
+                  <input value={guiaNuevoVal.dia||""} onChange={e=>setGuiaNuevoVal(p=>({...p,dia:e.target.value}))} placeholder="Ej: Martes o Miercoles" style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Descripcion</label>
+                  <textarea value={guiaNuevoVal.desc||""} onChange={e=>setGuiaNuevoVal(p=>({...p,desc:e.target.value}))} placeholder="Que es, como funciona, objetivo del formato..." style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:56,resize:"vertical",marginBottom:6,boxSizing:"border-box"}}/>
+                  <div style={{display:"flex",gap:6}}>
+                    <button onClick={()=>{if(!guiaNuevoVal.nombre)return;setGuia(g=>({...g,series:[...g.series,{nombre:guiaNuevoVal.nombre,color:guiaNuevoVal.color||"#555",freq:guiaNuevoVal.freq||"",dia:guiaNuevoVal.dia||"",desc:guiaNuevoVal.desc||""}]}));setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Agregar</button>
+                    <button onClick={()=>{setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                  </div>
+                </div>
+              )}
+              {guia.series.map((s,i)=>(
+                <div key={i} style={{background:"#0b0b0b",border:"1px solid #1a1a1a",borderLeft:`3px solid ${s.color}`,borderRadius:8,padding:"10px 14px",marginBottom:8}}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8}}>
+                    <div style={{flex:1}}>
+                      <div style={{display:"flex",gap:8,alignItems:"center",marginBottom:6,flexWrap:"wrap"}}>
+                        <span style={{fontSize:9,fontWeight:900,background:s.color,color:"#fff",padding:"2px 8px",borderRadius:10,letterSpacing:0.5}}>{s.nombre}</span>
+                        <span style={{fontSize:9,color:"#555"}}>{s.freq}</span>
+                        <span style={{fontSize:9,color:"#444"}}>Mejor dia: {s.dia}</span>
+                      </div>
+                      {guiaEditando===`series-${i}`?(
+                        <div>
+                          <textarea value={guiaEditVal.desc||""} onChange={e=>setGuiaEditVal(p=>({...p,desc:e.target.value}))}
+                            style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:50,resize:"vertical"}}/>
+                          <div style={{display:"flex",gap:6,marginTop:6}}>
+                            <button onClick={()=>{setGuia(g=>({...g,series:g.series.map((x,j)=>j===i?{...x,desc:guiaEditVal.desc}:x)}));setGuiaEditando(null);}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Guardar</button>
+                            <button onClick={()=>setGuiaEditando(null)} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                          </div>
+                        </div>
+                      ):(
+                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8}}>
+                          <div style={{fontSize:10,color:"#888",lineHeight:1.5,flex:1}}>{s.desc}</div>
+                          <button onClick={()=>{setGuiaEditando(`series-${i}`);setGuiaEditVal({desc:s.desc});}}
+                            style={{padding:"2px 8px",background:"transparent",color:"#444",border:"1px solid #222",borderRadius:4,fontSize:9,cursor:"pointer",flexShrink:0}}>✏ Editar</button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* EFEMERIDES */}
+          {guiaTab==="efemerides"&&(
+            <div>
+              <div style={{fontSize:10,color:"#C40803",fontWeight:700,marginBottom:8,textTransform:"uppercase",letterSpacing:1}}>Calendario de efemerides y fechas clave</div>
+              <button onClick={()=>{setGuiaAgregando("efemerides");setGuiaNuevoVal({mes:"Enero",fecha:"",nombre:"",tipo:"Social",nota:""});}} style={{padding:"4px 14px",borderRadius:16,fontSize:9,fontWeight:700,cursor:"pointer",background:"transparent",color:"#C40803",border:"1.5px dashed #C40803",marginBottom:10}}>+ Agregar efemeride</button>
+              {guiaAgregando==="efemerides"&&(
+                <div style={{background:"#0d0d0d",border:"1.5px solid #C40803",borderRadius:8,padding:"12px 14px",marginBottom:12}}>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:6}}>
+                    <div>
+                      <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Mes</label>
+                      <select value={guiaNuevoVal.mes||"Enero"} onChange={e=>setGuiaNuevoVal(p=>({...p,mes:e.target.value}))} style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10}}>
+                        {["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio-Agosto","Septiembre","Octubre","Noviembre","Diciembre"].map(m=><option key={m} style={{background:"#111"}}>{m}</option>)}
+                      </select>
+                    </div>
+                    <div>
+                      <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Tipo</label>
+                      <select value={guiaNuevoVal.tipo||"Social"} onChange={e=>setGuiaNuevoVal(p=>({...p,tipo:e.target.value}))} style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10}}>
+                        {["Social","Teatral","Internacional","Temporada"].map(t=><option key={t} style={{background:"#111"}}>{t}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Fecha</label>
+                  <input value={guiaNuevoVal.fecha||""} onChange={e=>setGuiaNuevoVal(p=>({...p,fecha:e.target.value}))} placeholder="Ej: 14 feb / 2do domingo / Todo octubre" style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Nombre de la efemeride</label>
+                  <input value={guiaNuevoVal.nombre||""} onChange={e=>setGuiaNuevoVal(p=>({...p,nombre:e.target.value}))} placeholder="Ej: Dia del Maestro" style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Nota editorial</label>
+                  <textarea value={guiaNuevoVal.nota||""} onChange={e=>setGuiaNuevoVal(p=>({...p,nota:e.target.value}))} placeholder="Como usar esta fecha para el contenido de Teatrando..." style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:48,resize:"vertical",marginBottom:6,boxSizing:"border-box"}}/>
+                  <div style={{display:"flex",gap:6}}>
+                    <button onClick={()=>{if(!guiaNuevoVal.nombre)return;setGuia(g=>({...g,efemerides:[...g.efemerides,{mes:guiaNuevoVal.mes,fecha:guiaNuevoVal.fecha||"",nombre:guiaNuevoVal.nombre,tipo:guiaNuevoVal.tipo||"Social",nota:guiaNuevoVal.nota||""}]}));setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Agregar</button>
+                    <button onClick={()=>{setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                  </div>
+                </div>
+              )}
+              {["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio-Agosto","Septiembre","Octubre","Noviembre","Diciembre"].map(mes=>{
+                const efs=guia.efemerides.filter(e=>e.mes===mes);
+                if(!efs.length) return null;
+                return(
+                  <div key={mes} style={{marginBottom:14}}>
+                    <div style={{fontSize:9,color:"#444",textTransform:"uppercase",letterSpacing:1,fontWeight:700,marginBottom:6,paddingBottom:4,borderBottom:"1px solid #1a1a1a"}}>{mes}</div>
+                    {efs.map((ef,i)=>{
+                      const idx=guia.efemerides.indexOf(ef);
+                      const tipoColor={"Social":"#b45309","Teatral":"#C40803","Internacional":"#0891b2","Temporada":"#059669"}[ef.tipo]||"#555";
+                      return(
+                        <div key={i} style={{display:"flex",gap:10,padding:"7px 0",borderBottom:"1px solid #111",alignItems:"flex-start"}}>
+                          <div style={{minWidth:90,fontSize:10,fontWeight:700,color:"#fff"}}>{ef.fecha}</div>
+                          <div style={{flex:1}}>
+                            <div style={{display:"flex",gap:6,alignItems:"center",marginBottom:3,flexWrap:"wrap"}}>
+                              <span style={{fontSize:10,color:"#ddd"}}>{ef.nombre}</span>
+                              <span style={{fontSize:8,fontWeight:700,color:tipoColor,border:`1px solid ${tipoColor}`,padding:"1px 6px",borderRadius:8}}>{ef.tipo}</span>
+                            </div>
+                            {guiaEditando===`ef-${idx}`?(
+                              <div>
+                                <textarea value={guiaEditVal.nota||""} onChange={e=>setGuiaEditVal(p=>({...p,nota:e.target.value}))}
+                                  style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:40,resize:"vertical"}}/>
+                                <div style={{display:"flex",gap:6,marginTop:4}}>
+                                  <button onClick={()=>{setGuia(g=>({...g,efemerides:g.efemerides.map((x,j)=>j===idx?{...x,nota:guiaEditVal.nota}:x)}));setGuiaEditando(null);}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Guardar</button>
+                                  <button onClick={()=>setGuiaEditando(null)} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                                </div>
+                              </div>
+                            ):(
+                              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8}}>
+                                <div style={{fontSize:10,color:"#666",lineHeight:1.4,flex:1}}>{ef.nota}</div>
+                                <button onClick={()=>{setGuiaEditando(`ef-${idx}`);setGuiaEditVal({nota:ef.nota});}}
+                                  style={{padding:"2px 8px",background:"transparent",color:"#444",border:"1px solid #222",borderRadius:4,fontSize:9,cursor:"pointer",flexShrink:0}}>✏ Editar</button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* REGLAS DE ORO */}
+          {guiaTab==="reglas"&&(
+            <div>
+              <div style={{fontSize:10,color:"#C40803",fontWeight:700,marginBottom:8,textTransform:"uppercase",letterSpacing:1}}>Reglas de oro — aplican siempre</div>
+              <button onClick={()=>{setGuiaAgregando("reglas");setGuiaNuevoVal({texto:"",detalle:""});}} style={{padding:"4px 14px",borderRadius:16,fontSize:9,fontWeight:700,cursor:"pointer",background:"transparent",color:"#C40803",border:"1.5px dashed #C40803",marginBottom:10}}>+ Agregar regla</button>
+              {guiaAgregando==="reglas"&&(
+                <div style={{background:"#0d0d0d",border:"1.5px solid #C40803",borderRadius:8,padding:"12px 14px",marginBottom:12}}>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Regla (enunciado corto)</label>
+                  <input value={guiaNuevoVal.texto||""} onChange={e=>setGuiaNuevoVal(p=>({...p,texto:e.target.value}))} placeholder="Ej: Siempre incluir horario en obras de estreno" style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,marginBottom:6,boxSizing:"border-box"}}/>
+                  <label style={{fontSize:9,color:"#555",marginBottom:3,display:"block"}}>Detalle o excepciones</label>
+                  <textarea value={guiaNuevoVal.detalle||""} onChange={e=>setGuiaNuevoVal(p=>({...p,detalle:e.target.value}))} placeholder="Contexto, cuando aplica, excepciones..." style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:56,resize:"vertical",marginBottom:6,boxSizing:"border-box"}}/>
+                  <div style={{display:"flex",gap:6}}>
+                    <button onClick={()=>{if(!guiaNuevoVal.texto)return;const nextNum=guia.reglas.length+1;setGuia(g=>({...g,reglas:[...g.reglas,{num:nextNum,texto:guiaNuevoVal.texto,detalle:guiaNuevoVal.detalle||""}]}));setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Agregar</button>
+                    <button onClick={()=>{setGuiaAgregando(null);setGuiaNuevoVal({});}} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                  </div>
+                </div>
+              )}
+              {guia.reglas.map((r,i)=>(
+                <div key={i} style={{background:"#0b0b0b",border:"1px solid #1a1a1a",borderRadius:8,padding:"10px 14px",marginBottom:8,display:"flex",gap:12,alignItems:"flex-start"}}>
+                  <div style={{fontSize:20,fontWeight:700,color:"#C40803",minWidth:28,lineHeight:1}}>{r.num}</div>
+                  <div style={{flex:1}}>
+                    <div style={{fontSize:11,fontWeight:700,color:"#fff",marginBottom:4}}>{r.texto}</div>
+                    {guiaEditando===`regla-${i}`?(
+                      <div>
+                        <textarea value={guiaEditVal.detalle||""} onChange={e=>setGuiaEditVal(p=>({...p,detalle:e.target.value}))}
+                          style={{width:"100%",background:"#111",border:"1px solid #333",color:"#fff",borderRadius:4,padding:"4px 8px",fontSize:10,minHeight:50,resize:"vertical"}}/>
+                        <div style={{display:"flex",gap:6,marginTop:6}}>
+                          <button onClick={()=>{setGuia(g=>({...g,reglas:g.reglas.map((x,j)=>j===i?{...x,detalle:guiaEditVal.detalle}:x)}));setGuiaEditando(null);}} style={{padding:"3px 10px",background:"#C40803",color:"#fff",border:"none",borderRadius:4,fontSize:9,cursor:"pointer",fontWeight:700}}>Guardar</button>
+                          <button onClick={()=>setGuiaEditando(null)} style={{padding:"3px 10px",background:"transparent",color:"#555",border:"1px solid #333",borderRadius:4,fontSize:9,cursor:"pointer"}}>Cancelar</button>
+                        </div>
+                      </div>
+                    ):(
+                      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8}}>
+                        <div style={{fontSize:10,color:"#666",lineHeight:1.5,flex:1}}>{r.detalle}</div>
+                        <button onClick={()=>{setGuiaEditando(`regla-${i}`);setGuiaEditVal({detalle:r.detalle});}}
+                          style={{padding:"2px 8px",background:"transparent",color:"#444",border:"1px solid #222",borderRadius:4,fontSize:9,cursor:"pointer",flexShrink:0}}>✏ Editar</button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+        </div>
+      )}
 
         <div style={{textAlign:"center",marginTop:28,fontSize:8,color:"#141414"}}>Teatrando CDMX · Sistema de Contenido 2026 · @teatrandocdmx</div>
       </div>
     </div>
-
-    )
   );
 }

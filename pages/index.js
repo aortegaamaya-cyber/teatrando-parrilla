@@ -212,6 +212,7 @@ async function loadData() {
 const BRIEFINGS_INIT = {"Mayo":"📌 LÍNEA EDITORIAL MAYO 2026\n\n🎯 OBJETIVO\n• Generar engagement orgánico\n• Posicionar marca como referente teatral\n• Convertir a WhatsApp (ventas) 👉 alineado al modelo de negocio\n\n📅 ENFOQUE POR SEMANA\nS1 (1–3 may): Arranque cultural + cartelera fin de semana.\nS2 (4–10 may): Día de las Madres.\nS3 (11–17 may): Día del Maestro + One Vision of Queen.\nS4 (18–24 may): Venta fuerte + curaduría + memes.\nS5 (25–31 may): Cierre de mes + adelanto junio."}
 
 let _historial = [];
+let _historial = [];
 const regCambio = (id,campo,ant,nuevo) => {
   _historial = [{ts:new Date().toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit",second:"2-digit"}),id,campo,anterior:typeof ant==="object"?JSON.stringify(ant):String(ant),nuevo:typeof nuevo==="object"?JSON.stringify(nuevo):String(nuevo)},..._historial].slice(0,300);
   return [..._historial];

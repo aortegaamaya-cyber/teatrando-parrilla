@@ -211,7 +211,7 @@ async function loadData() {
 
 const BRIEFINGS_INIT = {"Mayo":"📌 LÍNEA EDITORIAL MAYO 2026\n\n🎯 OBJETIVO\n• Generar engagement orgánico\n• Posicionar marca como referente teatral\n• Convertir a WhatsApp (ventas) 👉 alineado al modelo de negocio\n\n📅 ENFOQUE POR SEMANA\nS1 (1–3 may): Arranque cultural + cartelera fin de semana.\nS2 (4–10 may): Día de las Madres.\nS3 (11–17 may): Día del Maestro + One Vision of Queen.\nS4 (18–24 may): Venta fuerte + curaduría + memes.\nS5 (25–31 may): Cierre de mes + adelanto junio."}
 
-
+let _historial = [];
 let _historial = [];
 const regCambio = (id,campo,ant,nuevo) => {
   _historial = [{ts:new Date().toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit",second:"2-digit"}),id,campo,anterior:typeof ant==="object"?JSON.stringify(ant):String(ant),nuevo:typeof nuevo==="object"?JSON.stringify(nuevo):String(nuevo)},..._historial].slice(0,300);
@@ -262,6 +262,7 @@ export default function App() {
   const [syncStatus, setSyncStatus] = useState("idle");
   const [lastRefresh, setLastRefresh] = useState("");
   const [modoCliente, setModoCliente] = useState(true);
+  const modoClienteRef = useRef(true);
   const [showAdminLogin, setShowAdminLogin] = useState(false);
   const [passInput, setPassInput] = useState("");
   const [passError, setPassError] = useState(false);
@@ -349,7 +350,7 @@ export default function App() {
 
   // ── GUARDADO AUTOMÁTICO cuando cambian los datos (solo admin) ──
   useEffect(()=>{
-    if(!dataLoaded || modoCliente) return; // no guardar en modo cliente
+    if(!dataLoaded || modoClienteRef.current) return;
     setSyncStatus("saving");
     const t=setTimeout(async()=>{
       try{
@@ -536,14 +537,14 @@ export default function App() {
           <input
             type="password" value={passInput}
             onChange={e=>{setPassInput(e.target.value);setPassError(false);}}
-            onKeyDown={e=>{if(e.key==="Enter"){if(passInput===ADMIN_PASS){setModoCliente(false);setShowAdminLogin(false);setPassInput("");}else setPassError(true);}}}
+            onKeyDown={e=>{if(e.key==="Enter"){if(passInput===ADMIN_PASS){setModoCliente(false); modoClienteRef.current=false;setShowAdminLogin(false);setPassInput("");}else setPassError(true);}}}
             placeholder="Contraseña..."
             style={{...inputStyle,marginBottom:8,textAlign:"center",fontSize:14,letterSpacing:4}}
             autoFocus
           />
           {passError&&<div style={{fontSize:10,color:"#C40803",marginBottom:8}}>Contraseña incorrecta. Intenta de nuevo.</div>}
           <div style={{display:"flex",gap:8,justifyContent:"center",marginTop:8}}>
-            <BTN onClick={()=>{if(passInput===ADMIN_PASS){setModoCliente(false);setShowAdminLogin(false);setPassInput("");}else setPassError(true);}}>Entrar</BTN>
+            <BTN onClick={()=>{if(passInput===ADMIN_PASS){setModoCliente(false); modoClienteRef.current=false;setShowAdminLogin(false);setPassInput("");}else setPassError(true);}}>Entrar</BTN>
             <BTN onClick={()=>{setShowAdminLogin(false);setPassInput("");setPassError(false);}} danger small>Cancelar</BTN>
           </div>
         </div>

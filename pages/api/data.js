@@ -1,52 +1,32 @@
-// pages/api/data.js
-// Proxy para JSONBin.io - base de datos JSON gratuita y persistente
-// Configurar: JSONBIN_BIN_ID y JSONBIN_API_KEY en Vercel Environment Variables
-
-const BIN_ID = process.env.JSONBIN_BIN_ID;
-const API_KEY = process.env.JSONBIN_API_KEY;
-const BASE_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader('Cache-Control', 'no-store');
-
-  if (req.method === 'OPTIONS') return res.status(200).end();
-
-  if (!BIN_ID || !API_KEY) {
-    return res.status(500).json({ error: 'Missing JSONBIN_BIN_ID or JSONBIN_API_KEY env vars' });
-  }
-
+  const SUPABASE_URL = process.env.SUPABASE_URL;
+  const SUPABASE_SECRET_KEY = process.env.SUPABASE_SECRET_KEY;
+  const headers = {
+    'Content-Type': 'application/json',
+    'apikey': SUPABASE_SECRET_KEY,
+    'Authorization': `Bearer ${SUPABASE_SECRET_KEY}`,
+  };
   if (req.method === 'GET') {
     try {
-      const response = await fetch(`${BASE_URL}/latest`, {
-        headers: { 'X-Master-Key': API_KEY }
-      });
-      const json = await response.json();
-      const data = json.record?.data || null;
-      return res.status(200).json({ data });
-    } catch (e) {
-      return res.status(500).json({ error: 'Error reading data' });
-    }
-  }
-
-  if (req.method === 'POST') {
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/parrilla_data?id=eq.julio_2026&select=data`, { headers });
+      const json = await r.json();
+      if (json && json[0] && json[0].data) {
+        res.status(200).json({ data: json[0].data });
+      } else {
+        res.status(200).json({ data: null });
+      }
+    } catch(e) { res.status(500).json({ error: e.message }); }
+  } else if (req.method === 'POST') {
     try {
       const { data } = req.body;
-      await fetch(BASE_URL, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Master-Key': API_KEY
-        },
-        body: JSON.stringify({ data })
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/parrilla_data?id=eq.julio_2026`, {
+        method: 'PATCH',
+        headers: { ...headers, 'Prefer': 'return=minimal' },
+        body: JSON.stringify({ data, updated_at: new Date().toISOString() })
       });
-      return res.status(200).json({ ok: true });
-    } catch (e) {
-      return res.status(500).json({ error: 'Error saving data' });
-    }
+      res.status(r.ok ? 200 : 500).json({ ok: r.ok });
+    } catch(e) { res.status(500).json({ error: e.message }); }
+  } else {
+    res.status(405).json({ error: 'Method not allowed' });
   }
-
-  return res.status(405).json({ error: 'Method not allowed' });
 }

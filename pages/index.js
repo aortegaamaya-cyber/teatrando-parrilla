@@ -126,15 +126,25 @@ const POLL_INTERVAL = 4000;
 
 async function saveData(data) {
   try {
-    const res = await fetch('/api/data',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({data:JSON.stringify(data)})});
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ data: JSON.stringify(data), updated_at: new Date().toISOString() })
+    });
     return res.ok;
   } catch(e) { return false; }
 }
 async function loadData() {
   try {
-    const res = await fetch('/api/data');
+      headers: {
+      }
+    });
     const json = await res.json();
-    if (json.data) return JSON.parse(json.data);
+    if (json && json[0] && json[0].data && json[0].data !== '{}') {
+      return JSON.parse(json[0].data);
+    }
   } catch(e) {}
   return null;
 }

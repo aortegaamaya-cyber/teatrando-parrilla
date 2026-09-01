@@ -209,13 +209,7 @@ EJES DEL MES:
 · Variedad de obras — rotar toda la cartelera`;
 
 
-const buildCoberturasSeptiembre = () => [
-  {id:"cobs_01",obra:"El Deseo de lo Prohibido",recinto:"Teatro Renacimiento",fecha:"Agosto 2026",genero:"Drama",notas:"Material audiovisual disponible."},
-  {id:"cobs_02",obra:"Nocturno",recinto:"Teatro Las Torres",fecha:"Agosto 2026",genero:"Drama",notas:"Material audiovisual disponible."},
-  {id:"cobs_03",obra:"Entre Tú y Yo",recinto:"Teatro Renacimiento",fecha:"Agosto 2026",genero:"Drama",notas:"Material audiovisual disponible."},
-  {id:"cobs_04",obra:"El Gorila",recinto:"Teatro Wilberto Cantón",fecha:"Agosto 2026",genero:"Monólogo",notas:"Material audiovisual disponible."},
-  {id:"cobs_05",obra:"Los Perros",recinto:"Teatro Milán",fecha:"Agosto 2026",genero:"Drama",notas:"Hasta el 13 de septiembre."},
-];
+const buildCoberturasSeptiembre = () => [];
 
 const buildCoberturasAgosto = () => [
   {id:"cob_01",obra:"El Charco Inútil",recinto:"Teatro Helénico",fecha:"Jue 6 agosto",genero:"Drama / Monólogo",notas:"Humberto Dupeyron. Teatro independiente."},
@@ -555,26 +549,33 @@ export default function App() {
           ))}
         </>)}
         {vista==="coberturas"&&(<div style={{marginTop:12}}>
-          <div style={{fontSize:12,fontWeight:700,marginBottom:4}}>Coberturas del mes — Agosto 2026</div>
-          <div style={{fontSize:9,color:"#444",marginBottom:14}}>Obras que Aarón visitará en persona este mes.</div>
-          {coberturas.map(c=>(
-            <div key={c.id} style={{background:"#0b0b0b",border:"1px solid #1a1a1a",borderRadius:9,padding:"12px 14px",marginBottom:8}}>
-              <div style={{display:"flex",gap:8,alignItems:"flex-start",justifyContent:"space-between"}}>
-                <div style={{flex:1}}>
-                  <input value={c.obra} onChange={e=>setCoberturas(prev=>prev.map(x=>x.id===c.id?{...x,obra:e.target.value}:x))} style={{width:"100%",background:"#111",border:"1px solid #222",borderRadius:5,padding:"3px 7px",color:"#fff",fontSize:12,marginBottom:4,fontWeight:700}}/>
-                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginTop:4}}>
-                    <input value={c.fecha} onChange={e=>setCoberturas(prev=>prev.map(x=>x.id===c.id?{...x,fecha:e.target.value}:x))} placeholder="Fecha" style={{background:"#111",border:"1px solid #222",borderRadius:5,padding:"3px 7px",color:"#C40803",fontSize:10}}/>
-                    <input value={c.recinto} onChange={e=>setCoberturas(prev=>prev.map(x=>x.id===c.id?{...x,recinto:e.target.value}:x))} placeholder="Recinto" style={{background:"#111",border:"1px solid #222",borderRadius:5,padding:"3px 7px",color:"#aaa",fontSize:10}}/>
+          <div style={{fontSize:12,fontWeight:700,marginBottom:4}}>Coberturas del mes — Septiembre 2026</div>
+          <div style={{fontSize:9,color:"#444",marginBottom:14}}>Obras que Aarón visitará en persona este mes. Los cambios se guardan automáticamente.</div>
+          {coberturas.length===0&&<div style={{border:"1px dashed #1a1a1a",borderRadius:8,padding:"20px",textAlign:"center",color:"#333",fontSize:11,marginBottom:12}}>Sin coberturas. Agrega la primera.</div>}
+          {coberturas.map(c=>(<div key={c.id} style={{background:"#0b0b0b",border:"1px solid #1a1a1a",borderRadius:9,padding:"12px 14px",marginBottom:8}}>
+            <div style={{display:"flex",gap:8,alignItems:"flex-start",justifyContent:"space-between"}}>
+              <div style={{flex:1}}>
+                <div style={{fontSize:7,color:"#555",textTransform:"uppercase",letterSpacing:1,marginBottom:3,fontWeight:700}}>Nombre de la obra</div>
+                <input value={c.obra} onChange={e=>{const nc=coberturas.map(x=>x.id===c.id?{...x,obra:e.target.value}:x);setCoberturas(nc);guardarAdmin({parrillas,resenas,briefings,coberturas:nc,mesesDisp:["Agosto","Septiembre"]});}} placeholder="Nombre de la obra" style={{width:"100%",background:"#111",border:"1px solid #333",borderRadius:5,padding:"5px 8px",color:"#fff",fontSize:12,marginBottom:8,fontWeight:700,boxSizing:"border-box",fontFamily:"inherit"}}/>
+                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:8}}>
+                  <div>
+                    <div style={{fontSize:7,color:"#555",textTransform:"uppercase",letterSpacing:1,marginBottom:3,fontWeight:700}}>Fecha de visita</div>
+                    <input value={c.fecha} onChange={e=>{const nc=coberturas.map(x=>x.id===c.id?{...x,fecha:e.target.value}:x);setCoberturas(nc);guardarAdmin({parrillas,resenas,briefings,coberturas:nc,mesesDisp:["Agosto","Septiembre"]});}} placeholder="ej: Sáb 15 sept" style={{width:"100%",background:"#111",border:"1px solid #333",borderRadius:5,padding:"5px 8px",color:"#C40803",fontSize:10,boxSizing:"border-box",fontFamily:"inherit"}}/>
                   </div>
-                  <input value={c.notas} onChange={e=>setCoberturas(prev=>prev.map(x=>x.id===c.id?{...x,notas:e.target.value}:x))} placeholder="Notas..." style={{width:"100%",background:"#111",border:"1px dashed #1a1a1a",borderRadius:5,padding:"3px 7px",color:"#555",fontSize:9,marginTop:4}}/>
+                  <div>
+                    <div style={{fontSize:7,color:"#555",textTransform:"uppercase",letterSpacing:1,marginBottom:3,fontWeight:700}}>Recinto</div>
+                    <input value={c.recinto} onChange={e=>{const nc=coberturas.map(x=>x.id===c.id?{...x,recinto:e.target.value}:x);setCoberturas(nc);guardarAdmin({parrillas,resenas,briefings,coberturas:nc,mesesDisp:["Agosto","Septiembre"]});}} placeholder="ej: Teatro Helénico" style={{width:"100%",background:"#111",border:"1px solid #333",borderRadius:5,padding:"5px 8px",color:"#aaa",fontSize:10,boxSizing:"border-box",fontFamily:"inherit"}}/>
+                  </div>
                 </div>
-                <button onClick={()=>setCoberturas(prev=>prev.filter(x=>x.id!==c.id))} style={{background:"transparent",border:"none",color:"#555",cursor:"pointer",fontSize:14,padding:"2px 4px"}}>✕</button>
+                <div style={{fontSize:7,color:"#555",textTransform:"uppercase",letterSpacing:1,marginBottom:3,fontWeight:700}}>Notas</div>
+                <input value={c.notas} onChange={e=>{const nc=coberturas.map(x=>x.id===c.id?{...x,notas:e.target.value}:x);setCoberturas(nc);guardarAdmin({parrillas,resenas,briefings,coberturas:nc,mesesDisp:["Agosto","Septiembre"]});}} placeholder="Notas adicionales..." style={{width:"100%",background:"#0a0a0a",border:"1px dashed #222",borderRadius:5,padding:"5px 8px",color:"#555",fontSize:9,boxSizing:"border-box",fontFamily:"inherit"}}/>
               </div>
+              <button onClick={()=>{const nc=coberturas.filter(x=>x.id!==c.id);setCoberturas(nc);guardarAdmin({parrillas,resenas,briefings,coberturas:nc,mesesDisp:["Agosto","Septiembre"]});}} style={{background:"transparent",border:"none",color:"#444",cursor:"pointer",fontSize:16,padding:"2px 4px",marginTop:2,flexShrink:0}}>✕</button>
             </div>
-          ))}
-          <button onClick={()=>setCoberturas(prev=>[...prev,{id:`cob_${Date.now()}`,obra:"Nueva cobertura",recinto:"",fecha:"",genero:"",notas:""}])} style={{padding:"6px 16px",borderRadius:14,border:"1px dashed #333",background:"transparent",color:"#555",cursor:"pointer",fontSize:10,fontWeight:700,marginTop:4}}>+ Agregar cobertura</button>
+          </div>))}
+          <button onClick={()=>{const nc=[...coberturas,{id:`cob_${Date.now()}`,obra:"",recinto:"",fecha:"",genero:"",notas:""}];setCoberturas(nc);guardarAdmin({parrillas,resenas,briefings,coberturas:nc,mesesDisp:["Agosto","Septiembre"]});}} style={{padding:"8px 18px",borderRadius:14,border:"1.5px dashed #C40803",background:"transparent",color:"#C40803",cursor:"pointer",fontSize:10,fontWeight:700,marginTop:8,display:"block"}}>+ Agregar cobertura</button>
         </div>)}
-        {vista==="resenas"&&(<div style={{marginTop:12}}>
+                {vista==="resenas"&&(<div style={{marginTop:12}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
             <div><div style={{fontSize:12,fontWeight:700}}>Reseñas — Julio 2026</div><div style={{fontSize:9,color:"#444",marginTop:2}}>{resenasMes.length} reseñas · 5 por semana (semanas 1-4)</div></div>
             <button onClick={handleAgregarResena} style={{padding:"4px 12px",borderRadius:14,border:"1px solid #22c55e",background:"#002a10",color:"#22c55e",cursor:"pointer",fontSize:9,fontWeight:700}}>+ Nueva reseña</button>

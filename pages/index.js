@@ -300,6 +300,12 @@ export default function App() {
     setSyncStatus("saving");
     saveTimerRef.current = setTimeout(async()=>{ const ok=await saveData(data); if(isMounted.current){setSyncStatus(ok?"saved":"error");setTimeout(()=>{if(isMounted.current)setSyncStatus("idle");},2000);} },800);
   },[]);
+  const guardarInmediato = useCallback(async(data)=>{
+    if(modoClienteRef.current) return;
+    setSyncStatus("saving");
+    const ok=await saveData(data);
+    if(isMounted.current){setSyncStatus(ok?"saved":"error");setTimeout(()=>{if(isMounted.current)setSyncStatus("idle");},2000);}
+  },[]);
 
   useEffect(()=>{
     const interval=setInterval(async()=>{ if(!modoClienteRef.current) return; const saved=await loadData(); if(saved&&isMounted.current){if(saved.parrillas)setParrillas(saved.parrillas);if(saved.resenas)setResenas(saved.resenas);if(saved.briefings)setBriefings(saved.briefings);setLastRefresh(new Date().toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit",second:"2-digit"}));} },POLL_INTERVAL);
@@ -556,24 +562,24 @@ export default function App() {
             <div style={{display:"flex",gap:8,alignItems:"flex-start",justifyContent:"space-between"}}>
               <div style={{flex:1}}>
                 <div style={{fontSize:7,color:"#555",textTransform:"uppercase",letterSpacing:1,marginBottom:3,fontWeight:700}}>Nombre de la obra</div>
-                <input value={c.obra} onChange={e=>{const nc=coberturas.map(x=>x.id===c.id?{...x,obra:e.target.value}:x);setCoberturas(nc);guardarAdmin({parrillas,resenas,briefings,coberturas:nc,mesesDisp:["Agosto","Septiembre"]});}} placeholder="Nombre de la obra" style={{width:"100%",background:"#111",border:"1px solid #333",borderRadius:5,padding:"5px 8px",color:"#fff",fontSize:12,marginBottom:8,fontWeight:700,boxSizing:"border-box",fontFamily:"inherit"}}/>
+                <input value={c.obra} onChange={e=>{const nc=coberturas.map(x=>x.id===c.id?{...x,obra:e.target.value}:x);setCoberturas(nc);guardarInmediato({parrillas,resenas,briefings,coberturas:nc,mesesDisp:["Agosto","Septiembre"]});}} placeholder="Nombre de la obra" style={{width:"100%",background:"#111",border:"1px solid #333",borderRadius:5,padding:"5px 8px",color:"#fff",fontSize:12,marginBottom:8,fontWeight:700,boxSizing:"border-box",fontFamily:"inherit"}}/>
                 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:8}}>
                   <div>
                     <div style={{fontSize:7,color:"#555",textTransform:"uppercase",letterSpacing:1,marginBottom:3,fontWeight:700}}>Fecha de visita</div>
-                    <input value={c.fecha} onChange={e=>{const nc=coberturas.map(x=>x.id===c.id?{...x,fecha:e.target.value}:x);setCoberturas(nc);guardarAdmin({parrillas,resenas,briefings,coberturas:nc,mesesDisp:["Agosto","Septiembre"]});}} placeholder="ej: Sáb 15 sept" style={{width:"100%",background:"#111",border:"1px solid #333",borderRadius:5,padding:"5px 8px",color:"#C40803",fontSize:10,boxSizing:"border-box",fontFamily:"inherit"}}/>
+                    <input value={c.fecha} onChange={e=>{const nc=coberturas.map(x=>x.id===c.id?{...x,fecha:e.target.value}:x);setCoberturas(nc);guardarInmediato({parrillas,resenas,briefings,coberturas:nc,mesesDisp:["Agosto","Septiembre"]});}} placeholder="ej: Sáb 15 sept" style={{width:"100%",background:"#111",border:"1px solid #333",borderRadius:5,padding:"5px 8px",color:"#C40803",fontSize:10,boxSizing:"border-box",fontFamily:"inherit"}}/>
                   </div>
                   <div>
                     <div style={{fontSize:7,color:"#555",textTransform:"uppercase",letterSpacing:1,marginBottom:3,fontWeight:700}}>Recinto</div>
-                    <input value={c.recinto} onChange={e=>{const nc=coberturas.map(x=>x.id===c.id?{...x,recinto:e.target.value}:x);setCoberturas(nc);guardarAdmin({parrillas,resenas,briefings,coberturas:nc,mesesDisp:["Agosto","Septiembre"]});}} placeholder="ej: Teatro Helénico" style={{width:"100%",background:"#111",border:"1px solid #333",borderRadius:5,padding:"5px 8px",color:"#aaa",fontSize:10,boxSizing:"border-box",fontFamily:"inherit"}}/>
+                    <input value={c.recinto} onChange={e=>{const nc=coberturas.map(x=>x.id===c.id?{...x,recinto:e.target.value}:x);setCoberturas(nc);guardarInmediato({parrillas,resenas,briefings,coberturas:nc,mesesDisp:["Agosto","Septiembre"]});}} placeholder="ej: Teatro Helénico" style={{width:"100%",background:"#111",border:"1px solid #333",borderRadius:5,padding:"5px 8px",color:"#aaa",fontSize:10,boxSizing:"border-box",fontFamily:"inherit"}}/>
                   </div>
                 </div>
                 <div style={{fontSize:7,color:"#555",textTransform:"uppercase",letterSpacing:1,marginBottom:3,fontWeight:700}}>Notas</div>
-                <input value={c.notas} onChange={e=>{const nc=coberturas.map(x=>x.id===c.id?{...x,notas:e.target.value}:x);setCoberturas(nc);guardarAdmin({parrillas,resenas,briefings,coberturas:nc,mesesDisp:["Agosto","Septiembre"]});}} placeholder="Notas adicionales..." style={{width:"100%",background:"#0a0a0a",border:"1px dashed #222",borderRadius:5,padding:"5px 8px",color:"#555",fontSize:9,boxSizing:"border-box",fontFamily:"inherit"}}/>
+                <input value={c.notas} onChange={e=>{const nc=coberturas.map(x=>x.id===c.id?{...x,notas:e.target.value}:x);setCoberturas(nc);guardarInmediato({parrillas,resenas,briefings,coberturas:nc,mesesDisp:["Agosto","Septiembre"]});}} placeholder="Notas adicionales..." style={{width:"100%",background:"#0a0a0a",border:"1px dashed #222",borderRadius:5,padding:"5px 8px",color:"#555",fontSize:9,boxSizing:"border-box",fontFamily:"inherit"}}/>
               </div>
-              <button onClick={()=>{const nc=coberturas.filter(x=>x.id!==c.id);setCoberturas(nc);guardarAdmin({parrillas,resenas,briefings,coberturas:nc,mesesDisp:["Agosto","Septiembre"]});}} style={{background:"transparent",border:"none",color:"#444",cursor:"pointer",fontSize:16,padding:"2px 4px",marginTop:2,flexShrink:0}}>✕</button>
+              <button onClick={()=>{const nc=coberturas.filter(x=>x.id!==c.id);setCoberturas(nc);guardarInmediato({parrillas,resenas,briefings,coberturas:nc,mesesDisp:["Agosto","Septiembre"]});}} style={{background:"transparent",border:"none",color:"#444",cursor:"pointer",fontSize:16,padding:"2px 4px",marginTop:2,flexShrink:0}}>✕</button>
             </div>
           </div>))}
-          <button onClick={()=>{const nc=[...coberturas,{id:`cob_${Date.now()}`,obra:"",recinto:"",fecha:"",genero:"",notas:""}];setCoberturas(nc);guardarAdmin({parrillas,resenas,briefings,coberturas:nc,mesesDisp:["Agosto","Septiembre"]});}} style={{padding:"8px 18px",borderRadius:14,border:"1.5px dashed #C40803",background:"transparent",color:"#C40803",cursor:"pointer",fontSize:10,fontWeight:700,marginTop:8,display:"block"}}>+ Agregar cobertura</button>
+          <button onClick={()=>{const nc=[...coberturas,{id:`cob_${Date.now()}`,obra:"",recinto:"",fecha:"",genero:"",notas:""}];setCoberturas(nc);guardarInmediato({parrillas,resenas,briefings,coberturas:nc,mesesDisp:["Agosto","Septiembre"]});}} style={{padding:"8px 18px",borderRadius:14,border:"1.5px dashed #C40803",background:"transparent",color:"#C40803",cursor:"pointer",fontSize:10,fontWeight:700,marginTop:8,display:"block"}}>+ Agregar cobertura</button>
         </div>)}
                 {vista==="resenas"&&(<div style={{marginTop:12}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>

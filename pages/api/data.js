@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   };
   if (req.method === 'GET') {
     try {
-      const r = await fetch(`${SUPABASE_URL}/rest/v1/parrilla_data?id=eq.septiembre_2026&select=data`, { headers });
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/parrilla_data?id=eq.octubre_2026&select=data`, { headers });
       const json = await r.json();
       if (json && json[0] && json[0].data) {
         res.status(200).json({ data: json[0].data });
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
   } else if (req.method === 'POST') {
     try {
       const { data } = req.body;
-      const r = await fetch(`${SUPABASE_URL}/rest/v1/parrilla_data?id=eq.septiembre_2026`, {
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/parrilla_data?id=eq.octubre_2026`, {
         method: 'PATCH',
         headers: { ...headers, 'Prefer': 'return=minimal' },
         body: JSON.stringify({ data, updated_at: new Date().toISOString() })
